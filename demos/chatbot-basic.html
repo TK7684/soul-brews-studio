@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>LINE OA Chatbot ตอบคำถามอัตโนมัติ | ตัวอย่างงาน — Soul Brews Studio</title>
+<meta name="description" content="สิ่งที่ลูกค้าจะได้รับในแพ็กเกจ Basic (฿2,000 · ส่งใน 3 วัน)">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:#0a0a12;color:#e5e7eb;line-height:1.6}
+.wrap{max-width:1100px;margin:0 auto;padding:24px}
+header{background:linear-gradient(135deg,#6366f1,#1e1b4b);padding:60px 24px 40px;text-align:center}
+header .badge{display:inline-block;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);border-radius:999px;padding:6px 18px;font-size:14px;margin-bottom:16px}
+header h1{font-size:2.2rem;color:#fff;margin-bottom:8px}
+header .sub{color:rgba(255,255,255,.85);font-size:1.05rem}
+.grid{display:grid;gap:20px;margin:32px 0}
+.g2{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+.card{background:#13131f;border:1px solid #26264a;border-radius:14px;padding:20px}
+.card h3{color:#fff;font-size:1.05rem;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.card p,.card li{color:#9ca3af;font-size:.92rem}
+.card ul{list-style:none;margin-top:8px}
+.card li{padding:4px 0 4px 22px;position:relative}
+.card li::before{content:'✓';position:absolute;left:0;color:#34d399}
+.chat{background:#13131f;border:1px solid #26264a;border-radius:14px;padding:20px;max-width:420px;margin:0 auto}
+.msg{max-width:80%;padding:10px 14px;border-radius:14px;margin:6px 0;font-size:.9rem}
+.user{background:#374151;margin-left:auto;color:#fff}
+.bot{background:#1f2937;color:#d1d5db}
+.bot .btns{display:flex;gap:8px;margin-top:8px}
+.pbtn{border:1px solid #4b5563;border-radius:999px;padding:4px 12px;font-size:.78rem;color:#93c5fd;cursor:pointer}
+.msg .ts{display:block;font-size:.65rem;color:#6b7280;margin-top:4px}
+.mock{background:#fff;color:#111827;border-radius:14px;overflow:hidden;border:1px solid #26264a}
+.mock .bar{background:#f3f4f6;padding:8px 14px;display:flex;gap:6px;align-items:center;font-size:.75rem;color:#6b7280}
+.mock .dot{width:9px;height:9px;border-radius:50%}
+.mock .body{padding:22px}
+.mock h4{font-size:1.15rem;margin-bottom:6px}
+.mock .price{color:#059669;font-size:1.4rem;font-weight:700}
+.tag{display:inline-block;background:#ecfdf5;color:#047857;border-radius:6px;padding:2px 8px;font-size:.7rem;font-weight:600;margin:8px 4px 0 0}
+.wf{background:#0f0f1a;border:1px dashed #4b5563;border-radius:12px;padding:18px;font-family:ui-monospace,monospace;font-size:.82rem;color:#a5b4fc;overflow-x:auto;white-space:nowrap}
+.wf .node{display:inline-block;background:#1e1b4b;border:1px solid #4f46e5;border-radius:8px;padding:6px 12px;margin:4px 2px}
+.wf .arr{color:#6366f1}
+.chart{display:flex;align-items:flex-end;gap:12px;height:180px;padding:10px 0}
+.bar-ch{flex:1;background:linear-gradient(to top,#3b82f6,#60a5fa);border-radius:6px 6px 0 0;position:relative;min-width:28px}
+.bar-ch span{position:absolute;bottom:-22px;left:0;right:0;text-align:center;font-size:.68rem;color:#9ca3af}
+.bar-ch b{position:absolute;top:-20px;left:0;right:0;text-align:center;font-size:.7rem;color:#e5e7eb}
+.kpi{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:14px}
+.kpi .k{background:#0f0f1a;border:1px solid #26264a;border-radius:12px;padding:16px;text-align:center}
+.kpi .k .v{font-size:1.5rem;font-weight:700;color:#fff}
+.kpi .k .l{font-size:.72rem;color:#6b7280;margin-top:4px}
+table{width:100%;border-collapse:collapse;font-size:.85rem}
+th{background:#1e1b4b;color:#c7d2fe;text-align:left;padding:10px 12px}
+td{padding:10px 12px;border-bottom:1px solid #26264a;color:#9ca3af}
+td.g{color:#34d399}
+.price-box{background:linear-gradient(135deg,#6366f1,#1e1b4b);border-radius:16px;padding:28px;text-align:center;margin:32px auto;max-width:560px}
+.price-box .p{font-size:2.6rem;font-weight:800;color:#fff}
+.price-box .d{color:rgba(255,255,255,.85);margin-top:6px}
+.price-box a{display:inline-block;background:#fff;color:#111827;font-weight:700;border-radius:10px;padding:12px 32px;margin-top:16px;text-decoration:none}
+footer{text-align:center;padding:32px;color:#4b5563;font-size:.8rem}
+nav.tabs{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:24px 0 0}
+nav.tabs a{background:#13131f;border:1px solid #26264a;color:#9ca3af;text-decoration:none;border-radius:999px;padding:6px 14px;font-size:.8rem}
+nav.tabs a.cur{background:#6366f1;color:#fff;border-color:#6366f1}
+.toc{columns:2;gap:24px}
+.toc a{color:#93c5fd;text-decoration:none;display:block;padding:3px 0;font-size:.9rem}
+@media(max-width:700px){.toc{columns:1}}
+</style>
+</head>
+<body>
+<header>
+  <div class="badge">ตัวอย่างผลงาน — Basic ฿2,000</div>
+  <h1>LINE OA Chatbot ตอบคำถามอัตโนมัติ</h1>
+  <div class="sub">สิ่งที่ลูกค้าจะได้รับในแพ็กเกจ Basic (฿2,000 · ส่งใน 3 วัน)</div>
+  <nav class="tabs"><a class="cur" href="chatbot-basic.html">Chatbot Basic ฿2K</a><a class="" href="chatbot-standard.html">Chatbot Standard ฿5K</a><a class="" href="chatbot-premium.html">Chatbot Premium ฿12K</a><a class="" href="web-basic.html">เว็บ Basic ฿3K</a><a class="" href="web-standard.html">เว็บ Standard ฿8K</a><a class="" href="web-premium.html">เว็บ Premium ฿20K</a><a class="" href="automation-basic.html">Automation Basic ฿3K</a><a class="" href="automation-standard.html">Automation Standard ฿7K</a><a class="" href="automation-premium.html">Automation Premium ฿15K</a><a class="" href="seo-sample.html">SEO Content ฿400</a><a class="" href="data-dashboard.html">Data Dashboard ฿1.5K</a></nav>
+</header>
+<div class="wrap">
+
+<div class="chat">
+  <div style="text-align:center;color:#6b7280;font-size:.75rem;margin-bottom:10px">— ตัวอย่างหน้าจอแชตจริงใน LINE —</div>
+  <div class="msg user">ร้านเปิดกี่โมงคะ? <span class="ts">14:02</span></div>
+  <div class="msg bot">ร้านเปิด 10:00–22:00 ทุกวันครับ 🕐 มีอะไรให้ช่วยเพิ่มไหมครับ
+    <div class="btns"><span class="pbtn">📍 ที่อยู่ร้าน</span><span class="pbtn">🍽️ เมนูวันนี้</span></div>
+    <span class="ts">14:02 · ตอบทันที</span></div>
+  <div class="msg user">📍 ที่อยู่ร้าน <span class="ts">14:02</span></div>
+  <div class="msg bot">123 ซอยสุขุมวิท 71 กรุงเทพฯ — แผนที่: goo.gl/maps/xxx 🗺️<span class="ts">14:02</span></div>
+</div>
+<div class="grid g3" style="margin-top:28px">
+  <div class="card"><h3>💬 FAQ อัตโนมัติ</h3><ul><li>ตอบคำถามซ้ำ 24 ชม.</li><li>ไทย/อังกฤษ</li><li>ตอบทันที &lt;1 วินาที</li></ul></div>
+  <div class="card"><h3>📱 Rich Menu</h3><ul><li>เมนูปุ่มด้านล่างแชต</li><li>ออกแบบตามแบรนด์</li><li>4–6 ปุ่มลัด</li></ul></div>
+  <div class="card"><h3>🔗 เชื่อม API 1 จุด</h3><ul><li>เช่น เช็คสถานะออเดอร์</li><li>ดึงข้อมูลจากระบบคุณ</li><li>รูปแบบ JSON</li></ul></div>
+</div>
+
+<div class="price-box">
+  <div class="p">฿2,000</div>
+  <div class="d">ส่งมอบใน 3 วัน · แก้ไขได้ 2 ครั้ง · รวมตั้งค่า LINE OA ให้เรียบร้อย</div>
+  <a href="https://fastwork.co/user/bugtap" target="_blank">สั่งงานใน Fastwork →</a>
+</div>
+</div>
+<footer>Soul Brews Studio — ตัวอย่างผลงานจริง · อัปเดต ส.ค. 2026 · demos/chatbot-basic.html</footer>
+</body>
+</html>
