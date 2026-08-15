@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>n8n Workflow — ระบบอัตโนมัติร้านกาแฟ | Deliverable</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;450;500;550;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f7f7f8;
+  --surface: #ffffff;
+  --surface-2: #f0f0f2;
+  --canvas: #fbfbfc;
+  --fg: #1d1d1f;
+  --fg-2: #3c3c43;
+  --muted: #6e6e76;
+  --muted-2: #9a9aa2;
+  --border: #e2e2e6;
+  --border-strong: #c9c9d0;
+  --accent: #d64562;          /* n8n-style coral — use max 2 places */
+  --accent-soft: #fbe9ed;
+  --success: #2e9e5b;
+  --success-soft: #e6f5ec;
+  --danger: #d64550;
+  --danger-soft: #fbeaea;
+  --warn: #c78a1e;
+  --warn-soft: #fbf3e2;
+  --info: #4478a8;
+  --dot: #dcdce2;
+  --font-ui: 'IBM Plex Sans Thai', 'Noto Sans Thai', sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body { height: 100%; }
+
+body {
+  font-family: var(--font-ui);
+  background: var(--bg);
+  color: var(--fg);
+  font-size: 14px;
+  line-height: 1.5;
+  overflow: hidden;
+}
+
+.app {
+  display: grid;
+  grid-template-rows: 52px 1fr 218px;
+  grid-template-columns: 248px 1fr;
+  grid-template-areas:
+    "topbar topbar"
+    "sidebar canvas"
+    "log log";
+  height: 100vh;
+}
+
+/* ============ TOP BAR ============ */
+.topbar {
+  grid-area: topbar;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 0 16px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-weight: 600;
+  font-size: 15px;
+  letter-spacing: -0.01em;
+}
+.brand-mark {
+  width: 26px; height: 26px;
+  border-radius: 6px;
+  background: var(--accent);           /* accent use #1 */
+  color: #fff;
+  display: grid;
+  place-items: center;
+  font-weight: 600;
+  font-size: 13px;
+  font-family: var(--font-mono);
+}
+
+.wf-tabs {
+  display: flex;
+  gap: 4px;
+  border-left: 1px solid var(--border);
+  padding-left: 16px;
+  height: 100%;
+  align-items: stretch;
+}
+.wf-tab {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 14px;
+  border-bottom: 2px solid transparent;
+  color: var(--muted);
+  font-weight: 550;
+  font-size: 13px;
+  cursor: default;
+  white-space: nowrap;
+}
+.wf-tab.active {
+  color: var(--fg);
+  border-bottom-color: var(--fg);
+}
+.wf-tab .status-dot { width: 7px; height: 7px; }
+
+.topbar-right {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.toggle-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 550;
+  color: var(--fg-2);
+}
+.toggle-label-caps {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted-2);
+}
+
+.switch {
+  width: 34px; height: 19px;
+  border-radius: 999px;
+  background: var(--border-strong);
+  position: relative;
+  cursor: pointer;
+  transition: background .15s;
+}
+.switch::after {
+  content: '';
+  position: absolute;
+  top: 2.5px; left: 2.5px;
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  background: #fff;
+  transition: transform .15s;
+}
+.switch.on { background: var(--success); }
+.switch.on::after { transform: translateX(15px); }
+
+.btn {
+  font-family: var(--font-ui);
+  font-size: 13px;
+  font-weight: 550;
+  letter-spacing: 0.02em;
+  padding: 7px 14px;
+  border-radius: 6px;
+  border: 1px solid var(--border-strong);
+  background: var(--surface);
+  color: var(--fg);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+.btn svg { flex: none; }
+.btn-primary {
+  background: var(--accent);            /* accent use #2 */
+  border-color: var(--accent);
+  color: #fff;
+}
+
+/* ============ SIDEBAR ============ */
+.sidebar {
+  grid-area: sidebar;
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  overflow-y: auto;
+  padding: 14px 10px 24px;
+}
+.side-title {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-weight: 500;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--muted-2);
+  padding: 6px 8px 8px;
+}
+.side-section { margin-bottom: 18px; }
+
+.node-lib-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 8px;
+  border-radius: 6px;
+  cursor: grab;
+  color: var(--fg-2);
+  font-weight: 500;
+  font-size: 13px;
+  transition: background .12s;
+}
+.node-lib-item:hover { background: var(--surface-2); }
+.node-lib-item .n-icon {
+  width: 28px; height: 28px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  display: grid;
+  place-items: center;
+  color: var(--muted);
+  flex: none;
+}
+.node-lib-item small {
+  display: block;
+  font-size: 11px;
+  color: var(--muted-2);
+  font-weight: 400;
+  letter-spacing: 0.01em;
+}
+
+/* ============ CANVAS ============ */
+.canvas-wrap {
+  grid-area: canvas;
+  overflow: auto;
+  background: var(--canvas);
+  background-image: radial-gradient(var(--dot) 1px, transparent 1px);
+  background-size: 22px 22px;
+  position: relative;
+}
+
+.wf-label {
+  position: absolute;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted-2);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.wf-label::after {
+  content: '';
+  width: 120px;
+  height: 1px;
+  background: var(--border-strong);
+}
+
+.node {
+  position: absolute;
+  width: 212px;
+  background: var(--surface);
+  border: 1px solid var(--border-strong);
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(20,20,30,.07), 0 4px 10px rgba(20,20,30,.05);
+  padding: 9px 12px;
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+.node-icon {
+  width: 30px; height: 30px;
+  border-radius: 7px;
+  display: grid;
+  place-items: center;
+  flex: none;
+  border: 1px solid var(--border);
+}
+.node-icon.t-trigger { background: var(--warn-soft); color: var(--warn); }
+.node-icon.t-schedule { background: var(--warn-soft); color: var(--warn); }
+.node-icon.t-sheet   { background: var(--success-soft); color: var(--success); }
+.node-icon.t-line    { background: var(--accent-soft); color: var(--accent); }
+.node-icon.t-ai      { background: var(--surface-2); color: var(--fg-2); }
+.node-icon.t-if      { background: var(--info-soft-bg, #e9f0f7); color: var(--info); }
+
+.node-body { min-width: 0; flex: 1; }
+.node-name {
+  font-weight: 550;
+  font-size: 12.5px;
+  line-height: 1.35;
+  color: var(--fg);
+}
+.node-sub {
+  font-size: 10.5px;
+  color: var(--muted);
+  margin-top: 3px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.node-sub time { font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.01em; }
+
+.status-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  display: inline-block;
+  flex: none;
+}
+.status-dot.ok   { background: var(--success); }
+.status-dot.err  { background: var(--danger); }
+.status-dot.idle { background: var(--border-strong); }
+
+.node-port {
+  position: absolute;
+  top: 50%;
+  width: 9px; height: 9px;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 2px solid var(--border-strong);
+  transform: translateY(-50%);
+}
+.port-in  { left: -5px; }
+.port-out { right: -5px; }
+
+.wires {
+  position: absolute;
+  top: 0; left: 0;
+  pointer-events: none;
+}
+.wires path { fill: none; stroke: var(--border-strong); stroke-width: 2; }
+.wires path.active { stroke: var(--success); stroke-opacity: .55; }
+.wires text {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  fill: var(--muted-2);
+}
+
+.minimap-hint {
+  position: sticky;
+  top: 0;
+  float: right;
+  margin: 10px 12px 0 auto;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.07em;
+  color: var(--muted-2);
+  text-transform: uppercase;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  padding: 3px 8px;
+}
+
+/* ============ EXECUTION LOG ============ */
+.logpanel {
+  grid-area: log;
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+.log-head {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 9px 16px;
+  border-bottom: 1px solid var(--border);
+}
+.log-head h2 {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+.log-head .chip {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--muted-2);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 2px 7px;
+}
+.log-head .spacer { margin-left: auto; }
+.log-filter {
+  font-size: 12px;
+  color: var(--muted);
+  display: flex;
+  gap: 4px;
+}
+.log-filter span {
+  padding: 3px 9px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 500;
+}
+.log-filter span.on { background: var(--surface-2); color: var(--fg); font-weight: 550; }
+
+.log-table {
+  flex: 1;
+  overflow-y: auto;
+  font-size: 12.5px;
+}
+.log-row {
+  display: grid;
+  grid-template-columns: 168px 1fr 200px 130px 92px 70px;
+  gap: 10px;
+  align-items: center;
+  padding: 7px 16px;
+  border-bottom: 1px solid var(--surface-2);
+}
+.log-row:hover { background: var(--canvas); }
+.log-row .ts { font-family: var(--font-mono); font-size: 11.5px; color: var(--fg-2); }
+.log-row .wf { font-weight: 550; color: var(--fg-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.log-row .node-cell { color: var(--muted); display: flex; align-items: center; gap: 7px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.log-row .node-cell svg { flex: none; color: var(--muted-2); }
+.log-row .dur { font-family: var(--font-mono); font-size: 11.5px; color: var(--muted); text-align: right; }
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  font-weight: 550;
+  letter-spacing: 0.01em;
+  border-radius: 4px;
+  padding: 2px 8px;
+  justify-self: start;
+}
+.badge.ok  { background: var(--success-soft); color: var(--success); }
+.badge.err { background: var(--danger-soft); color: var(--danger); }
+
+.retry-cell { color: var(--muted-2); font-size: 11px; font-family: var(--font-mono); }
+
+/* scrollbar */
+::-webkit-scrollbar { width: 9px; height: 9px; }
+::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+
+@media (max-width: 980px) {
+  .app {
+    grid-template-columns: 200px 1fr;
+  }
+  .log-row { grid-template-columns: 150px 1fr 120px 80px 60px; }
+  .log-row .node-cell, .log-row .retry-cell { display: none; }
+}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- ================= TOP BAR ================= -->
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-mark">n8</div>
+      <span>ระบบอัตโนมัติ ร้านกาแฟ</span>
+    </div>
+
+    <nav class="wf-tabs">
+      <div class="wf-tab active">
+        <span class="status-dot ok"></span>
+        WF-01 · รับออเดอร์ → LINE แจ้งทีม
+      </div>
+      <div class="wf-tab">
+        <span class="status-dot ok"></span>
+        WF-02 · รายงานยอดขายเช้า
+      </div>
+    </nav>
+
+    <div class="topbar-right">
+      <div class="toggle-group">
+        <span class="toggle-label-caps">WF-01</span>
+        <div class="switch on" role="switch" aria-checked="true" aria-label="เปิดใช้งาน WF-01"></div>
+      </div>
+      <div class="toggle-group">
+        <span class="toggle-label-caps">WF-02</span>
+        <div class="switch on" role="switch" aria-checked="true" aria-label="เปิดใช้งาน WF-02"></div>
+      </div>
+      <button class="btn">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+        Add node
+      </button>
+      <button class="btn btn-primary">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+        Save &amp; Activate
+      </button>
+    </div>
+  </header>
+
+  <!-- ================= SIDEBAR ================= -->
+  <aside class="sidebar">
+    <div class="side-section">
+      <div class="side-title">Node Library</div>
+
+      <div class="node-lib-item">
+        <div class="n-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
+        <div>Trigger<small>Webhook / รับอีเวนต์</small></div>
+      </div>
+      <div class="node-lib-item">
+        <div class="n-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15.5 14"/></svg></div>
+        <div>Schedule<small>Cron / ตั้งเวลาทำงาน</small></div>
+      </div>
+      <div class="node-lib-item">
+        <div class="n-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/><line x1="9" y1="3" x2="9" y2="21"/></svg></div>
+        <div>Google Sheets<small>อ่าน / เขียนสเปรดชีต</small></div>
+      </div>
+      <div class="node-lib-item">
+        <div class="n-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.5 8.5 0 0 1-8.5 8.5c-1.4 0-2.8-.3-4-.9L3 21l1.9-5.5A8.5 8.5 0 1 1 21 11.5z"/></svg></div>
+        <div>LINE Notify<small>ส่งข้อความเข้ากลุ่ม</small></div>
+      </div>
+      <div class="node-lib-item">
+        <div class="n-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="14" x2="23" y2="14"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="14" x2="4" y2="14"/></svg></div>
+        <div>OpenAI / Gemini<small>LLM สรุป / เขียนข้อความ</small></div>
+      </div>
+      <div class="node-lib-item">
+        <div class="n-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="22 6 12 13 2 6"/></svg></div>
+        <div>Email<small>ส่งอีเมลแจ้งเตือน</small></div>
+      </div>
+      <div class="node-lib-item">
+        <div class="n-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><line x1="3" y1="12" x2="21" y2="12"/><ellipse cx="12" cy="12" rx="4" ry="9"/></svg></div>
+        <div>HTTP Request<small>เรียก API ภายนอก</small></div>
+      </div>
+      <div class="node-lib-item">
+        <div class="n-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><line x1="6" y1="3" x2="6" y2="15"/><circle cx="6" cy="18" r="3"/><line x1="18" y1="9" x2="18" y2="21"/><circle cx="18" cy="6" r="3"/></svg></div>
+        <div>IF<small>เงื่อนไข แยกทางเดิน</small></div>
+      </div>
+      <div class="node-lib-item">
+        <div class="n-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><polygon points="22 3 2 3 10 12.5 10 19 14 21 14 12.5 22 3"/></svg></div>
+        <div>Filter<small>กรองข้อมูล</small></div>
+      </div>
+    </div>
+
+    <div class="side-section">
+      <div class="side-title">Credentials</div>
+      <div class="node-lib-item">
+        <div class="n-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+        <div>Google OAuth<small>เชื่อมต่อแล้ว · 14 ส.ค. 68</small></div>
+      </div>
+      <div class="node-lib-item">
+        <div class="n-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+        <div>LINE Token<small>เชื่อมต่อแล้ว · 2 ส.ค. 68</small></div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ================= CANVAS ================= -->
+  <main class="canvas-wrap" id="canvas">
+    <div class="minimap-hint">Canvas 1280 × 1180 · 100%</div>
+
+    <!-- ===== WORKFLOW 1 ===== -->
+    <div class="wf-label" style="left:36px; top:28px;">Workflow 01 — Order to LINE</div>
+
+    <svg class="wires" width="1280" height="1180" style="left:0; top:0;">
+      <!-- WF1 wires: node(212w, ~56h) rows at y=76 -->
+      <path class="active" d="M 256 104 C 306 104, 306 104, 356 104"/>
+      <path class="active" d="M 568 104 C 618 104, 618 104, 668 104"/>
+      <path class="active" d="M 880 104 C 930 104, 930 104, 980 104"/>
+      <!-- WF2 wires -->
+      <path class="active" d="M 256 436 C 306 436, 306 436, 356 436"/>
+      <path class="active" d="M 568 436 C 618 436, 618 436, 668 436"/>
+      <path class="active" d="M 880 436 C 930 436, 930 436, 980 436"/>
+      <!-- labels -->
+      <text x="300" y="96">orders[]</text>
+      <text x="612" y="96">checked</text>
+      <text x="924" y="96">notify</text>
+      <text x="300" y="428">salesRows</text>
+      <text x="612" y="428">prompt</text>
+      <text x="924" y="428">report</text>
+    </svg>
+
+    <!-- WF1 node 1 -->
+    <div class="node" style="left:40px; top:76px;">
+      <div class="node-port port-out"></div>
+      <div class="node-icon t-trigger">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+      </div>
+      <div class="node-body">
+        <div class="node-name">รับออเดอร์ใหม่</div>
+        <div class="node-sub"><span class="status-dot ok"></span><time>ล่าสุด 14:32:07</time></div>
+      </div>
+    </div>
+
+    <!-- WF1 node 2 -->
+    <div class="node" style="left:356px; top:76px;">
+      <div class="node-port port-in"></div><div class="node-port port-out"></div>
+      <div class="node-icon t-sheet">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="9" x2="9" y2="21"/></svg>
+      </div>
+      <div class="node-body">
+        <div class="node-name">บันทึกลง Google Sheets</div>
+        <div class="node-sub"><span class="status-dot ok"></span><time>ล่าสุด 14:32:08</time></div>
+      </div>
+    </div>
+
+    <!-- WF1 node 3 -->
+    <div class="node" style="left:672px; top:76px;">
+      <div class="node-port port-in"></div><div class="node-port port-out"></div>
+      <div class="node-icon t-if">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><line x1="6" y1="3" x2="6" y2="15"/><circle cx="6" cy="18" r="3"/><line x1="18" y1="9" x2="18" y2="21"/><circle cx="18" cy="6" r="3"/></svg>
+      </div>
+      <div class="node-body">
+        <div class="node-name">ตรวจสอบสถานะ</div>
+        <div class="node-sub"><span class="status-dot ok"></span><time>ล่าสุด 14:32:09</time></div>
+      </div>
+    </div>
+
+    <!-- WF1 node 4 -->
+    <div class="node" style="left:988px; top:76px;">
+      <div class="node-port port-in"></div>
+      <div class="node-icon t-line">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.5 8.5 0 0 1-8.5 8.5c-1.4 0-2.8-.3-4-.9L3 21l1.9-5.5A8.5 8.5 0 1 1 21 11.5z"/></svg>
+      </div>
+      <div class="node-body">
+        <div class="node-name">LINE แจ้งทีม</div>
+        <div class="node-sub"><span class="status-dot ok"></span><time>ล่าสุด 14:32:09</time></div>
+      </div>
+    </div>
+
+    <!-- ===== WORKFLOW 2 ===== -->
+    <div class="wf-label" style="left:36px; top:356px;">Workflow 02 — Morning Sales Report</div>
+
+    <div class="node" style="left:40px; top:404px;">
+      <div class="node-port port-out"></div>
+      <div class="node-icon t-schedule">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15.5 14"/></svg>
+      </div>
+      <div class="node-body">
+        <div class="node-name">ทุกเช้า 8:00</div>
+        <div class="node-sub"><span class="status-dot ok"></span><time>cron 0 8 * * *</time></div>
+      </div>
+    </div>
+
+    <div class="node" style="left:356px; top:404px;">
+      <div class="node-port port-in"></div><div class="node-port port-out"></div>
+      <div class="node-icon t-sheet">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="9" x2="9" y2="21"/></svg>
+      </div>
+      <div class="node-body">
+        <div class="node-name">สรุปยอดขายประจำวัน</div>
+        <div class="node-sub"><span class="status-dot ok"></span><time>ล่าสุด 08:00:01</time></div>
+      </div>
+    </div>
+
+    <div class="node" style="left:672px; top:404px;">
+      <div class="node-port port-in"></div><div class="node-port port-out"></div>
+      <div class="node-icon t-ai">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="14" x2="23" y2="14"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="14" x2="4" y2="14"/></svg>
+      </div>
+      <div class="node-body">
+        <div class="node-name">AI เขียนรายงาน</div>
+        <div class="node-sub"><span class="status-dot ok"></span><time>Gemini 2.5 · 2.1s</time></div>
+      </div>
+    </div>
+
+    <div class="node" style="left:988px; top:404px;">
+      <div class="node-port port-in"></div>
+      <div class="node-icon t-line">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.5 8.5 0 0 1-8.5 8.5c-1.4 0-2.8-.3-4-.9L3 21l1.9-5.5A8.5 8.5 0 1 1 21 11.5z"/></svg>
+      </div>
+      <div class="node-body">
+        <div class="node-name">ส่งไลน์เจ้าของร้าน</div>
+        <div class="node-sub"><span class="status-dot ok"></span><time>ล่าสุด 08:00:05</time></div>
+      </div>
+    </div>
+
+    <!-- WF2 sample output preview -->
+    <div class="node" style="left:40px; top:560px; width:520px; cursor:default;">
+      <div style="font-family:var(--font-mono); font-size:10.5px; letter-spacing:0.08em; text-transform:uppercase; color:var(--muted-2); margin-bottom:6px;">ตัวอย่างข้อความที่ AI ส่งเข้าไลน์ — 14 ส.ค. 2568 08:00</div>
+      <div style="background:var(--surface-2); border:1px solid var(--border); border-radius:8px; padding:10px 12px; font-size:12.5px; line-height:1.7; color:var(--fg-2);">
+        สรุปยอดขาย 13 ส.ค. 68<br>
+        ยอดขายรวม <b style="color:var(--fg);">฿38,420</b> (บิล 118 ใบ) · เพิ่มขึ้น 7.2% จากสัปดาห์ก่อน<br>
+        ขายดีสุด: ลาเต้เย็น 32 แก้ว, อเมริกาโน่ 27 แก้ว<br>
+        ต้องเฝ้า: เมล็ดคอลัมบิาเหลือ 4.2 กก. (พอ ~2 วัน) — สั่งเพิ่มได้เลยครับ
+      </div>
+    </div>
+  </main>
+
+  <!-- ================= EXECUTION LOG ================= -->
+  <section class="logpanel">
+    <div class="log-head">
+      <h2>Execution Log</h2>
+      <span class="chip">8 rows · 2026-08-14</span>
+      <div class="log-filter">
+        <span class="on">ทั้งหมด</span><span>สำเร็จ</span><span>ล้มเหลว</span>
+      </div>
+      <div class="spacer"></div>
+      <span class="chip">Avg 412 ms</span>
+      <span class="chip">Success rate 87.5%</span>
+    </div>
+    <div class="log-table">
+      <div class="log-row">
+        <span class="ts">2026-08-14 14:32:07</span>
+        <span class="wf">WF-01 รับออเดอร์ → LINE แจ้งทีม</span>
+        <span class="node-cell"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>รับออเดอร์ใหม่</span>
+        <span class="badge ok"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>สำเร็จ</span>
+        <span class="dur">126 ms</span>
+        <span class="retry-cell">—</span>
+      </div>
+      <div class="log-row">
+        <span class="ts">2026-08-14 14:31:44</span>
+        <span class="wf">WF-01 รับออเดอร์ → LINE แจ้งทีม</span>
+        <span class="node-cell"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M21 11.5a8.5 8.5 0 0 1-8.5 8.5c-1.4 0-2.8-.3-4-.9L3 21l1.9-5.5A8.5 8.5 0 1 1 21 11.5z"/></svg>LINE แจ้งทีม</span>
+        <span class="badge ok"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>สำเร็จ</span>
+        <span class="dur">488 ms</span>
+        <span class="retry-cell">—</span>
+      </div>
+      <div class="log-row">
+        <span class="ts">2026-08-14 13:58:12</span>
+        <span class="wf">WF-01 รับออเดอร์ → LINE แจ้งทีม</span>
+        <span class="node-cell"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="9" x2="9" y2="21"/></svg>บันทึกลง Sheets</span>
+        <span class="badge err"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>ล้มเหลว</span>
+        <span class="dur">2,014 ms</span>
+        <span class="retry-cell">retry 1/3 ✓</span>
+      </div>
+      <div class="log-row">
+        <span class="ts">2026-08-14 12:15:36</span>
+        <span class="wf">WF-01 รับออเดอร์ → LINE แจ้งทีม</span>
+        <span class="node-cell"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><line x1="6" y1="3" x2="6" y2="15"/><circle cx="6" cy="18" r="3"/><line x1="18" y1="9" x2="18" y2="21"/><circle cx="18" cy="6" r="3"/></svg>ตรวจสอบสถานะ</span>
+        <span class="badge ok"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>สำเร็จ</span>
+        <span class="dur">94 ms</span>
+        <span class="retry-cell">—</span>
+      </div>
+      <div class="log-row">
+        <span class="ts">2026-08-14 11:47:02</span>
+        <span class="wf">WF-01 รับออเดอร์ → LINE แจ้งทีม</span>
+        <span class="node-cell"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>รับออเดอร์ใหม่</span>
+        <span class="badge ok"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>สำเร็จ</span>
+        <span class="dur">118 ms</span>
+        <span class="retry-cell">—</span>
+      </div>
+      <div class="log-row">
+        <span class="ts">2026-08-14 08:00:05</span>
+        <span class="wf">WF-02 รายงานยอดขายเช้า</span>
+        <span class="node-cell"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M21 11.5a8.5 8.5 0 0 1-8.5 8.5c-1.4 0-2.8-.3-4-.9L3 21l1.9-5.5A8.5 8.5 0 1 1 21 11.5z"/></svg>ส่งไลน์เจ้าของร้าน</span>
+        <span class="badge ok"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>สำเร็จ</span>
+        <span class="dur">512 ms</span>
+        <span class="retry-cell">—</span>
+      </div>
+      <div class="log-row">
+        <span class="ts">2026-08-14 08:00:03</span>
+        <span class="wf">WF-02 รายงานยอดขายเช้า</span>
+        <span class="node-cell"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/></svg>AI เขียนรายงาน</span>
+        <span class="badge ok"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>สำเร็จ</span>
+        <span class="dur">2,084 ms</span>
+        <span class="retry-cell">—</span>
+      </div>
+      <div class="log-row">
+        <span class="ts">2026-08-14 08:00:00</span>
+        <span class="wf">WF-02 รายงานยอดขายเช้า</span>
+        <span class="node-cell"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15.5 14"/></svg>ทุกเช้า 8:00 (cron)</span>
+        <span class="badge ok"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>สำเร็จ</span>
+        <span class="dur">61 ms</span>
+        <span class="retry-cell">—</span>
+      </div>
+    </div>
+  </section>
+
+</div>
+</body>
+</html>
