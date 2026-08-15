@@ -2,105 +2,693 @@
 <html lang="th">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Data Analysis + Dashboard | ตัวอย่างงาน — Soul Brews Studio</title>
-<meta name="description" content="ส่งไฟล์ Excel/CSV มา → รับ Dashboard ที่คลิกดูยอดขาย/แนวโน้มได้ทันที (Python/Pandas)">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>คอฟฟี่เชน กรุงเทพ — Sales Analytics Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;450;500;550;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:#0a0a12;color:#e5e7eb;line-height:1.6}
-.wrap{max-width:1100px;margin:0 auto;padding:24px}
-header{background:linear-gradient(135deg,#2563eb,#0a1f3d);padding:60px 24px 40px;text-align:center}
-header .badge{display:inline-block;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);border-radius:999px;padding:6px 18px;font-size:14px;margin-bottom:16px}
-header h1{font-size:2.2rem;color:#fff;margin-bottom:8px}
-header .sub{color:rgba(255,255,255,.85);font-size:1.05rem}
-.grid{display:grid;gap:20px;margin:32px 0}
-.g2{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
-.g3{grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
-.card{background:#13131f;border:1px solid #26264a;border-radius:14px;padding:20px}
-.card h3{color:#fff;font-size:1.05rem;margin-bottom:10px;display:flex;align-items:center;gap:8px}
-.card p,.card li{color:#9ca3af;font-size:.92rem}
-.card ul{list-style:none;margin-top:8px}
-.card li{padding:4px 0 4px 22px;position:relative}
-.card li::before{content:'✓';position:absolute;left:0;color:#34d399}
-.chat{background:#13131f;border:1px solid #26264a;border-radius:14px;padding:20px;max-width:420px;margin:0 auto}
-.msg{max-width:80%;padding:10px 14px;border-radius:14px;margin:6px 0;font-size:.9rem}
-.user{background:#374151;margin-left:auto;color:#fff}
-.bot{background:#1f2937;color:#d1d5db}
-.bot .btns{display:flex;gap:8px;margin-top:8px}
-.pbtn{border:1px solid #4b5563;border-radius:999px;padding:4px 12px;font-size:.78rem;color:#93c5fd;cursor:pointer}
-.msg .ts{display:block;font-size:.65rem;color:#6b7280;margin-top:4px}
-.mock{background:#fff;color:#111827;border-radius:14px;overflow:hidden;border:1px solid #26264a}
-.mock .bar{background:#f3f4f6;padding:8px 14px;display:flex;gap:6px;align-items:center;font-size:.75rem;color:#6b7280}
-.mock .dot{width:9px;height:9px;border-radius:50%}
-.mock .body{padding:22px}
-.mock h4{font-size:1.15rem;margin-bottom:6px}
-.mock .price{color:#059669;font-size:1.4rem;font-weight:700}
-.tag{display:inline-block;background:#ecfdf5;color:#047857;border-radius:6px;padding:2px 8px;font-size:.7rem;font-weight:600;margin:8px 4px 0 0}
-.wf{background:#0f0f1a;border:1px dashed #4b5563;border-radius:12px;padding:18px;font-family:ui-monospace,monospace;font-size:.82rem;color:#a5b4fc;overflow-x:auto;white-space:nowrap}
-.wf .node{display:inline-block;background:#1e1b4b;border:1px solid #4f46e5;border-radius:8px;padding:6px 12px;margin:4px 2px}
-.wf .arr{color:#6366f1}
-.chart{display:flex;align-items:flex-end;gap:12px;height:180px;padding:10px 0}
-.bar-ch{flex:1;background:linear-gradient(to top,#3b82f6,#60a5fa);border-radius:6px 6px 0 0;position:relative;min-width:28px}
-.bar-ch span{position:absolute;bottom:-22px;left:0;right:0;text-align:center;font-size:.68rem;color:#9ca3af}
-.bar-ch b{position:absolute;top:-20px;left:0;right:0;text-align:center;font-size:.7rem;color:#e5e7eb}
-.kpi{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:14px}
-.kpi .k{background:#0f0f1a;border:1px solid #26264a;border-radius:12px;padding:16px;text-align:center}
-.kpi .k .v{font-size:1.5rem;font-weight:700;color:#fff}
-.kpi .k .l{font-size:.72rem;color:#6b7280;margin-top:4px}
-table{width:100%;border-collapse:collapse;font-size:.85rem}
-th{background:#1e1b4b;color:#c7d2fe;text-align:left;padding:10px 12px}
-td{padding:10px 12px;border-bottom:1px solid #26264a;color:#9ca3af}
-td.g{color:#34d399}
-.price-box{background:linear-gradient(135deg,#2563eb,#0a1f3d);border-radius:16px;padding:28px;text-align:center;margin:32px auto;max-width:560px}
-.price-box .p{font-size:2.6rem;font-weight:800;color:#fff}
-.price-box .d{color:rgba(255,255,255,.85);margin-top:6px}
-.price-box a{display:inline-block;background:#fff;color:#111827;font-weight:700;border-radius:10px;padding:12px 32px;margin-top:16px;text-decoration:none}
-footer{text-align:center;padding:32px;color:#4b5563;font-size:.8rem}
-nav.tabs{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:24px 0 0}
-nav.tabs a{background:#13131f;border:1px solid #26264a;color:#9ca3af;text-decoration:none;border-radius:999px;padding:6px 14px;font-size:.8rem}
-nav.tabs a.cur{background:#2563eb;color:#fff;border-color:#2563eb}
-.toc{columns:2;gap:24px}
-.toc a{color:#93c5fd;text-decoration:none;display:block;padding:3px 0;font-size:.9rem}
-@media(max-width:700px){.toc{columns:1}}
+:root {
+  --bg: #f4f4f3;
+  --surface: #ffffff;
+  --surface-2: #f0efec;
+  --fg: #1f1e1b;
+  --fg-2: #3b3a35;
+  --muted: #6e6c64;
+  --muted-2: #a09d93;
+  --border: #e3e1dc;
+  --accent: #9a5b2e;              /* brand brown — max 2 uses */
+  --data: #3f7d6a;                /* chart teal — data ink, not accent */
+  --data-soft: #e2efe9;
+  --success: #2e7d4f;
+  --success-soft: #e9f4ed;
+  --danger: #c04a3d;
+  --danger-soft: #f8eae7;
+  --warn: #b07b1e;
+  --font-ui: 'IBM Plex Sans Thai', 'Noto Sans Thai', sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: var(--font-ui);
+  background: var(--bg);
+  color: var(--fg);
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+.shell { max-width: 1180px; margin: 0 auto; padding: 26px 24px 60px; }
+
+/* ============ HEADER + FILTER BAR ============ */
+.page-head {
+  display: flex;
+  align-items: flex-end;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+.page-head h1 {
+  font-size: 21px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+}
+.page-head .sub {
+  font-size: 12.5px;
+  color: var(--muted);
+  margin-top: 2px;
+}
+.page-head .updated {
+  margin-left: auto;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--muted-2);
+  letter-spacing: 0.03em;
+}
+
+.filterbar {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+.f-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted-2);
+}
+.select {
+  appearance: none;
+  font-family: var(--font-ui);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--fg);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  padding: 7px 30px 7px 11px;
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='%236e6c64' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+}
+.chip-select {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+}
+.chip {
+  font-size: 12.5px;
+  font-weight: 500;
+  padding: 5px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--muted);
+  cursor: pointer;
+}
+.chip.on {
+  background: var(--fg);
+  border-color: var(--fg);
+  color: #fff;
+  font-weight: 550;
+}
+.filterbar .spacer { margin-left: auto; }
+.btn-export {
+  font-family: var(--font-ui);
+  font-size: 13px;
+  font-weight: 550;
+  letter-spacing: 0.02em;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 15px;
+  border-radius: 7px;
+  border: 1px solid var(--accent);      /* accent use #1 */
+  background: var(--accent);
+  color: #fff;
+  cursor: pointer;
+}
+
+/* ============ KPI CARDS ============ */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 12px;
+  margin-bottom: 14px;
+}
+.kpi {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 13px 15px;
+}
+.kpi .k-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 550;
+  color: var(--muted);
+  letter-spacing: 0.01em;
+}
+.kpi .k-label svg { color: var(--muted-2); flex: none; }
+.kpi .k-value {
+  font-size: 24px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin-top: 4px;
+  line-height: 1.2;
+  font-variant-numeric: tabular-nums;
+}
+.kpi .k-delta {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11.5px;
+  font-weight: 550;
+  margin-top: 5px;
+  border-radius: 4px;
+  padding: 1.5px 7px;
+}
+.kpi .k-delta.up   { background: var(--success-soft); color: var(--success); }
+.kpi .k-delta.down { background: var(--danger-soft); color: var(--danger); }
+.kpi .k-delta.flat { background: var(--surface-2); color: var(--muted); }
+.k-delta span.note { font-weight: 400; color: var(--muted); font-size: 11px; margin-left: 2px; }
+
+/* ============ CHART CARDS ============ */
+.grid-2 {
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+.grid-2b {
+  display: grid;
+  grid-template-columns: 2fr 3fr;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 16px 18px;
+}
+.card-head {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+.card-head h2 { font-size: 14.5px; font-weight: 600; letter-spacing: 0.01em; }
+.card-head .hint { font-size: 11.5px; color: var(--muted-2); }
+.card-head .right { margin-left: auto; font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted-2); }
+
+/* --- line chart --- */
+.linechart-wrap { position: relative; }
+.linechart { width: 100%; height: auto; display: block; }
+.lc-grid { stroke: var(--border); stroke-width: 1; }
+.lc-grid-line { stroke: var(--border); stroke-dasharray: 3 4; stroke-width: 1; }
+.lc-area { fill: var(--data-soft); }
+.lc-line { fill: none; stroke: var(--data); stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.lc-dot { fill: #fff; stroke: var(--data); stroke-width: 2; }
+.lc-label {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  fill: var(--muted-2);
+  letter-spacing: 0.02em;
+}
+.lc-val {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  font-weight: 500;
+  fill: var(--fg-2);
+}
+.lc-yearmark {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  fill: var(--muted-2);
+  letter-spacing: 0.08em;
+}
+
+/* --- bar charts --- */
+.hbar-row {
+  display: grid;
+  grid-template-columns: 96px 1fr 74px;
+  gap: 10px;
+  align-items: center;
+  padding: 6px 0;
+}
+.hbar-row .name { font-size: 13px; font-weight: 500; color: var(--fg-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.hbar-track { height: 14px; background: var(--surface-2); border-radius: 4px; overflow: hidden; }
+.hbar-fill { height: 100%; background: var(--data); border-radius: 4px; }
+.hbar-fill.dim { background: #9db8ae; }
+.hbar-row .val {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  color: var(--fg-2);
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+.hbar-row .val small { color: var(--success); font-size: 10px; margin-left: 3px; }
+
+/* --- heatmap --- */
+.heatmap-scroll { overflow-x: auto; }
+.heatmap {
+  display: grid;
+  grid-template-columns: 44px repeat(12, minmax(26px, 1fr));
+  gap: 4px;
+  min-width: 440px;
+}
+.hm-cell {
+  height: 24px;
+  border-radius: 4px;
+  background: var(--data);
+}
+.hm-label {
+  font-size: 10.5px;
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  font-weight: 500;
+}
+.hm-x {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  color: var(--muted-2);
+  text-align: center;
+  padding-top: 2px;
+}
+.hm-legend {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 12px;
+  font-size: 11px;
+  color: var(--muted);
+}
+.hm-legend .sw {
+  width: 16px; height: 11px;
+  border-radius: 3px;
+  display: inline-block;
+}
+
+/* --- insights --- */
+.insight {
+  display: flex;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--surface-2);
+}
+.insight:last-child { border-bottom: none; padding-bottom: 2px; }
+.insight .i-icon {
+  width: 32px; height: 32px;
+  border-radius: 7px;
+  background: var(--surface-2);
+  display: grid;
+  place-items: center;
+  color: var(--fg-2);
+  flex: none;
+}
+.insight .i-icon.warn { background: #f7efdd; color: var(--warn); }
+.insight .i-icon.good { background: var(--success-soft); color: var(--success); }
+.insight h3 {
+  font-size: 13.5px;
+  font-weight: 550;
+  line-height: 1.45;
+}
+.insight p {
+  font-size: 12.5px;
+  color: var(--muted);
+  margin-top: 3px;
+  line-height: 1.6;
+}
+.insight p b { color: var(--fg-2); font-weight: 600; }
+.insight .i-tag {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--muted-2);
+  margin-top: 5px;
+}
+
+.footer-note {
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted-2);
+  margin-top: 22px;
+}
+
+@media (max-width: 900px) {
+  .grid-2, .grid-2b { grid-template-columns: 1fr; }
+}
 </style>
 </head>
 <body>
-<header>
-  <div class="badge">ตัวอย่างผลงาน — เริ่มต้น ฿1,500</div>
-  <h1>Data Analysis + Dashboard</h1>
-  <div class="sub">ส่งไฟล์ Excel/CSV มา → รับ Dashboard ที่คลิกดูยอดขาย/แนวโน้มได้ทันที (Python/Pandas)</div>
-  <nav class="tabs"><a class="" href="chatbot-basic.html">Chatbot Basic ฿2K</a><a class="" href="chatbot-standard.html">Chatbot Standard ฿5K</a><a class="" href="chatbot-premium.html">Chatbot Premium ฿12K</a><a class="" href="web-basic.html">เว็บ Basic ฿3K</a><a class="" href="web-standard.html">เว็บ Standard ฿8K</a><a class="" href="web-premium.html">เว็บ Premium ฿20K</a><a class="" href="automation-basic.html">Automation Basic ฿3K</a><a class="" href="automation-standard.html">Automation Standard ฿7K</a><a class="" href="automation-premium.html">Automation Premium ฿15K</a><a class="" href="seo-sample.html">SEO Content ฿400</a><a class="cur" href="data-dashboard.html">Data Dashboard ฿1.5K</a></nav>
-</header>
-<div class="wrap">
+<div class="shell">
 
-<div class="mock">
-<div class="bar"><span class="dot" style="background:#ef4444"></span><span class="dot" style="background:#f59e0b"></span><span class="dot" style="background:#22c55e"></span>&nbsp; 📊 sales-dashboard.html — เปิดได้ทุกเบราว์เซอร์</div>
-<div class="body" style="background:#f8fafc">
-<div class="kpi">
-<div class="k" style="border-color:#dbeafe"><div class="v" style="color:#1d4ed8">฿1.24M</div><div class="l">ยอดขายปีนี้ (+18%)</div></div>
-<div class="k" style="border-color:#dbeafe"><div class="v" style="color:#1d4ed8">3,421</div><div class="l">ออเดอร์</div></div>
-<div class="k" style="border-color:#dbeafe"><div class="v" style="color:#1d4ed8">฿362</div><div class="l">ยอดเฉลี่ย/ออเดอร์</div></div>
-<div class="k" style="border-color:#dbeafe"><div class="v" style="color:#1d4ed8">4.7⭐</div><div class="l">คะแนนรีวิว</div></div>
-</div>
-<div class="chart" style="margin-top:18px">
-<div class="bar-ch" style="height:40%"><b>720K</b><span>Q1</span></div>
-<div class="bar-ch" style="height:55%"><b>980K</b><span>Q2</span></div>
-<div class="bar-ch" style="height:75%"><b>1.3M</b><span>Q3</span></div>
-<div class="bar-ch" style="height:95%"><b>1.7M</b><span>Q4</span></div>
-</div>
-</div></div>
-<div class="grid g3" style="margin-top:28px">
-  <div class="card"><h3>📥 ส่งอะไรมาก็ได้</h3><ul><li>Excel / CSV / Google Sheets</li><li>ฐานข้อมูล (export)</li><li>ไม่ต้องจัดรูปแบบก่อนส่ง</li></ul></div>
-  <div class="card"><h3>🧹 ทำอะไรให้</h3><ul><li>ทำความสะอาดข้อมูล</li><li>วิเคราะห์แนวโน้ม/ผิดปกติ</li><li>สรุปเป็นภาษาที่อ่านเข้าใจ</li></ul></div>
-  <div class="card"><h3>📤 ได้รับอะไร</h3><ul><li>Dashboard แบบ Interactive</li><li>รายงานสรุป (PDF)</li><li>Source Code (Python) ถ้าต้องการ</li></ul></div>
-</div>
+  <!-- ============ HEADER ============ -->
+  <div class="page-head">
+    <div>
+      <h1>คอฟฟี่เชน กรุงเทพ — Sales Analytics</h1>
+      <div class="sub">แดชบอร์ดสรุปยอดขายทั้ง 5 สาขา · อัตโนมัติจากข้อมูล POS รายชั่วโมง</div>
+    </div>
+    <div class="updated">DATA AS OF 2026-08-14 23:59 · ICT</div>
+  </div>
 
-<div class="price-box">
-  <div class="p">฿1,500 ขึ้นไป</div>
-  <div class="d">ส่งมอบ 2–4 วัน ตามปริมาณข้อมูล · แก้ไขได้ 2 ครั้ง · ข้อมูลของคุณถูกลบหลังส่งมอบ</div>
-  <a href="https://fastwork.co/user/bugtap" target="_blank">สั่งงานใน Fastwork →</a>
+  <!-- ============ FILTER BAR ============ -->
+  <div class="filterbar">
+    <span class="f-label">ช่วงวันที่</span>
+    <select class="select" aria-label="ช่วงวันที่">
+      <option>12 เดือนล่าสุด (ก.ย. 67 – ส.ค. 68)</option>
+      <option>3 เดือนล่าสุด</option>
+      <option>เดือนนี้</option>
+      <option>สัปดาห์นี้</option>
+      <option>เลือกช่วงเอง…</option>
+    </select>
+    <span class="f-label">สาขา</span>
+    <div class="chip-select">
+      <span class="chip on">ทั้งหมด</span>
+      <span class="chip">สยาม</span>
+      <span class="chip">ลาดพร้าว</span>
+      <span class="chip">อ่อนนุช</span>
+      <span class="chip">พระราม 9</span>
+      <span class="chip">ทองหล่อ</span>
+    </div>
+    <div class="spacer"></div>
+    <button class="btn-export">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      Export CSV
+    </button>
+  </div>
+
+  <!-- ============ KPI CARDS ============ -->
+  <div class="kpi-grid">
+    <div class="kpi">
+      <div class="k-label">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        ยอดขายรวม
+      </div>
+      <div class="k-value">฿4.2M</div>
+      <span class="k-delta up"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>+18% <span class="note">YoY</span></span>
+    </div>
+    <div class="kpi">
+      <div class="k-label">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+        จำนวนออเดอร์
+      </div>
+      <div class="k-value">12,847</div>
+      <span class="k-delta up"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>+11% <span class="note">YoY</span></span>
+    </div>
+    <div class="kpi">
+      <div class="k-label">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+        ยอดเฉลี่ย/บิล
+      </div>
+      <div class="k-value">฿327</div>
+      <span class="k-delta up"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>+6% <span class="note">YoY</span></span>
+    </div>
+    <div class="kpi">
+      <div class="k-label">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg>
+        ลูกค้าใหม่
+      </div>
+      <div class="k-value">1,204</div>
+      <span class="k-delta up"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>+9% <span class="note">MoM</span></span>
+    </div>
+    <div class="kpi">
+      <div class="k-label">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9"/><polyline points="3 4 3 12 9 12"/><path d="M12 7v5l3 2"/></svg>
+        ลูกค้ากลับมาซื้อ
+      </div>
+      <div class="k-value">68%</div>
+      <span class="k-delta up"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>+4 pts</span>
+    </div>
+    <div class="kpi">
+      <div class="k-label">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        คะแนนรีวิวเฉลี่ย
+      </div>
+      <div class="k-value">4.7<span style="font-size:13px; color:var(--muted-2); font-weight:500;">/5</span></div>
+      <span class="k-delta flat">n = 3,412 <span class="note">รีวิว</span></span>
+    </div>
+  </div>
+
+  <!-- ============ REVENUE TREND + BRANCH ============ -->
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-head">
+        <h2>แนวโน้มยอดขายรายเดือน</h2>
+        <span class="hint">ล้านบาท · ทุกสาขา</span>
+        <span class="right">Sep 67 – Aug 68</span>
+      </div>
+      <div class="linechart-wrap">
+        <svg class="linechart" viewBox="0 0 620 230" role="img" aria-label="กราฟเส้นยอดขายรายเดือน 12 เดือนล่าสุด">
+          <!-- gridlines -->
+          <line class="lc-grid-line" x1="46" y1="30"  x2="600" y2="30"/>
+          <line class="lc-grid-line" x1="46" y1="75"  x2="600" y2="75"/>
+          <line class="lc-grid-line" x1="46" y1="120" x2="600" y2="120"/>
+          <line class="lc-grid-line" x1="46" y1="165" x2="600" y2="165"/>
+          <line class="lc-grid" x1="46" y1="195" x2="600" y2="195"/>
+          <!-- y labels -->
+          <text class="lc-label" x="8" y="33">450K</text>
+          <text class="lc-label" x="8" y="78">400K</text>
+          <text class="lc-label" x="8" y="123">350K</text>
+          <text class="lc-label" x="8" y="168">300K</text>
+          <text class="lc-label" x="8" y="198">250K</text>
+          <!-- year divider between Dec 67 / Jan 68 -->
+          <line x1="195" y1="22" x2="195" y2="195" stroke="var(--border)" stroke-dasharray="2 4"/>
+          <text class="lc-yearmark" x="60" y="16">พ.ศ. 2567</text>
+          <text class="lc-yearmark" x="204" y="16">พ.ศ. 2568</text>
+          <!-- area -->
+          <path class="lc-area" d="M60 138 L107 129 L154 143 L201 122 L248 116 L295 124 L342 96 L389 82 L436 90 L483 66 L530 52 L577 38 L577 195 L60 195 Z"/>
+          <!-- line -->
+          <path class="lc-line" d="M60 138 L107 129 L154 143 L201 122 L248 116 L295 124 L342 96 L389 82 L436 90 L483 66 L530 52 L577 38"/>
+          <!-- dots -->
+          <circle class="lc-dot" cx="60"  cy="138" r="3"/>
+          <circle class="lc-dot" cx="107" cy="129" r="3"/>
+          <circle class="lc-dot" cx="154" cy="143" r="3"/>
+          <circle class="lc-dot" cx="201" cy="122" r="3"/>
+          <circle class="lc-dot" cx="248" cy="116" r="3"/>
+          <circle class="lc-dot" cx="295" cy="124" r="3"/>
+          <circle class="lc-dot" cx="342" cy="96"  r="3"/>
+          <circle class="lc-dot" cx="389" cy="82"  r="3"/>
+          <circle class="lc-dot" cx="436" cy="90"  r="3"/>
+          <circle class="lc-dot" cx="483" cy="66"  r="3"/>
+          <circle class="lc-dot" cx="530" cy="52"  r="3"/>
+          <circle class="lc-dot" cx="577" cy="38"  r="3.5" stroke-width="2.6"/>
+          <!-- value callouts: peak + last -->
+          <text class="lc-val" x="487" y="55">421K</text>
+          <text class="lc-val" x="543" y="40" font-weight="600">452K</text>
+          <text class="lc-val" x="100" y="118">312K</text>
+          <!-- x labels -->
+          <text class="lc-label" x="50"  y="212" text-anchor="middle">ก.ย.</text>
+          <text class="lc-label" x="97"  y="212" text-anchor="middle">ต.ค.</text>
+          <text class="lc-label" x="144" y="212" text-anchor="middle">พ.ย.</text>
+          <text class="lc-label" x="191" y="212" text-anchor="middle">ธ.ค.</text>
+          <text class="lc-label" x="238" y="212" text-anchor="middle">ม.ค.</text>
+          <text class="lc-label" x="285" y="212" text-anchor="middle">ก.พ.</text>
+          <text class="lc-label" x="332" y="212" text-anchor="middle">มี.ค.</text>
+          <text class="lc-label" x="379" y="212" text-anchor="middle">เม.ย.</text>
+          <text class="lc-label" x="426" y="212" text-anchor="middle">พ.ค.</text>
+          <text class="lc-label" x="473" y="212" text-anchor="middle">มิ.ย.</text>
+          <text class="lc-label" x="520" y="212" text-anchor="middle">ก.ค.</text>
+          <text class="lc-label" x="567" y="212" text-anchor="middle">ส.ค.</text>
+        </svg>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <h2>เปรียบเทียบสาขา</h2>
+        <span class="hint">ยอดขาย 12 เดือน</span>
+        <span class="right">THB</span>
+      </div>
+      <div class="hbar-row">
+        <span class="name">สยาม</span>
+        <div class="hbar-track"><div class="hbar-fill" style="width:100%"></div></div>
+        <span class="val">1.12M <small>+22%</small></span>
+      </div>
+      <div class="hbar-row">
+        <span class="name">ลาดพร้าว</span>
+        <div class="hbar-track"><div class="hbar-fill dim" style="width:78%"></div></div>
+        <span class="val">874K <small>+9%</small></span>
+      </div>
+      <div class="hbar-row">
+        <span class="name">อ่อนนุช</span>
+        <div class="hbar-track"><div class="hbar-fill dim" style="width:71%"></div></div>
+        <span class="val">796K <small>+14%</small></span>
+      </div>
+      <div class="hbar-row">
+        <span class="name">พระราม 9</span>
+        <div class="hbar-track"><div class="hbar-fill dim" style="width:63%"></div></div>
+        <span class="val">704K <small>+6%</small></span>
+      </div>
+      <div class="hbar-row">
+        <span class="name">ทองหล่อ</span>
+        <div class="hbar-track"><div class="hbar-fill dim" style="width:58%"></div></div>
+        <span class="val">651K <small>-3%</small></span>
+      </div>
+      <div style="margin-top:14px; font-size:12px; color:var(--muted); border-top:1px solid var(--surface-2); padding-top:11px;">
+        สาขาสยามครองส่วนแบ่ง <b style="color:var(--fg-2);">27%</b> ของยอดรวม · สาขาทองหล่อ เป็นสาขาเดียวที่ติดลบ ต้องทบทวนโปรโมชันปลายไตรมาส
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ TOP PRODUCTS + HEATMAP ============ -->
+  <div class="grid-2b">
+    <div class="card">
+      <div class="card-head">
+        <h2>สินค้าขายดี 8 อันดับ</h2>
+        <span class="hint">จำนวนแก้ว/ชิ้น</span>
+        <span class="right">12 MO</span>
+      </div>
+      <div class="hbar-row">
+        <span class="name">ลาเต้</span>
+        <div class="hbar-track"><div class="hbar-fill" style="width:100%"></div></div>
+        <span class="val">3,412</span>
+      </div>
+      <div class="hbar-row">
+        <span class="name">อเมริกาโน่</span>
+        <div class="hbar-track"><div class="hbar-fill dim" style="width:91%"></div></div>
+        <span class="val">3,098</span>
+      </div>
+      <div class="hbar-row">
+        <span class="name">มัทฉะลาเต้</span>
+        <div class="hbar-track"><div class="hbar-fill dim" style="width:74%"></div></div>
+        <span class="val">2,521 <small>+41%</small></span>
+      </div>
+      <div class="hbar-row">
+        <span class="name">ครัวซองต์</span>
+        <div class="hbar-track"><div class="hbar-fill dim" style="width:69%"></div></div>
+        <span class="val">2,347</span>
+      </div>
+      <div class="hbar-row">
+        <span class="name">โกโก้เย็น</span>
+        <div class="hbar-track"><div class="hbar-fill dim" style="width:57%"></div></div>
+        <span class="val">1,943</span>
+      </div>
+      <div class="hbar-row">
+        <span class="name">เอสเปรสโซ</span>
+        <div class="hbar-track"><div class="hbar-fill dim" style="width:49%"></div></div>
+        <span class="val">1,664</span>
+      </div>
+      <div class="hbar-row">
+        <span class="name">ไททีมัทฉะปั่น</span>
+        <div class="hbar-track"><div class="hbar-fill dim" style="width:41%"></div></div>
+        <span class="val">1,402 <small>+38%</small></span>
+      </div>
+      <div class="hbar-row">
+        <span class="name">โกโก้ปั่น</span>
+        <div class="hbar-track"><div class="hbar-fill dim" style="width:36%"></div></div>
+        <span class="val">1,215</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <h2>แผนที่ความร้อนยอดขายรายชั่วโมง</h2>
+        <span class="hint">เข้ม = ยอดขายสูง · เฉลี่ย 12 สัปดาห์</span>
+        <span class="right">08:00–19:00</span>
+      </div>
+      <div class="heatmap-scroll">
+        <div class="heatmap">
+          <div></div>
+          <div class="hm-x">8</div><div class="hm-x">9</div><div class="hm-x">10</div><div class="hm-x">11</div><div class="hm-x">12</div><div class="hm-x">13</div><div class="hm-x">14</div><div class="hm-x">15</div><div class="hm-x">16</div><div class="hm-x">17</div><div class="hm-x">18</div><div class="hm-x">19</div>
+
+          <div class="hm-label">จันทร์</div>
+          <div class="hm-cell" style="opacity:.30"></div><div class="hm-cell" style="opacity:.45"></div><div class="hm-cell" style="opacity:.60"></div><div class="hm-cell" style="opacity:.78"></div><div class="hm-cell" style="opacity:.88"></div><div class="hm-cell" style="opacity:.55"></div><div class="hm-cell" style="opacity:.42"></div><div class="hm-cell" style="opacity:.25"></div><div class="hm-cell" style="opacity:.35"></div><div class="hm-cell" style="opacity:.62"></div><div class="hm-cell" style="opacity:.72"></div><div class="hm-cell" style="opacity:.40"></div>
+
+          <div class="hm-label">อังคาร</div>
+          <div class="hm-cell" style="opacity:.28"></div><div class="hm-cell" style="opacity:.42"></div><div class="hm-cell" style="opacity:.58"></div><div class="hm-cell" style="opacity:.75"></div><div class="hm-cell" style="opacity:.85"></div><div class="hm-cell" style="opacity:.52"></div><div class="hm-cell" style="opacity:.38"></div><div class="hm-cell" style="opacity:.22"></div><div class="hm-cell" style="opacity:.32"></div><div class="hm-cell" style="opacity:.58"></div><div class="hm-cell" style="opacity:.68"></div><div class="hm-cell" style="opacity:.38"></div>
+
+          <div class="hm-label">พุธ</div>
+          <div class="hm-cell" style="opacity:.32"></div><div class="hm-cell" style="opacity:.46"></div><div class="hm-cell" style="opacity:.62"></div><div class="hm-cell" style="opacity:.80"></div><div class="hm-cell" style="opacity:.90"></div><div class="hm-cell" style="opacity:.58"></div><div class="hm-cell" style="opacity:.44"></div><div class="hm-cell" style="opacity:.26"></div><div class="hm-cell" style="opacity:.36"></div><div class="hm-cell" style="opacity:.64"></div><div class="hm-cell" style="opacity:.74"></div><div class="hm-cell" style="opacity:.42"></div>
+
+          <div class="hm-label">พฤหัส</div>
+          <div class="hm-cell" style="opacity:.34"></div><div class="hm-cell" style="opacity:.48"></div><div class="hm-cell" style="opacity:.64"></div><div class="hm-cell" style="opacity:.82"></div><div class="hm-cell" style="opacity:.92"></div><div class="hm-cell" style="opacity:.60"></div><div class="hm-cell" style="opacity:.46"></div><div class="hm-cell" style="opacity:.28"></div><div class="hm-cell" style="opacity:.38"></div><div class="hm-cell" style="opacity:.66"></div><div class="hm-cell" style="opacity:.76"></div><div class="hm-cell" style="opacity:.44"></div>
+
+          <div class="hm-label">ศุกร์</div>
+          <div class="hm-cell" style="opacity:.38"></div><div class="hm-cell" style="opacity:.52"></div><div class="hm-cell" style="opacity:.68"></div><div class="hm-cell" style="opacity:.86"></div><div class="hm-cell" style="opacity:1"></div><div class="hm-cell" style="opacity:.66"></div><div class="hm-cell" style="opacity:.50"></div><div class="hm-cell" style="opacity:.30"></div><div class="hm-cell" style="opacity:.42"></div><div class="hm-cell" style="opacity:.74"></div><div class="hm-cell" style="opacity:.84"></div><div class="hm-cell" style="opacity:.52"></div>
+
+          <div class="hm-label">เสาร์</div>
+          <div class="hm-cell" style="opacity:.42"></div><div class="hm-cell" style="opacity:.58"></div><div class="hm-cell" style="opacity:.76"></div><div class="hm-cell" style="opacity:.90"></div><div class="hm-cell" style="opacity:.96"></div><div class="hm-cell" style="opacity:.72"></div><div class="hm-cell" style="opacity:.60"></div><div class="hm-cell" style="opacity:.40"></div><div class="hm-cell" style="opacity:.52"></div><div class="hm-cell" style="opacity:.80"></div><div class="hm-cell" style="opacity:.88"></div><div class="hm-cell" style="opacity:.58"></div>
+
+          <div class="hm-label">อาทิตย์</div>
+          <div class="hm-cell" style="opacity:.36"></div><div class="hm-cell" style="opacity:.54"></div><div class="hm-cell" style="opacity:.72"></div><div class="hm-cell" style="opacity:.84"></div><div class="hm-cell" style="opacity:.90"></div><div class="hm-cell" style="opacity:.70"></div><div class="hm-cell" style="opacity:.58"></div><div class="hm-cell" style="opacity:.38"></div><div class="hm-cell" style="opacity:.48"></div><div class="hm-cell" style="opacity:.70"></div><div class="hm-cell" style="opacity:.78"></div><div class="hm-cell" style="opacity:.50"></div>
+        </div>
+      </div>
+      <div class="hm-legend">
+        ต่ำ
+        <span class="sw" style="background:var(--data); opacity:.25"></span>
+        <span class="sw" style="background:var(--data); opacity:.50"></span>
+        <span class="sw" style="background:var(--data); opacity:.75"></span>
+        <span class="sw" style="background:var(--data); opacity:1"></span>
+        สูง · พีคคือวันศุกร์–เสาร์ ช่วง 11:00–12:00 และ 17:00–18:00
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ INSIGHTS ============ -->
+  <div class="card">
+    <div class="card-head">
+      <h2>3 ข้อค้นพบอัตโนมัติ (Auto-Generated Insights)</h2>
+      <span class="hint">สร้างโดยวิเคราะห์ข้อมูล 12 เดือนล่าสุด</span>
+      <span class="right">AI Summary</span>
+    </div>
+
+    <div class="insight">
+      <div class="i-icon good">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+      </div>
+      <div>
+        <h3>สาขาสยามโต 22% จากโปร Buy 1 Get 1</h3>
+        <p>การ์ดโปรโมชัน Buy 1 Get 1 เดือน มิ.ย.–ก.ค. 68 ดันยอดสาขาสยามขึ้น <b>+22% YoY</b> สูงสุดในทุกสาขา โดย 61% ของผู้ใช้โปรกลับมาซื้อซ้ำเต็มราคาภายใน 30 วัน — คุ้มต้นทุนโปรแน่นอน</p>
+        <span class="i-tag">Promotion Impact · Confidence 92%</span>
+      </div>
+    </div>
+
+    <div class="insight">
+      <div class="i-icon warn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+      </div>
+      <div>
+        <h3>ลูกค้าหายตอน 15:00–16:00 ทุกวัน</h3>
+        <p>ช่วง 15:00–16:00 ยอดต่ำสุดของวันแบบทุกสาขา (ต่ำกว่าค่าเฉลี่ย <b>-48%</b>) ทั้งที่มีคนเดินผ่านหน้าร้านปกติ — สันนิษฐานว่าพนักงานเปลี่ยนกะพอดี แนะนำทำ "Happy Hour แก้วเล็ก 45.-" เติมช่องว่างช่วงนี้</p>
+        <span class="i-tag">Traffic Gap · Confidence 87%</span>
+      </div>
+    </div>
+
+    <div class="insight">
+      <div class="i-icon">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+      </div>
+      <div>
+        <h3>มัทฉะเติบโตเร็วสุด 3 เดือนกลับมานี้</h3>
+        <p>มัทฉะลาเต้ +41% และไททีมัทฉะปั่น +38% เทียบปีก่อน แซงโกโก้ขึ้นเป็นอันดับ 3 แล้ว แนะนำเพิ่มพรีมิกซ์มัทฉะเกรดพิธีการใน Q4 และทดสอบมัทฉะเย็น "เกรดไฮ-คาเฟอีน" ที่สาขาสยามก่อนขยาย</p>
+        <span class="i-tag">Product Trend · Confidence 95%</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-note">คอฟฟี่เชน กรุงเทพ · Sales Analytics v2.4 · Refreshed daily 06:00 · Bangkok ICT</div>
 </div>
-</div>
-<footer>Soul Brews Studio — ตัวอย่างผลงานจริง · อัปเดต ส.ค. 2026 · demos/data-dashboard.html</footer>
 </body>
 </html>
