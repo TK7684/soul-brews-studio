@@ -2,108 +2,688 @@
 <html lang="th">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Full AI Automation System | ตัวอย่างงาน — Soul Brews Studio</title>
-<meta name="description" content="LINE + WhatsApp + Discord + CRM + Database + n8n + ดูแล 30 วัน — ระบบอัตโนมัติเต็มรูปแบบ">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ห้องควบคุมระบบ AI — แดชบอร์ดเชิงปฏิบัติการแบบหลายแพลตฟอร์ม</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:#0a0a12;color:#e5e7eb;line-height:1.6}
-.wrap{max-width:1100px;margin:0 auto;padding:24px}
-header{background:linear-gradient(135deg,#6366f1,#1e1b4b);padding:60px 24px 40px;text-align:center}
-header .badge{display:inline-block;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);border-radius:999px;padding:6px 18px;font-size:14px;margin-bottom:16px}
-header h1{font-size:2.2rem;color:#fff;margin-bottom:8px}
-header .sub{color:rgba(255,255,255,.85);font-size:1.05rem}
-.grid{display:grid;gap:20px;margin:32px 0}
-.g2{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
-.g3{grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
-.card{background:#13131f;border:1px solid #26264a;border-radius:14px;padding:20px}
-.card h3{color:#fff;font-size:1.05rem;margin-bottom:10px;display:flex;align-items:center;gap:8px}
-.card p,.card li{color:#9ca3af;font-size:.92rem}
-.card ul{list-style:none;margin-top:8px}
-.card li{padding:4px 0 4px 22px;position:relative}
-.card li::before{content:'✓';position:absolute;left:0;color:#34d399}
-.chat{background:#13131f;border:1px solid #26264a;border-radius:14px;padding:20px;max-width:420px;margin:0 auto}
-.msg{max-width:80%;padding:10px 14px;border-radius:14px;margin:6px 0;font-size:.9rem}
-.user{background:#374151;margin-left:auto;color:#fff}
-.bot{background:#1f2937;color:#d1d5db}
-.bot .btns{display:flex;gap:8px;margin-top:8px}
-.pbtn{border:1px solid #4b5563;border-radius:999px;padding:4px 12px;font-size:.78rem;color:#93c5fd;cursor:pointer}
-.msg .ts{display:block;font-size:.65rem;color:#6b7280;margin-top:4px}
-.mock{background:#fff;color:#111827;border-radius:14px;overflow:hidden;border:1px solid #26264a}
-.mock .bar{background:#f3f4f6;padding:8px 14px;display:flex;gap:6px;align-items:center;font-size:.75rem;color:#6b7280}
-.mock .dot{width:9px;height:9px;border-radius:50%}
-.mock .body{padding:22px}
-.mock h4{font-size:1.15rem;margin-bottom:6px}
-.mock .price{color:#059669;font-size:1.4rem;font-weight:700}
-.tag{display:inline-block;background:#ecfdf5;color:#047857;border-radius:6px;padding:2px 8px;font-size:.7rem;font-weight:600;margin:8px 4px 0 0}
-.wf{background:#0f0f1a;border:1px dashed #4b5563;border-radius:12px;padding:18px;font-family:ui-monospace,monospace;font-size:.82rem;color:#a5b4fc;overflow-x:auto;white-space:nowrap}
-.wf .node{display:inline-block;background:#1e1b4b;border:1px solid #4f46e5;border-radius:8px;padding:6px 12px;margin:4px 2px}
-.wf .arr{color:#6366f1}
-.chart{display:flex;align-items:flex-end;gap:12px;height:180px;padding:10px 0}
-.bar-ch{flex:1;background:linear-gradient(to top,#3b82f6,#60a5fa);border-radius:6px 6px 0 0;position:relative;min-width:28px}
-.bar-ch span{position:absolute;bottom:-22px;left:0;right:0;text-align:center;font-size:.68rem;color:#9ca3af}
-.bar-ch b{position:absolute;top:-20px;left:0;right:0;text-align:center;font-size:.7rem;color:#e5e7eb}
-.kpi{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:14px}
-.kpi .k{background:#0f0f1a;border:1px solid #26264a;border-radius:12px;padding:16px;text-align:center}
-.kpi .k .v{font-size:1.5rem;font-weight:700;color:#fff}
-.kpi .k .l{font-size:.72rem;color:#6b7280;margin-top:4px}
-table{width:100%;border-collapse:collapse;font-size:.85rem}
-th{background:#1e1b4b;color:#c7d2fe;text-align:left;padding:10px 12px}
-td{padding:10px 12px;border-bottom:1px solid #26264a;color:#9ca3af}
-td.g{color:#34d399}
-.price-box{background:linear-gradient(135deg,#6366f1,#1e1b4b);border-radius:16px;padding:28px;text-align:center;margin:32px auto;max-width:560px}
-.price-box .p{font-size:2.6rem;font-weight:800;color:#fff}
-.price-box .d{color:rgba(255,255,255,.85);margin-top:6px}
-.price-box a{display:inline-block;background:#fff;color:#111827;font-weight:700;border-radius:10px;padding:12px 32px;margin-top:16px;text-decoration:none}
-footer{text-align:center;padding:32px;color:#4b5563;font-size:.8rem}
-nav.tabs{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:24px 0 0}
-nav.tabs a{background:#13131f;border:1px solid #26264a;color:#9ca3af;text-decoration:none;border-radius:999px;padding:6px 14px;font-size:.8rem}
-nav.tabs a.cur{background:#6366f1;color:#fff;border-color:#6366f1}
-.toc{columns:2;gap:24px}
-.toc a{color:#93c5fd;text-decoration:none;display:block;padding:3px 0;font-size:.9rem}
-@media(max-width:700px){.toc{columns:1}}
+:root{
+  --bg:#0f0f0f;
+  --surface:#171716;
+  --surface-2:#1e1e1c;
+  --fg:#f0f0ee;
+  --muted:#9c9a93;
+  --border:#2a2a27;
+  --accent:#e8a33d;
+  --ok:#4cc38a;
+  --warn:#e0b04b;
+  --danger:#e5655e;
+  --info:#5b9dd9;
+  --line-green:#06c755;
+  --wa-green:#25d366;
+  --discord:#5865f2;
+  --radius:12px;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-font-smoothing:antialiased}
+body{
+  font-family:'IBM Plex Sans Thai','Inter',sans-serif;
+  background:var(--bg);color:var(--fg);
+  font-size:14px;line-height:1.55;
+  padding-bottom:56px;
+}
+.wrap{max-width:1280px;margin:0 auto;padding:0 18px}
+
+/* ---------- top bar ---------- */
+.topbar{
+  display:flex;align-items:center;gap:14px;flex-wrap:wrap;
+  padding:18px 0 16px;border-bottom:1px solid var(--border);margin-bottom:22px;
+}
+.brand{display:flex;align-items:center;gap:11px}
+.brand .logo{
+  width:38px;height:38px;border-radius:10px;background:var(--surface-2);
+  border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--accent);
+}
+.brand .t1{font-size:16px;font-weight:600;line-height:1.3}
+.brand .t2{font-size:12px;color:var(--muted)}
+.sys-status{
+  margin-left:auto;display:flex;align-items:center;gap:8px;flex-wrap:wrap;
+}
+.pill{
+  display:inline-flex;align-items:center;gap:7px;
+  border:1px solid var(--border);border-radius:99px;
+  padding:6px 14px;font-size:12px;font-weight:500;background:var(--surface);
+}
+.pill .dot{width:7px;height:7px;border-radius:50%;background:var(--ok);box-shadow:0 0 0 3px rgba(76,195,138,.15)}
+.pill.time{color:var(--muted)}
+.pill.live{letter-spacing:.06em;font-family:'Inter',sans-serif}
+.pill.live .dot{background:var(--accent);box-shadow:0 0 0 3px rgba(232,163,61,.18);animation:blink 2s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.45}}
+
+/* ---------- section headers ---------- */
+.sec{margin-bottom:10px;display:flex;align-items:center;gap:9px}
+.sec svg{color:var(--muted)}
+.sec h2{font-size:14px;font-weight:600;letter-spacing:.01em}
+.sec .hint{font-size:11.5px;color:var(--muted);margin-left:auto}
+.grid-platforms{margin-bottom:26px}
+
+/* ---------- platform cards ---------- */
+.plat-cards{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px;
+}
+.pcard{
+  background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+  padding:16px 16px 14px;position:relative;
+}
+.pcard .head{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.pcard .pic{
+  width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;color:#fff;flex:0 0 auto;
+}
+.pcard .pic.line{background:var(--line-green)}
+.pcard .pic.wa{background:var(--wa-green)}
+.pcard .pic.dc{background:var(--discord)}
+.pcard .pname{font-size:13.5px;font-weight:600;line-height:1.3}
+.pcard .psub{font-size:11px;color:var(--muted);display:flex;align-items:center;gap:5px}
+.pcard .psub .sdot{width:6px;height:6px;border-radius:50%;background:var(--ok)}
+.pcard .rows{display:flex;flex-direction:column;gap:7px;border-top:1px solid var(--border);padding-top:12px}
+.pcard .prow{display:flex;justify-content:space-between;font-size:12.5px}
+.pcard .prow .k{color:var(--muted)}
+.pcard .prow .v{font-weight:500;font-family:'Inter','IBM Plex Sans Thai',sans-serif}
+.pcard .prow .v.big{font-size:19px;font-weight:600}
+.pcard .spark{margin-top:10px;height:26px;display:flex;align-items:flex-end;gap:2.5px}
+.pcard .spark i{flex:1;background:var(--border);border-radius:2px 2px 0 0;opacity:.9}
+.pcard .spark i.on{background:currentColor}
+
+/* ---------- main grid ---------- */
+.cols{
+  display:grid;grid-template-columns:1.15fr .85fr;gap:12px;margin-bottom:26px;
+}
+@media(max-width:980px){.cols{grid-template-columns:1fr}}
+.cols>*{min-width:0}
+.panel{
+  background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+  overflow:hidden;
+}
+.panel .p-head{
+  padding:13px 16px;border-bottom:1px solid var(--border);
+  display:flex;align-items:center;gap:9px;
+}
+.panel .p-head h3{font-size:13px;font-weight:600}
+.panel .p-head .tag{
+  margin-left:auto;font-size:10.5px;color:var(--accent);
+  border:1px solid rgba(232,163,61,.35);border-radius:99px;padding:2px 10px;
+  display:flex;align-items:center;gap:5px;font-weight:500;
+}
+.panel .p-head .tag .dot{width:5px;height:5px;border-radius:50%;background:var(--accent);animation:blink 2s infinite}
+
+/* feed */
+.feed{display:flex;flex-direction:column}
+.feed-item{
+  display:flex;gap:11px;padding:12px 16px;border-bottom:1px solid var(--border);align-items:flex-start;
+}
+.feed-item:last-child{border-bottom:0}
+.feed-item .favatar{
+  width:32px;height:32px;border-radius:9px;background:var(--surface-2);border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;flex:0 0 auto;
+}
+.feed-item .favatar svg{width:15px;height:15px}
+.feed-item .favatar.line{color:var(--line-green)}
+.feed-item .favatar.wa{color:var(--wa-green)}
+.feed-item .favatar.dc{color:var(--discord)}
+.feed-item .fbody{flex:1;min-width:0}
+.feed-item .frow1{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.feed-item .fname{font-size:12.5px;font-weight:600}
+.feed-item .ftime{font-size:10.5px;color:var(--muted);font-family:'Inter',sans-serif}
+.feed-item .ftext{
+  font-size:12.5px;color:var(--fg);margin-top:2px;line-height:1.5;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;
+}
+.feed-item .ftags{display:flex;gap:6px;margin-top:6px;flex-wrap:wrap}
+.ftag{
+  font-size:10.5px;border-radius:6px;padding:2px 8px;font-weight:500;
+  display:inline-flex;align-items:center;gap:5px;
+}
+.ftag.order{background:rgba(76,195,138,.12);color:var(--ok)}
+.ftag.ask{background:rgba(91,157,217,.12);color:var(--info)}
+.ftag.complaint{background:rgba(229,101,94,.12);color:var(--danger)}
+.ftag.neutral{background:var(--surface-2);color:var(--muted)}
+.ftag b{font-family:'Inter',sans-serif;font-weight:600}
+.ftag.ans{background:rgba(76,195,138,.12);color:var(--ok)}
+.ftag.human{background:var(--surface-2);color:var(--fg);border:1px solid var(--border)}
+.ftag .cdot{width:5px;height:5px;border-radius:50%;background:currentColor}
+
+/* ---------- CRM table ---------- */
+.crm-scroll{overflow-x:auto}
+table.crm{width:100%;border-collapse:collapse;font-size:12.5px;min-width:560px}
+.crm th{
+  text-align:left;font-size:10.5px;font-weight:500;color:var(--muted);
+  letter-spacing:.07em;text-transform:uppercase;padding:9px 14px;border-bottom:1px solid var(--border);
+  font-family:'Inter','IBM Plex Sans Thai',sans-serif;white-space:nowrap;
+}
+.crm td{padding:10px 14px;border-bottom:1px solid var(--border);white-space:nowrap}
+.crm tr:last-child td{border-bottom:0}
+.crm .cust{display:flex;align-items:center;gap:9px}
+.crm .cavatar{
+  width:28px;height:28px;border-radius:50%;background:var(--surface-2);border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;flex:0 0 auto;
+}
+.crm .cname{font-weight:500;font-size:12.5px;line-height:1.3}
+.crm .csince{font-size:10.5px;color:var(--muted)}
+.crm .plat-ic{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--muted)}
+.crm .plat-ic svg{width:14px;height:14px}
+.crm .ltv{font-family:'Inter','IBM Plex Sans Thai',sans-serif;font-weight:500}
+.crm .lastc{color:var(--muted);font-size:11.5px}
+.seg{
+  font-size:10.5px;border-radius:6px;padding:2px 9px;font-weight:500;display:inline-block;
+}
+.seg.vip{background:rgba(232,163,61,.14);color:var(--accent)}
+.seg.new{background:rgba(91,157,217,.14);color:var(--info)}
+.seg.reg{background:rgba(76,195,138,.13);color:var(--ok)}
+
+/* ---------- workflow ---------- */
+.wf-wrap{padding:20px 16px 14px;overflow-x:auto}
+.wf{display:flex;align-items:center;gap:0;min-width:760px}
+.wf-node{
+  background:var(--surface-2);border:1px solid var(--border);border-radius:10px;
+  padding:10px 14px;display:flex;align-items:center;gap:10px;flex:0 0 auto;
+}
+.wf-node .nic{
+  width:30px;height:30px;border-radius:8px;background:var(--bg);
+  border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--muted);flex:0 0 auto;
+}
+.wf-node.hot .nic{color:var(--ok);border-color:rgba(76,195,138,.4)}
+.wf-node .nt{font-size:12px;font-weight:600;line-height:1.35}
+.wf-node .ns{font-size:10px;color:var(--muted)}
+.wf-arrow{flex:0 0 auto;display:flex;align-items:center;color:var(--muted);padding:0 4px}
+.wf-branch{display:flex;flex-direction:column;gap:8px;flex:0 0 auto}
+.wf-branch .wf-node{padding:7px 12px}
+.wf-branch .wf-node .nic{width:24px;height:24px}
+.wf-branch .wf-node .nt{font-size:11px;font-weight:500}
+.wf-branch .wf-node .ns{font-size:9.5px}
+.wf-node .nic.ok{color:var(--ok);border-color:rgba(76,195,138,.4)}
+.wf-node .nic.warn{color:var(--warn);border-color:rgba(224,176,75,.4)}
+.wf-caption{
+  padding:0 16px 14px;font-size:11px;color:var(--muted);
+  display:flex;align-items:center;gap:7px;
+}
+.wf-caption svg{color:var(--ok);flex:0 0 auto}
+
+/* ---------- bottom grid: report + activity ---------- */
+.bottom{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:12px;
+}
+.report{padding:18px 18px 16px}
+.report .rp-head{display:flex;align-items:center;gap:10px;margin-bottom:16px}
+.report .rp-head h3{font-size:14px;font-weight:600}
+.report .rp-head .sub{font-size:11.5px;color:var(--muted)}
+.rp-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.rp{
+  background:var(--surface-2);border:1px solid var(--border);border-radius:10px;padding:13px 14px;
+}
+.rp .k{font-size:11.5px;color:var(--muted)}
+.rp .v{font-size:22px;font-weight:600;font-family:'Inter','IBM Plex Sans Thai',sans-serif;margin-top:2px;line-height:1.15}
+.rp .v small{font-size:12px;color:var(--muted);font-weight:500}
+.rp .delta{font-size:10.5px;margin-top:3px;display:flex;align-items:center;gap:4px}
+.rp .delta.up{color:var(--ok)}
+.rp .delta.down{color:var(--danger)}
+.rp.hero{grid-column:span 2;background:var(--surface);border-color:rgba(232,163,61,.35)}
+.rp.hero .v{font-size:28px;color:var(--accent)}
+.rp-hero-note{font-size:11px;color:var(--muted);margin-top:4px}
+
+/* handoff panel */
+.handoff{padding:16px 18px}
+.ho-row{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--border);font-size:12.5px}
+.ho-row:last-child{border-bottom:0}
+.ho-row .who{flex:1;display:flex;align-items:center;gap:9px}
+.ho-row .havatar{
+  width:26px;height:26px;border-radius:50%;background:var(--surface-2);border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600;
+}
+.ho-row .hname{font-weight:500;line-height:1.25}
+.ho-row .hsub{font-size:10.5px;color:var(--muted)}
+.ho-row .hcount{font-family:'Inter',sans-serif;font-weight:600;color:var(--fg)}
+
+/* footer note */
+.foot-note{
+  margin-top:26px;padding-top:16px;border-top:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;
+}
+.foot-note .f1{font-size:12px;color:var(--muted);max-width:62ch}
+.foot-note .cta{
+  display:inline-flex;align-items:center;gap:8px;background:var(--accent);color:#161613;
+  border-radius:10px;padding:11px 20px;font-size:13.5px;font-weight:600;text-decoration:none;white-space:nowrap;
+}
 </style>
 </head>
 <body>
-<header>
-  <div class="badge">ตัวอย่างผลงาน — Premium ฿12,000</div>
-  <h1>Full AI Automation System</h1>
-  <div class="sub">LINE + WhatsApp + Discord + CRM + Database + n8n + ดูแล 30 วัน — ระบบอัตโนมัติเต็มรูปแบบ</div>
-  <nav class="tabs"><a class="" href="chatbot-basic.html">Chatbot Basic ฿2K</a><a class="" href="chatbot-standard.html">Chatbot Standard ฿5K</a><a class="cur" href="chatbot-premium.html">Chatbot Premium ฿12K</a><a class="" href="web-basic.html">เว็บ Basic ฿3K</a><a class="" href="web-standard.html">เว็บ Standard ฿8K</a><a class="" href="web-premium.html">เว็บ Premium ฿20K</a><a class="" href="automation-basic.html">Automation Basic ฿3K</a><a class="" href="automation-standard.html">Automation Standard ฿7K</a><a class="" href="automation-premium.html">Automation Premium ฿15K</a><a class="" href="seo-sample.html">SEO Content ฿400</a><a class="" href="data-dashboard.html">Data Dashboard ฿1.5K</a></nav>
-</header>
 <div class="wrap">
 
-<div class="wf" style="margin-bottom:8px;text-align:center;color:#6b7280">— ตัวอย่าง Workflow อัตโนมัติ (n8n) —</div>
-<div class="wf">
-<span class="node">💬 ลูกค้าแชทเข้า</span><span class="arr">→</span>
-<span class="node">🤖 AI วิเคราะห์ความต้องการ</span><span class="arr">→</span>
-<span class="node">🗂️ บันทึกลง CRM</span><span class="arr">→</span>
-<span class="node">⚡ ตอบ+เสนอสินค้า</span><span class="arr">→</span>
-<span class="node">🛒 สั่งซื้อ</span><span class="arr">→</span>
-<span class="node">🧾 ออกใบแจ้งหนี้</span><span class="arr">→</span>
-<span class="node">📣 แจ้งทีมผ่าน LINE</span>
-</div>
-<div class="grid g2" style="margin-top:28px">
-<div class="card"><h3>🗄️ CRM + Database</h3>
-<table><tr><th>ลูกค้า</th><th>ช่องทาง</th><th>สถานะ</th><th>มูลค่ารวม</th></tr>
-<tr><td>คุณสมชาย</td><td>LINE</td><td class="g">VIP · ซื้อ 5 ครั้ง</td><td>฿12,400</td></tr>
-<tr><td>คุณมาลี</td><td>WhatsApp</td><td>ลูกค้าใหม่</td><td>฿850</td></tr>
-<tr><td>ร้านกาแฟ X</td><td>Discord</td><td>ดูแลต่อเนื่อง</td><td>฿45,000</td></tr></table>
-<p style="margin-top:10px;font-size:.8rem">ทุกการสนทนาถูกบันทึก + ติดแท็กอัตโนมัติ — รู้ทันทีว่าลูกค้าคนไหนคุ้มค่า</p></div>
-<div class="kpi">
-  <div class="k"><div class="v">3</div><div class="l">แพลตฟอร์มรวมศูนย์<br>(LINE+WA+Discord)</div></div>
-  <div class="k"><div class="v">&lt;1 วิ</div><div class="l">เวลาตอบกลับเฉลี่ย</div></div>
-  <div class="k"><div class="v">24/7</div><div class="l">ทำงานอัตโนมัติ</div></div>
-  <div class="k"><div class="v">30 วัน</div><div class="l">ดูแลหลังส่งมอบ</div></div>
-</div>
-</div>
+  <!-- ============ TOP BAR ============ -->
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 2a4 4 0 0 0-4 4v2H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V10a2 2 0 0 0-2-2h-2V6a4 4 0 0 0-4-4z"/><circle cx="9" cy="14" r="0"/><path d="M9 14h6"/></svg>
+      </div>
+      <div>
+        <div class="t1">ห้องควบคุมระบบ AI</div>
+        <div class="t2">ร้านข้าวมันไก่เจ้าเก่า · ทุกแพลตฟอร์มในที่เดียว</div>
+      </div>
+    </div>
+    <div class="sys-status">
+      <span class="pill"><span class="dot"></span> ระบบทำงานปกติ</span>
+      <span class="pill time">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        อัปเดตล่าสุด 12 วินาทีที่แล้ว
+      </span>
+      <span class="pill live"><span class="dot"></span> LIVE</span>
+    </div>
+  </header>
 
-<div class="price-box">
-  <div class="p">฿12,000</div>
-  <div class="d">ส่งมอบใน 7 วัน · แก้ไขไม่จำกัด 30 วัน · รวมฝึกใช้งานทีมของคุณ</div>
-  <a href="https://fastwork.co/user/bugtap" target="_blank">สั่งงานใน Fastwork →</a>
+  <!-- ============ PLATFORM CARDS ============ -->
+  <div class="grid-platforms">
+    <div class="sec">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M17 7V5a2 2 0 0 0-2-2H9a2 2 0 0 0-2 2v2"/></svg>
+      <h2>แพลตฟอร์มที่เชื่อมต่อ</h2>
+      <span class="hint">ข้อมูล ณ วันนี้ 00:00–ขณะนี้</span>
+    </div>
+    <div class="plat-cards">
+
+      <div class="pcard" style="color:var(--line-green)">
+        <div class="head">
+          <div class="pic line">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+          </div>
+          <div>
+            <div class="pname">LINE Official Account</div>
+            <div class="psub"><span class="sdot"></span> เชื่อมต่อปกติ</div>
+          </div>
+        </div>
+        <div class="rows">
+          <div class="prow"><span class="k">ข้อความวันนี้</span><span class="v big">96</span></div>
+          <div class="prow"><span class="k">เวลาตอบเฉลี่ย</span><span class="v">6 วินาที</span></div>
+          <div class="prow"><span class="k">ตอบโดย AI</span><span class="v">81%</span></div>
+        </div>
+        <div class="spark">
+          <i style="height:30%"></i><i style="height:45%"></i><i style="height:38%"></i><i style="height:60%"></i><i class="on" style="height:75%"></i><i style="height:55%"></i><i class="on" style="height:88%"></i><i style="height:62%"></i><i class="on" style="height:100%"></i><i style="height:70%"></i><i style="height:48%"></i><i style="height:58%"></i>
+        </div>
+      </div>
+
+      <div class="pcard" style="color:var(--wa-green)">
+        <div class="head">
+          <div class="pic wa">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.52.149-.174.198-.298.297-.497.1-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          </div>
+          <div>
+            <div class="pname">WhatsApp Business</div>
+            <div class="psub"><span class="sdot"></span> เชื่อมต่อปกติ</div>
+          </div>
+        </div>
+        <div class="rows">
+          <div class="prow"><span class="k">ข้อความวันนี้</span><span class="v big">34</span></div>
+          <div class="prow"><span class="k">เวลาตอบเฉลี่ย</span><span class="v">9 วินาที</span></div>
+          <div class="prow"><span class="k">ตอบโดย AI</span><span class="v">74%</span></div>
+        </div>
+        <div class="spark">
+          <i style="height:20%"></i><i style="height:35%"></i><i class="on" style="height:50%"></i><i style="height:40%"></i><i style="height:65%"></i><i class="on" style="height:80%"></i><i style="height:45%"></i><i style="height:55%"></i><i class="on" style="height:90%"></i><i style="height:60%"></i><i style="height:38%"></i><i style="height:50%"></i>
+        </div>
+      </div>
+
+      <div class="pcard" style="color:var(--discord)">
+        <div class="head">
+          <div class="pic dc">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.79 19.79 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.058a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128c.126-.094.252-.192.372-.291a.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.3 12.3 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.84 19.84 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
+          </div>
+          <div>
+            <div class="pname">Discord Community</div>
+            <div class="psub"><span class="sdot"></span> เชื่อมต่อปกติ</div>
+          </div>
+        </div>
+        <div class="rows">
+          <div class="prow"><span class="k">ข้อความวันนี้</span><span class="v big">12</span></div>
+          <div class="prow"><span class="k">เวลาตอบเฉลี่ย</span><span class="v">14 วินาที</span></div>
+          <div class="prow"><span class="k">ตอบโดย AI</span><span class="v">58%</span></div>
+        </div>
+        <div class="spark">
+          <i style="height:15%"></i><i style="height:25%"></i><i style="height:20%"></i><i class="on" style="height:45%"></i><i style="height:30%"></i><i class="on" style="height:55%"></i><i style="height:35%"></i><i class="on" style="height:70%"></i><i style="height:42%"></i><i style="height:28%"></i><i class="on" style="height:60%"></i><i style="height:38%"></i>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ============ FEED + CRM ============ -->
+  <div class="sec">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+    <h2>บทสนทนาล่าสุด</h2>
+    <span class="hint">AI แท็กหมวดอัตโนมัติพร้อมค่าความมั่นใจ</span>
+  </div>
+  <div class="cols">
+
+    <!-- feed -->
+    <div class="panel">
+      <div class="p-head">
+        <h3>แชทเข้าแบบเรียลไทม์</h3>
+        <span class="tag"><span class="dot"></span> กำลังรับข้อความ</span>
+      </div>
+      <div class="feed">
+
+        <div class="feed-item">
+          <div class="favatar line">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+          </div>
+          <div class="fbody">
+            <div class="frow1"><span class="fname">คุณมะลิ (VIP)</span><span class="ftime">12:41 · LINE</span></div>
+            <div class="ftext">"สั่งข้าวมันไก่ทอด 3 กล่อง ส่งบ้านเลข 58 ค่ะ โอนพร้อมเพย์ได้เลยไหม"</div>
+            <div class="ftags">
+              <span class="ftag order"><span class="cdot"></span>สั่งซื้อ · <b>98%</b></span>
+              <span class="ftag ans"><span class="cdot"></span>AI ตอบอัตโนมัติ</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="feed-item">
+          <div class="favatar wa">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.52.149-.174.198-.298.297-.497.1-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          </div>
+          <div class="fbody">
+            <div class="frow1"><span class="fname">คุณต้น (ใหม่)</span><span class="ftime">12:38 · WhatsApp</span></div>
+            <div class="ftext">"ร้านปิดกี่โมงครับ เดี๋ยวเย็นนี้จะพาคุณนายไปทาน"</div>
+            <div class="ftags">
+              <span class="ftag ask"><span class="cdot"></span>สอบถาม · <b>96%</b></span>
+              <span class="ftag ans"><span class="cdot"></span>AI ตอบอัตโนมัติ</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="feed-item">
+          <div class="favatar line">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+          </div>
+          <div class="fbody">
+            <div class="frow1"><span class="fname">คุณก้อง</span><span class="ftime">12:33 · LINE</span></div>
+            <div class="ftext">"สั่งไปเมื่อคืนข้าวน้อยไปนิดนึง รสชาติก็โอเค แต่พิมพ์ซ้ำสองรอบยังไม่มีคนตอบเรื่องสะสมแต้ม — ต้องรอนานขนาดนี้เลยไหม"</div>
+            <div class="ftags">
+              <span class="ftag complaint"><span class="cdot"></span>ร้องเรียน · <b>87%</b></span>
+              <span class="ftag human"><span class="cdot"></span>ส่งต่อพนักงาน</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="feed-item">
+          <div class="favatar dc">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.79 19.79 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.058a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128c.126-.094.252-.192.372-.291a.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.3 12.3 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.84 19.84 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
+          </div>
+          <div class="fbody">
+            <div class="frow1"><span class="fname">KhunFah#2140</span><span class="ftime">12:29 · Discord</span></div>
+            <div class="ftext">"ทางร้านรับจัดงานเลี้ยงสิ้นปี 50 คนไหมคะ ขอใบเสนอราคาหน่อยได้ไหม"</div>
+            <div class="ftags">
+              <span class="ftag ask"><span class="cdot"></span>สอบถาม · <b>82%</b></span>
+              <span class="ftag human"><span class="cdot"></span>ส่งต่อพนักงาน</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="feed-item">
+          <div class="favatar wa">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.52.149-.174.198-.298.297-.497.1-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          </div>
+          <div class="fbody">
+            <div class="frow1"><span class="fname">คุณเบียร์ (ประจำ)</span><span class="ftime">12:22 · WhatsApp</span></div>
+            <div class="ftext">"โปรแฟมิลี่แพ็กยังมีอยู่ไหมครับ ขอ 2 เซ็ต ส่งเวลา 18:00"</div>
+            <div class="ftags">
+              <span class="ftag order"><span class="cdot"></span>สั่งซื้อ · <b>94%</b></span>
+              <span class="ftag ans"><span class="cdot"></span>AI ตอบอัตโนมัติ</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="feed-item">
+          <div class="favatar line">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+          </div>
+          <div class="fbody">
+            <div class="frow1"><span class="fname">คุณนิว</span><span class="ftime">12:18 · LINE</span></div>
+            <div class="ftext">"เมื่อวานสั่งมา ไก่ตึงไปหน่อย ข้าวแม่น้ำก็แห้ง วันนี้ต้องลูกค้าใหม่เข้ามาชิม หวังว่าจะดีขึ้นนะครับ ไม่งั้นคงต้องไปร้านอื่น"</div>
+            <div class="ftags">
+              <span class="ftag complaint"><span class="cdot"></span>ร้องเรียน · <b>71%</b></span>
+              <span class="ftag human"><span class="cdot"></span>ส่งต่อพนักงาน</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- CRM -->
+    <div class="panel">
+      <div class="p-head">
+        <h3>ฐานลูกค้า (CRM)</h3>
+        <span class="tag" style="color:var(--muted);border-color:var(--border)"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> 342 คน</span>
+      </div>
+      <div class="crm-scroll">
+        <table class="crm">
+          <thead>
+            <tr>
+              <th>ลูกค้า</th><th>แพลตฟอร์ม</th><th>กลุ่ม</th><th>ยอดใช้จ่ายสะสม</th><th>ติดต่อล่าสุด</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><div class="cust"><span class="cavatar">มล</span><div><div class="cname">คุณมะลิ</div><div class="csince">ลูกค้ามา 2 ปี</div></div></div></td>
+              <td><span class="plat-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>LINE</span></td>
+              <td><span class="seg vip">VIP</span></td>
+              <td class="ltv">฿18,240</td>
+              <td class="lastc">เมื่อ 4 นาทีก่อน</td>
+            </tr>
+            <tr>
+              <td><div class="cust"><span class="cavatar">ฟ้า</span><div><div class="cname">KhunFah#2140</div><div class="csince">สมาชิกใหม่ในเซิร์ฟเวอร์</div></div></div></td>
+              <td><span class="plat-ic"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.79 19.79 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.058a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128c.126-.094.252-.192.372-.291a.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.3 12.3 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.84 19.84 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>Discord</span></td>
+              <td><span class="seg new">ใหม่</span></td>
+              <td class="ltv">฿0</td>
+              <td class="lastc">เมื่อ 15 นาทีก่อน</td>
+            </tr>
+            <tr>
+              <td><div class="cust"><span class="cavatar">บีย</span><div><div class="cname">คุณเบียร์</div><div class="csince">สั่งประจำทุกสัปดาห์</div></div></div></td>
+              <td><span class="plat-ic"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.52.149-.174.198-.298.297-.497.1-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>WhatsApp</span></td>
+              <td><span class="seg reg">ประจำ</span></td>
+              <td class="ltv">฿9,670</td>
+              <td class="lastc">เมื่อ 21 นาทีก่อน</td>
+            </tr>
+            <tr>
+              <td><div class="cust"><span class="cavatar">ตน</span><div><div class="cname">คุณต้น</div><div class="csince">ทักครั้งแรกวันนี้</div></div></div></td>
+              <td><span class="plat-ic"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.52.149-.174.198-.298.297-.497.1-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>WhatsApp</span></td>
+              <td><span class="seg new">ใหม่</span></td>
+              <td class="ltv">฿250</td>
+              <td class="lastc">เมื่อ 27 นาทีก่อน</td>
+            </tr>
+            <tr>
+              <td><div class="cust"><span class="cavatar">สร</span><div><div class="cname">บริษัท สมิตรอินเตอร์</div><div class="csince">ลูกค้าองค์กร</div></div></div></td>
+              <td><span class="plat-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>LINE</span></td>
+              <td><span class="seg vip">VIP</span></td>
+              <td class="ltv">฿46,900</td>
+              <td class="lastc">เมื่อ 2 ชั่วโมงก่อน</td>
+            </tr>
+            <tr>
+              <td><div class="cust"><span class="cavatar">พร</span><div><div class="cname">คุณแพรวา</div><div class="csince">แนะนำโดยคุณมะลิ</div></div></div></td>
+              <td><span class="plat-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>LINE</span></td>
+              <td><span class="seg new">ใหม่</span></td>
+              <td class="ltv">฿180</td>
+              <td class="lastc">เมื่อ 3 ชั่วโมงก่อน</td>
+            </tr>
+            <tr>
+              <td><div class="cust"><span class="cavatar">จข</span><div><div class="cname">คุณจั๊กจั่น</div><div class="csince">จัดงานแต่งผ่านร้าน</div></div></div></td>
+              <td><span class="plat-ic"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.52.149-.174.198-.298.297-.497.1-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>WhatsApp</span></td>
+              <td><span class="seg vip">VIP</span></td>
+              <td class="ltv">฿32,500</td>
+              <td class="lastc">เมื่อ 5 ชั่วโมงก่อน</td>
+            </tr>
+            <tr>
+              <td><div class="cust"><span class="cavatar">นว</span><div><div class="cname">คุณนวกร</div><div class="csince">กลับมาอีกครั้งเดือนนี้</div></div></div></td>
+              <td><span class="plat-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>LINE</span></td>
+              <td><span class="seg reg">ประจำ</span></td>
+              <td class="ltv">฿4,120</td>
+              <td class="lastc">เมื่อ 1 วันก่อน</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ WORKFLOW ============ -->
+  <div class="sec">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="5" cy="6" r="3"/><circle cx="19" cy="6" r="3"/><circle cx="12" cy="18" r="3"/><path d="M8 6h8M6.5 8.5L10.5 15.5M17.5 8.5L13.5 15.5"/></svg>
+    <h2>ขั้นตอนการทำงานอัตโนมัติ (Workflow)</h2>
+    <span class="hint">ควบคุม–หยุด–แก้ไขได้เองจากหน้านี้</span>
+  </div>
+  <div class="panel" style="margin-bottom:26px">
+    <div class="wf-wrap">
+      <div class="wf">
+        <div class="wf-node hot">
+          <div class="nic">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          </div>
+          <div><div class="nt">รับแชท</div><div class="ns">LINE · WA · Discord</div></div>
+        </div>
+        <div class="wf-arrow">
+          <svg width="26" height="14" viewBox="0 0 26 14" fill="none" stroke="currentColor" stroke-width="1.6"><line x1="0" y1="7" x2="20" y2="7"/><polyline points="16 2 22 7 16 12"/></svg>
+        </div>
+        <div class="wf-node hot">
+          <div class="nic">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="3"/><path d="M12 1v4m0 14v4m11-11h-4M5 12H1m17.5-6.5l-2.8 2.8M8.3 15.7l-2.8 2.8m0-12.8l2.8 2.8m7.4 7.4l2.8 2.8"/></svg>
+          </div>
+          <div><div class="nt">AI วิเคราะห์</div><div class="ns">แท็กหมวด + ความมั่นใจ</div></div>
+        </div>
+        <div class="wf-arrow">
+          <svg width="26" height="14" viewBox="0 0 26 14" fill="none" stroke="currentColor" stroke-width="1.6"><line x1="0" y1="7" x2="20" y2="7"/><polyline points="16 2 22 7 16 12"/></svg>
+        </div>
+        <div class="wf-branch">
+          <div class="wf-node">
+            <div class="nic ok">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <div><div class="nt">ตอบอัตโนมัติ</div><div class="ns">สั่งซื้อ/สอบถามทั่วไป</div></div>
+          </div>
+          <div class="wf-node">
+            <div class="nic warn">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            </div>
+            <div><div class="nt">ส่งต่อพนักงาน</div><div class="ns">ร้องเรียน/เรื่องซับซ้อน</div></div>
+          </div>
+        </div>
+        <div class="wf-arrow">
+          <svg width="26" height="14" viewBox="0 0 26 14" fill="none" stroke="currentColor" stroke-width="1.6"><line x1="0" y1="7" x2="20" y2="7"/><polyline points="16 2 22 7 16 12"/></svg>
+        </div>
+        <div class="wf-node">
+          <div class="nic">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <div><div class="nt">บันทึก CRM</div><div class="ns">อัปเดตประวัติลูกค้า</div></div>
+        </div>
+        <div class="wf-arrow">
+          <svg width="26" height="14" viewBox="0 0 26 14" fill="none" stroke="currentColor" stroke-width="1.6"><line x1="0" y1="7" x2="20" y2="7"/><polyline points="16 2 22 7 16 12"/></svg>
+        </div>
+        <div class="wf-node">
+          <div class="nic">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+          </div>
+          <div><div class="nt">แจ้งทีม</div><div class="ns">สรุปส่งเจ้าของร้าน 20:00</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="wf-caption">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="20 6 9 17 4 12"/></svg>
+      เวิร์กโฟลว์ทำงาน 34 วันติดต่อกัน · ไม่มีการหยุดชะงัก · แก้ไขกติกาการส่งต่อได้ด้วยตัวเอง
+    </div>
+  </div>
+
+  <!-- ============ DAILY REPORT + HANDOFF ============ -->
+  <div class="bottom">
+    <div class="panel">
+      <div class="report">
+        <div class="rp-head">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.7"><path d="M3 3v18h18"/><path d="M7 14l4-4 3 3 5-6"/></svg>
+          <div>
+            <h3>สรุปวันนี้</h3>
+            <div class="sub">ส่งอัตโนมัติเข้า LINE เจ้าของร้านทุกวันเวลา 20:00 น.</div>
+          </div>
+        </div>
+        <div class="rp-grid">
+          <div class="rp hero">
+            <div class="k">ยอดขายจากแชท</div>
+            <div class="v">฿8,450</div>
+            <div class="rp-hero-note">คำนวณจากออเดอร์ที่ปิดผ่านบอททั้ง 3 แพลตฟอร์ม</div>
+          </div>
+          <div class="rp">
+            <div class="k">ยอดแชททั้งหมด</div>
+            <div class="v">142</div>
+            <div class="delta up">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="18 15 12 9 6 15"/></svg>
+              +12% จากเมื่อวาน
+            </div>
+          </div>
+          <div class="rp">
+            <div class="k">AI จัดการเอง</div>
+            <div class="v">113 <small>/ 142</small></div>
+            <div class="delta up">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="18 15 12 9 6 15"/></svg>
+              79.6% ของทุกบทสนทนา
+            </div>
+          </div>
+          <div class="rp" style="grid-column:span 2">
+            <div class="k">ส่งต่อให้พนักงาน</div>
+            <div class="v">29 <small>บทสนทนา</small></div>
+            <div class="delta down">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+              -8% เพราะ AI เรียนรู้คำถามใหม่ 41 แบบ
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="p-head">
+        <h3>ทีมที่รับเรื่องส่งต่อ</h3>
+        <span class="tag" style="color:var(--muted);border-color:var(--border)">วันนี้ 29 เรื่อง</span>
+      </div>
+      <div class="handoff">
+        <div class="ho-row">
+          <div class="who">
+            <span class="havatar">ป้อ</span>
+            <div><div class="hname">คุณป้อม (เจ้าของร้าน)</div><div class="hsub">รับเรื่อง VIP + ร้องเรียนหนัก</div></div>
+          </div>
+          <span class="hcount">11</span>
+        </div>
+        <div class="ho-row">
+          <div class="who">
+            <span class="havatar">แนน</span>
+            <div><div class="hname">คุณแนน (แคชเชียร์ประจำ)</div><div class="hsub">รับเรื่องสั่งซื้อพิเศษ + จัดงาน</div></div>
+          </div>
+          <span class="hcount">13</span>
+        </div>
+        <div class="ho-row">
+          <div class="who">
+            <span class="havatar">บอท</span>
+            <div><div class="hname">ระบบตอบกลับอัตโนมัติ</div><div class="hsub">คำถามซ้ำที่ยังไม่ได้สอน AI</div></div>
+          </div>
+          <span class="hcount">5</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- footer -->
+  <div class="foot-note">
+    <div class="f1">
+      แดชบอร์ดนี้คือระบบเต็มรูปแบบที่คุณจะได้รับ — รวมการเชื่อมต่อ 3 แพลตฟอร์ม, CRM อัตโนมัติ, เวิร์กโฟลว์ที่แก้ไขได้ และรายงานสรุปรายวันส่งถึงมือคุณ · ราคาเริ่มต้น 15,000.– รวมติดตั้งและสอนการใช้งาน 1 วันเต็ม
+    </div>
+    <a class="cta" href="#">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+      นัดคุยวางแผนระบบ
+    </a>
+  </div>
+
 </div>
-</div>
-<footer>Soul Brews Studio — ตัวอย่างผลงานจริง · อัปเดต ส.ค. 2026 · demos/chatbot-premium.html</footer>
 </body>
 </html>
