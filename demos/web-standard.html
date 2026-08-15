@@ -3,96 +3,269 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>เว็บบริษัท 5 หน้า + SEO เต็มรูปแบบ | ตัวอย่างงาน — Soul Brews Studio</title>
-<meta name="description" content="หน้าแรก · เกี่ยวกับเรา · บริการ · ผลงาน · ติดต่อเรา — พร้อม GSC + 2 ภาษา">
+<title>สยามขนส่ง จำกัด | Siam Transport Co., Ltd. — ขนส่งสินค้าครบวงจร</title>
+<meta name="description" content="สยามขนส่ง จำกัด ให้บริการขนส่งสินค้าทั่วประเทศกว่า 15 ปี ครอบคลุมขนส่งรถบรรทุก ขนส่งเย็น คลังสินค้า และโลจิสติกส์ครบวงจร">
 <style>
+:root{
+--bg:#f7f6f3;--surface:#ffffff;--fg:#191817;--muted:#6f6a63;--border:#e3e0da;
+--dark:#1c2b3a;--accent:#c2571b;--accent-soft:#f6e8dd;--success:#2e7d5b;
+}
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:#0a0a12;color:#e5e7eb;line-height:1.6}
-.wrap{max-width:1100px;margin:0 auto;padding:24px}
-header{background:linear-gradient(135deg,#f97316,#7c2d12);padding:60px 24px 40px;text-align:center}
-header .badge{display:inline-block;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);border-radius:999px;padding:6px 18px;font-size:14px;margin-bottom:16px}
-header h1{font-size:2.2rem;color:#fff;margin-bottom:8px}
-header .sub{color:rgba(255,255,255,.85);font-size:1.05rem}
-.grid{display:grid;gap:20px;margin:32px 0}
-.g2{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
-.g3{grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
-.card{background:#13131f;border:1px solid #26264a;border-radius:14px;padding:20px}
-.card h3{color:#fff;font-size:1.05rem;margin-bottom:10px;display:flex;align-items:center;gap:8px}
-.card p,.card li{color:#9ca3af;font-size:.92rem}
-.card ul{list-style:none;margin-top:8px}
-.card li{padding:4px 0 4px 22px;position:relative}
-.card li::before{content:'✓';position:absolute;left:0;color:#34d399}
-.chat{background:#13131f;border:1px solid #26264a;border-radius:14px;padding:20px;max-width:420px;margin:0 auto}
-.msg{max-width:80%;padding:10px 14px;border-radius:14px;margin:6px 0;font-size:.9rem}
-.user{background:#374151;margin-left:auto;color:#fff}
-.bot{background:#1f2937;color:#d1d5db}
-.bot .btns{display:flex;gap:8px;margin-top:8px}
-.pbtn{border:1px solid #4b5563;border-radius:999px;padding:4px 12px;font-size:.78rem;color:#93c5fd;cursor:pointer}
-.msg .ts{display:block;font-size:.65rem;color:#6b7280;margin-top:4px}
-.mock{background:#fff;color:#111827;border-radius:14px;overflow:hidden;border:1px solid #26264a}
-.mock .bar{background:#f3f4f6;padding:8px 14px;display:flex;gap:6px;align-items:center;font-size:.75rem;color:#6b7280}
-.mock .dot{width:9px;height:9px;border-radius:50%}
-.mock .body{padding:22px}
-.mock h4{font-size:1.15rem;margin-bottom:6px}
-.mock .price{color:#059669;font-size:1.4rem;font-weight:700}
-.tag{display:inline-block;background:#ecfdf5;color:#047857;border-radius:6px;padding:2px 8px;font-size:.7rem;font-weight:600;margin:8px 4px 0 0}
-.wf{background:#0f0f1a;border:1px dashed #4b5563;border-radius:12px;padding:18px;font-family:ui-monospace,monospace;font-size:.82rem;color:#a5b4fc;overflow-x:auto;white-space:nowrap}
-.wf .node{display:inline-block;background:#1e1b4b;border:1px solid #4f46e5;border-radius:8px;padding:6px 12px;margin:4px 2px}
-.wf .arr{color:#6366f1}
-.chart{display:flex;align-items:flex-end;gap:12px;height:180px;padding:10px 0}
-.bar-ch{flex:1;background:linear-gradient(to top,#3b82f6,#60a5fa);border-radius:6px 6px 0 0;position:relative;min-width:28px}
-.bar-ch span{position:absolute;bottom:-22px;left:0;right:0;text-align:center;font-size:.68rem;color:#9ca3af}
-.bar-ch b{position:absolute;top:-20px;left:0;right:0;text-align:center;font-size:.7rem;color:#e5e7eb}
-.kpi{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:14px}
-.kpi .k{background:#0f0f1a;border:1px solid #26264a;border-radius:12px;padding:16px;text-align:center}
-.kpi .k .v{font-size:1.5rem;font-weight:700;color:#fff}
-.kpi .k .l{font-size:.72rem;color:#6b7280;margin-top:4px}
-table{width:100%;border-collapse:collapse;font-size:.85rem}
-th{background:#1e1b4b;color:#c7d2fe;text-align:left;padding:10px 12px}
-td{padding:10px 12px;border-bottom:1px solid #26264a;color:#9ca3af}
-td.g{color:#34d399}
-.price-box{background:linear-gradient(135deg,#f97316,#7c2d12);border-radius:16px;padding:28px;text-align:center;margin:32px auto;max-width:560px}
-.price-box .p{font-size:2.6rem;font-weight:800;color:#fff}
-.price-box .d{color:rgba(255,255,255,.85);margin-top:6px}
-.price-box a{display:inline-block;background:#fff;color:#111827;font-weight:700;border-radius:10px;padding:12px 32px;margin-top:16px;text-decoration:none}
-footer{text-align:center;padding:32px;color:#4b5563;font-size:.8rem}
-nav.tabs{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:24px 0 0}
-nav.tabs a{background:#13131f;border:1px solid #26264a;color:#9ca3af;text-decoration:none;border-radius:999px;padding:6px 14px;font-size:.8rem}
-nav.tabs a.cur{background:#f97316;color:#fff;border-color:#f97316}
-.toc{columns:2;gap:24px}
-.toc a{color:#93c5fd;text-decoration:none;display:block;padding:3px 0;font-size:.9rem}
-@media(max-width:700px){.toc{columns:1}}
+body{font-family:'IBM Plex Sans Thai',system-ui,sans-serif;background:var(--bg);color:var(--fg);line-height:1.75;font-size:15.5px}
+img{max-width:100%;display:block}
+a{color:inherit}
+.wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+/* nav */
+nav{position:sticky;top:0;background:var(--surface);border-bottom:1px solid var(--border);z-index:50}
+nav .wrap{display:flex;align-items:center;gap:28px;height:64px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:600;font-size:17px;text-decoration:none}
+.logo svg{color:var(--accent)}
+.navlinks{display:flex;gap:24px;margin-left:auto;font-size:14px;font-weight:500}
+.navlinks a{text-decoration:none;color:var(--muted)}
+.navlinks a:hover{color:var(--fg)}
+.lang{border:1px solid var(--border);border-radius:0;padding:4px 10px;font-size:12px;background:none;cursor:pointer;font-weight:550;color:var(--muted)}
+.lang b{color:var(--fg)}
+/* hero — flat dark surface */
+.hero{background:var(--dark);color:#f2efe9;padding:88px 0 72px}
+.hero .eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#d8a06a;font-weight:550}
+.hero h1{font-size:clamp(30px,4.6vw,46px);font-weight:600;letter-spacing:-.02em;line-height:1.2;margin:12px 0 16px;max-width:22ch}
+.hero p{color:#b9b4ab;max-width:56ch}
+.hero .cta-row{display:flex;gap:14px;margin-top:28px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:13px 26px;font-size:14.5px;font-weight:600;text-decoration:none;border:1px solid transparent}
+.btn-primary{background:var(--accent);color:#fff}
+.btn-outline{border-color:#3d4f61;color:#f2efe9}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1px;background:#3d4f61;border:1px solid #3d4f61;margin-top:56px}
+.stats div{background:var(--dark);padding:20px 22px}
+.stats .n{font-size:26px;font-weight:600;letter-spacing:-.01em}
+.stats .l{font-size:12.5px;color:#b9b4ab}
+/* sections */
+section{padding:72px 0}
+section.alt{background:var(--surface)}
+.kicker{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);font-weight:550}
+h2{font-size:clamp(23px,3vw,30px);font-weight:600;letter-spacing:-.015em;margin:8px 0 8px}
+.lead{color:var(--muted);max-width:60ch}
+/* timeline */
+.timeline{margin-top:36px;border-left:2px solid var(--border);padding-left:28px;display:grid;gap:26px}
+.tl-item .yr{font-size:13px;font-weight:600;color:var(--accent);letter-spacing:.06em}
+.tl-item h3{font-size:17px;font-weight:600;margin:2px 0}
+.tl-item p{color:var(--muted);font-size:14px}
+/* team */
+.team{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:18px;margin-top:34px}
+.member{border:1px solid var(--border);background:var(--bg);padding:22px}
+.avatar{width:56px;height:56px;border-radius:50%;background:var(--dark);color:#d8a06a;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:19px;margin-bottom:14px}
+.member h3{font-size:15.5px;font-weight:600}
+.member .role{font-size:12.5px;color:var(--accent);font-weight:550;margin-bottom:6px}
+.member p{font-size:13px;color:var(--muted)}
+/* services */
+.svc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px;margin-top:34px}
+.svc{border:1px solid var(--border);background:var(--bg);padding:26px;display:flex;flex-direction:column;gap:8px}
+.svc svg{color:var(--accent)}
+.svc h3{font-size:16.5px;font-weight:600;display:flex;align-items:center;gap:10px}
+.svc p{color:var(--muted);font-size:14px;flex:1}
+.svc .from{font-size:13px;color:var(--fg);font-weight:550}
+.svc .from small{color:var(--muted);font-weight:450}
+.pricetable{width:100%;border-collapse:collapse;margin-top:36px;background:var(--surface);font-size:14px}
+.pricetable th{background:var(--dark);color:#f2efe9;text-align:left;padding:12px 16px;font-weight:550;font-size:13px;letter-spacing:.02em}
+.pricetable td{padding:12px 16px;border-bottom:1px solid var(--border)}
+.pricetable tr:last-child td{border-bottom:none}
+.pricetable .p{font-weight:600}
+/* works */
+.works{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px;margin-top:34px}
+.work{border:1px solid var(--border);background:var(--surface)}
+.work .cover{height:130px;display:flex;align-items:center;justify-content:center;font-size:12px;letter-spacing:.1em;text-transform:uppercase;font-weight:550}
+.work .cover svg{margin-right:8px}
+.work .body{padding:20px}
+.work h3{font-size:15.5px;font-weight:600;margin-bottom:4px}
+.work p{font-size:13.5px;color:var(--muted)}
+.work .tag{display:inline-block;font-size:11.5px;border:1px solid var(--border);padding:2px 10px;margin-top:10px;color:var(--muted)}
+/* contact */
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:36px;margin-top:34px}
+@media(max-width:820px){.contact-grid{grid-template-columns:1fr}}
+form{display:grid;gap:14px}
+label{font-size:13px;font-weight:550}
+input,select,textarea{font-family:inherit;font-size:14.5px;padding:12px 14px;border:1px solid var(--border);background:var(--surface);border-radius:0;width:100%}
+input:focus,textarea:focus,select:focus{outline:2px solid var(--accent-soft);border-color:var(--accent)}
+.info-card{border:1px solid var(--border);background:var(--surface);padding:26px;display:grid;gap:16px;align-content:start}
+.info-row{display:flex;gap:12px;font-size:14.5px}
+.info-row svg{flex:none;color:var(--accent);margin-top:3px}
+.info-row b{display:block;font-size:13px;font-weight:550}
+.map{height:160px;background:var(--bg);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:13px}
+/* footer */
+footer{background:var(--dark);color:#b9b4ab;padding:48px 0 32px;font-size:13.5px}
+footer .cols{display:grid;grid-template-columns:2fr 1fr 1fr;gap:32px}
+@media(max-width:700px){footer .cols{grid-template-columns:1fr}}
+footer h4{color:#f2efe9;font-size:13px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:12px;font-weight:550}
+footer a{display:block;text-decoration:none;padding:3px 0}
+footer a:hover{color:#f2efe9}
+.copyright{border-top:1px solid #3d4f61;margin-top:36px;padding-top:20px;font-size:12.5px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+.ic{width:22px;height:22px;viewBox:"0 0 24 24";fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--dark);color:#f2efe9;padding:12px 22px;font-size:14px;display:none;z-index:99}
 </style>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;450;500;550;600&display=swap" rel="stylesheet">
 </head>
 <body>
-<header>
-  <div class="badge">ตัวอย่างผลงาน — Standard ฿8,000</div>
-  <h1>เว็บบริษัท 5 หน้า + SEO เต็มรูปแบบ</h1>
-  <div class="sub">หน้าแรก · เกี่ยวกับเรา · บริการ · ผลงาน · ติดต่อเรา — พร้อม GSC + 2 ภาษา</div>
-  <nav class="tabs"><a class="" href="chatbot-basic.html">Chatbot Basic ฿2K</a><a class="" href="chatbot-standard.html">Chatbot Standard ฿5K</a><a class="" href="chatbot-premium.html">Chatbot Premium ฿12K</a><a class="" href="web-basic.html">เว็บ Basic ฿3K</a><a class="cur" href="web-standard.html">เว็บ Standard ฿8K</a><a class="" href="web-premium.html">เว็บ Premium ฿20K</a><a class="" href="automation-basic.html">Automation Basic ฿3K</a><a class="" href="automation-standard.html">Automation Standard ฿7K</a><a class="" href="automation-premium.html">Automation Premium ฿15K</a><a class="" href="seo-sample.html">SEO Content ฿400</a><a class="" href="data-dashboard.html">Data Dashboard ฿1.5K</a></nav>
-</header>
+<nav>
 <div class="wrap">
+<a class="logo" href="#home"><svg class="ic" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="6" width="14" height="11" rx="1"/><path d="M15 10h4l3 3v4h-7z"/><circle cx="6" cy="17" r="2"/><circle cx="17.5" cy="17" r="2"/></svg>สยามขนส่ง <span id="brandEn" style="display:none">Siam Transport</span></a>
+<div class="navlinks">
+<a href="#home" id="navHome">หน้าแรก</a>
+<a href="#about" id="navAbout">เกี่ยวกับเรา</a>
+<a href="#services" id="navSvc">บริการ</a>
+<a href="#works" id="navWorks">ผลงาน</a>
+<a href="#contact" id="navContact">ติดต่อเรา</a>
+</div>
+<button class="lang" onclick="toggleLang()"><b>TH</b> | EN</button>
+</div>
+</nav>
 
-<div class="mock">
-<div class="bar"><span class="dot" style="background:#ef4444"></span><span class="dot" style="background:#f59e0b"></span><span class="dot" style="background:#22c55e"></span>&nbsp; yourcompany.co.th</div>
-<div class="body" style="background:#fafafa">
-<div style="display:flex;gap:14px;font-size:.8rem;color:#374151;border-bottom:1px solid #e5e7eb;padding-bottom:10px;margin-bottom:14px"><b>หน้าแรก</b><span>เกี่ยวกับเรา</span><span>บริการ</span><span>ผลงาน</span><span>ติดต่อเรา</span><span style="margin-left:auto;color:#2563eb">TH | EN</span></div>
-<h4>บริษัท ตัวอย่าง จำกัด</h4>
-<p style="color:#6b7280;font-size:.85rem">โซลูชันธุรกิจครบวงจรมากว่า 10 ปี</p>
-<span class="tag">🌐 ไทย + อังกฤษ</span><span class="tag">🗺️ Sitemap.xml</span><span class="tag">📊 Google Search Console</span><span class="tag">✉️ ฟอร์มติดต่อ → LINE/Email</span>
-</div></div>
-<div class="grid g3" style="margin-top:28px">
-  <div class="card"><h3>📄 5 หน้าครบ</h3><ul><li>ออกแบบตามแบรนด์</li><li>แก้ไขเนื้อหาเองได้</li><li>หน้าผลงาน/บริการ</li></ul></div>
-  <div class="card"><h3>🌍 2 ภาษา</h3><ul><li>สลับ TH/EN</li><li>SEO แยกทั้งสองภาษา</li><li>hreflang ถูกต้อง</li></ul></div>
-  <div class="card"><h3>📬 ระบบติดต่อ</h3><ul><li>ฟอร์มส่งเข้า LINE/Email</li><li>แผนที่ร้าน</li><li>ปุ่มโทร/LINE เพิ่ม</li></ul></div>
+<!-- HOME -->
+<header class="hero" id="home">
+<div class="wrap">
+<div class="eyebrow" id="heroEyebrow">ขนส่งสินค้าทั่วประเทศ · ตั้งแต่ พ.ศ. 2553</div>
+<h1 id="heroTitle">ขนส่งสินค้าครบวงจร ตรงเวลา ปลอดภัย ทุกเส้นทางในประเทศ</h1>
+<p id="heroSub">เราดูแลสินค้าของคุณตั้งแต่คลังจนถึงมือลูกค้า ด้วยรถบรรทุกกว่า 120 คัน ระบบติดตาม GPS แบบเรียลไทม์ และทีมงานมืออาชีพกว่า 350 คน</p>
+<div class="cta-row">
+<a class="btn btn-primary" href="#contact">ขอใบเสนอราคา <svg class="ic" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="9 18 15 12 9 6"/></svg></a>
+<a class="btn btn-outline" href="#services">ดูบริการทั้งหมด</a>
 </div>
+<div class="stats">
+<div><div class="n">15+</div><div class="l" id="st1">ปีประสบการณ์</div></div>
+<div><div class="n">120</div><div class="l" id="st2">รถบรรทุกในฟลีท</div></div>
+<div><div class="n">77</div><div class="l" id="st3">จังหวัดที่ให้บริการ</div></div>
+<div><div class="n">98.6%</div><div class="l" id="st4">ส่งตรงเวลา</div></div>
+</div>
+</div>
+</header>
 
-<div class="price-box">
-  <div class="p">฿8,000</div>
-  <div class="d">ส่งมอบใน 5 วัน · แก้ไขได้ 3 ครั้ง · รวมตั้งค่า GSC + Analytics</div>
-  <a href="https://fastwork.co/user/bugtap" target="_blank">สั่งงานใน Fastwork →</a>
+<!-- ABOUT -->
+<section id="about">
+<div class="wrap">
+<div class="kicker">เกี่ยวกับเรา · About</div>
+<h2 id="aboutTitle">มากกว่า 15 ปีที่เราเดินทางเคียงข้างธุรกิจไทย</h2>
+<p class="lead" id="aboutLead">จากรถบรรทุกคันเดียวในปี 2553 สู่เครือข่ายขนส่งครบวงจรที่ลูกค้ากว่า 800 องค์กรไว้วางใจ</p>
+<div class="timeline">
+<div class="tl-item"><div class="yr">2546</div><h3>ก่อตั้งบริษัท</h3><p>เริ่มต้นจากรถกระบะ 1 คัน รับส่งสินค้าภายในเขตกรุงเทพฯ-ปริมณฑล</p></div>
+<div class="tl-item"><div class="yr">2553</div><h3>ขยายสู่ขนส่งเชิงพาณิชย์</h3><p>จดทะเบียนนิติบุคคล เปิดสาขาภาคกลาง ฟลีทเพิ่มเป็น 25 คัน</p></div>
+<div class="tl-item"><div class="yr">2559</div><h3>บริการคลังสินค้า (Fulfillment)</h3><p>เปิดคลังสินค้า 5,000 ตร.ม. ใกล้มอเตอร์เวย์ รองรับอีคอมเมิร์ซ</p></div>
+<div class="tl-item"><div class="yr">2564</div><h3>ระบบติดตาม GPS เรียลไทม์</h3><p>ติดตั้ง GPS ทุกคัน ลูกค้าดูตำแหน่งรถได้จากมือถือตลอด 24 ชม.</p></div>
+<div class="tl-item"><div class="yr">2567</div><h3>ครอบคลุม 77 จังหวัด</h3><p>ฟลีท 120 คัน พร้อมรถขนส่งเย็น และบริการ Last-mile ครบวงจร</p></div>
+</div>
+<div class="team">
+<div class="member"><div class="avatar">สม</div><h3>คุณสมชาย วงศ์สยาม</h3><div class="role">ผู้ก่อตั้ง / CEO</div><p>ประสบการณ์โลจิสติกส์ 25 ปี ผู้วางรากฐานเครือข่ายขนส่งทั่วประเทศ</p></div>
+<div class="member"><div class="avatar">พร</div><h3>คุณพรทิพย์ อรุณรักษ์</h3><div class="role">ผู้อำนวยการฝ่ายปฏิบัติการ</div><p>ดูแลฟลีทและคนขับ 350 คน มาตรฐานความปลอดภัยระดับสากล</p></div>
+<div class="member"><div class="avatar">วิ</div><h3>คุณวิชัย ตันติวงศ์</h3><div class="role">ผู้อำนวยการฝ่ายเทคโนโลยี</div><p>พัฒนาระบบ Track &amp; Trace และ API เชื่อมต่อระบบลูกค้าโดยตรง</p></div>
+<div class="member"><div class="avatar">มา</div><h3>คุณมาลี ศรีสุวรรณ</h3><div class="role">ผู้จัดการฝ่ายบริการลูกค้า</h3><p>ทีม call center ตอบปัญหาได้ทุกช่องทาง ภายใน 15 นาที</p></div>
 </div>
 </div>
-<footer>Soul Brews Studio — ตัวอย่างผลงานจริง · อัปเดต ส.ค. 2026 · demos/web-standard.html</footer>
+</section>
+
+<!-- SERVICES -->
+<section class="alt" id="services">
+<div class="wrap">
+<div class="kicker">บริการ · Services</div>
+<h2>โซลูชันขนส่งสำหรับทุกธุรกิจ</h2>
+<p class="lead">เลือกได้ตามความต้องการ หรือให้เราออกแบบแผนขนส่งเฉพาะให้ฟรี</p>
+<div class="svc-grid">
+<div class="svc"><svg class="ic" viewBox="0 0 24 24"><rect x="1" y="6" width="14" height="11" rx="1"/><path d="M15 10h4l3 3v4h-7z"/><circle cx="6" cy="17" r="2"/><circle cx="17.5" cy="17" r="2"/></svg><h3>ขนส่งรถบรรทุกเต็มคัน (FTL)</h3><p>รถบรรทุก 6-ล้อ ถึง 18-ล้อ สำหรับสินค้าปริมาณมาก ปลายทางเดียว ส่งตรงจุด ไม่แวะจอด</p><div class="from">เริ่มต้น ฿4,500 <small>/ เที่ยว</small></div></div>
+<div class="svc"><svg class="ic" viewBox="0 0 24 24"><path d="M16 3h5v5"/><path d="M8 3H3v5"/><path d="M21 3l-7 7"/><path d="M3 3l7 7"/><path d="M3 21h18"/><path d="M5 21V12h14v9"/></svg><h3>ขนส่งกระจายสินค้า (LTL)</h3><p>สินค้าปริมาณน้อยก็ส่งได้ รวมของหลายร้านในรอบเดียว ประหยัดค่าขนส่งสูงสุด 40%</p><div class="from">เริ่มต้น ฿350 <small>/ ลูกบาศก์เมตร</small></div></div>
+<div class="svc"><svg class="ic" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="1"/><path d="M8 5V3h8v2"/><path d="M3 10h18"/><path d="M12 8v8"/><path d="M8 12h8"/></svg><h3>ขนส่งควบคุมอุณหภูมิ</h3><p>รถคอนเทนเนอร์เย็น -18°C ถึง +8°C สำหรับอาหารสด เครื่องสำอาง และยา มาตรฐาน GMP</p><div class="from">เริ่มต้น ฿7,200 <small>/ เที่ยว</small></div></div>
+<div class="svc"><svg class="ic" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg><h3>คลังสินค้า &amp; Fulfillment</h3><p>รับฝากสินค้า แพ็ค ห่อ ติดฉลาก และส่งถึงมือลูกค้าปลายทาง พร้อมระบบสต๊อกออนไลน์</p><div class="from">เริ่มต้น ฿28 <small>/ ออเดอร์</small></div></div>
+<div class="svc"><svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg><h3>ขนส่งด่วนพิเศษ (Express)</h3><p>ส่งถึงภายใน 24 ชม. ในเขตกรุงเทพฯ-ปริมณฑล และ 48 ชม. ทั่วประเทศ พร้อม SMS แจ้งทุกสถานะ</p><div class="from">เริ่มต้น ฿180 <small>/ ชิ้น</small></div></div>
+<div class="svc"><svg class="ic" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8"/><path d="M12 17v4"/><path d="M7 8h4M7 11h7"/></svg><h3>ระบบ API สำหรับอีคอมเมิร์ซ</h3><p>เชื่อมต่อระบบสั่งซื้อของคุณกับเราอัตโนมัติ สร้างใบนำส่ง ติดตามสถานะ ผ่าน REST API</p><div class="from">ไม่มีค่าติดตั้ง <small>สำหรับลูกค้ารายเดือน</small></div></div>
+</div>
+<table class="pricetable">
+<tr><th>ประเภทบริการ</th><th>เขตกรุงเทพฯ-ปริมณฑล</th><th>ภาคกลาง / อีสาน</th><th>ภาคเหนือ / ใต้</th></tr>
+<tr><td>ขนส่ง FTL (รถ 10 ล้อ)</td><td class="p">฿4,500</td><td class="p">฿12,000</td><td class="p">฿18,500</td></tr>
+<tr><td>ขนส่ง LTL (ต่อ ลบ.ม.)</td><td class="p">฿350</td><td class="p">฿520</td><td class="p">฿680</td></tr>
+<tr><td>ขนส่งเย็น (รถ 6 ล้อ)</td><td class="p">฿7,200</td><td class="p">฿15,400</td><td class="p">฿22,000</td></tr>
+<tr><td>Express (ต่อชิ้น ≤3กก.)</td><td class="p">฿180</td><td class="p">฿260</td><td class="p">฿320</td></tr>
+</table>
+</div>
+</section>
+
+<!-- WORKS -->
+<section id="works">
+<div class="wrap">
+<div class="kicker">ผลงาน · Our Works</div>
+<h2>ลูกค้าที่ไว้วางใจให้เราดูแลทุกวัน</h2>
+<div class="works">
+<div class="work"><div class="cover" style="background:var(--accent-soft);color:var(--accent)"><svg class="ic" viewBox="0 0 24 24"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>เฟรชฟู้ด</div><div class="body"><h3>เดลิเวอรีผักสด 300 ร้านค้า</h3><p>ขนส่งผักสดควบคุมอุณหภูมิให้ร้านค้าสมาชิกทั่วกรุงเทพฯ ทุกเช้าตรงเวลา 98%+ ต่อเนื่อง 3 ปี</p><span class="tag">ขนส่งเย็น · B2B</span></div></div>
+<div class="work"><div class="cover" style="background:#e8ecf1;color:#1c2b3a"><svg class="ic" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>อีคอมเมิร์ซ</div><div class="body"><h3>Fulfillment แบรนด์แม่&amp;เด็กออนไลน์</h3><p>รับฝากสินค้า-แพ็ค-ส่ง 2,500 ออเดอร์/วัน ช่วง Double Day พร้อมเชื่อม API ระบบสั่งซื้ออัตโนมัติ</p><span class="tag">คลังสินค้า · API</span></div></div>
+<div class="work"><div class="cover" style="background:#efe9e2;color:#8a5a3b"><svg class="ic" viewBox="0 0 24 24"><path d="M12 2 2 7l10 5 10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>วัสดุก่อสร้าง</div><div class="body"><h3>กระจายสินค้า 42 สาขาทั่วประเทศ</h3><p>ขนส่งวัสดุก่อสร้างจากโรงงาน 3 แห่ง สู่สาขา 42 จังหวัด วางแผนรอบรถตัดต้นทุน 18%</p><span class="tag">FTL · Distribution</span></div></div>
+<div class="work"><div class="cover" style="background:#e5eef0;color:#2e7d8a"><svg class="ic" viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>เภสัชกรรม</div><div class="body"><h3>ขนส่งยา มาตรฐาน GMP</h3><p>ขนส่งยาควบคุมอุณหภูมิให้โรงพยาบาลเครือข่าย 60 แห่ง ผ่านการรับรองความปลอดภัยทุก lot</p><span class="tag">ขนส่งเย็น · GMP</span></div></div>
+<div class="work"><div class="cover" style="background:#f3ece4;color:#a0642c"><svg class="ic" viewBox="0 0 24 24"><path d="M17 8C8 10 5.9 16.17 3.82 21.34l1.89.66.95-2.3c.48.17.98.3 1.34.3C19 20 22 3 22 3c-1 2-8 2.25-13 3.25S2 11.5 2 13.5s1.75 3.75 1.75 3.75C7 8 17 8 17 8z"/></svg>เกษตรกรรม</div><div class="body"><h3>เก็บผลไม้สดจากสวนถึงโรงแปรรูป</h3><p>ระบบรับ-ส่งผลไม้สดภายใน 6 ชม. ลดของเสียจาก 12% เหลือ 3% ในฤดูกาลแรกของการใช้บริการ</p><span class="tag">Express · Agriculture</span></div></div>
+<div class="work"><div class="cover" style="background:#ece8f0;color:#5b4a8a"><svg class="ic" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>ค้าปลีกแฟรนไชส์</div><div class="body"><h3>เติมสินค้าร้านแฟรนไชส์ 200 สาขา</h3><p>วางรอบเติมสินค้าอัตโนมัติทุก 48 ชม. พร้อมรายงานสต๊อกรายสาขาผ่าน Dashboard ที่เราพัฒนาให้</p><span class="tag">LTL · Dashboard</span></div></div>
+</div>
+</div>
+</section>
+
+<!-- CONTACT -->
+<section class="alt" id="contact">
+<div class="wrap">
+<div class="kicker">ติดต่อเรา · Contact</div>
+<h2>ขอใบเสนอราคาฟรี ภายใน 1 ชั่วโมง</h2>
+<div class="contact-grid">
+<form onsubmit="event.preventDefault();document.getElementById('toast').style.display='block'">
+<div><label>ชื่อ-นามสกุล / บริษัท *</label><input required placeholder="เช่น สมชาย ใจดี หรือ บริษัท ABC จำกัด"></div>
+<div><label>เบอร์โทรศัพท์ / LINE ID *</label><input required placeholder="08x-xxx-xxxx"></div>
+<div><label>ประเภทสินค้า</label><select><option>สินค้าทั่วไป</option><option>อาหารสด / ต้องควบคุมอุณหภูมิ</option><option>สินค้าอีคอมเมิร์ซ</option><option>วัสดุก่อสร้าง / ของใหญ่</option><option>อื่น ๆ</option></select></div>
+<div><label>รายละเอียดเพิ่มเติม</label><textarea rows="4" placeholder="จำนวน ต้นทาง-ปลายทาง ความถี่การส่ง ฯลฯ"></textarea></div>
+<button class="btn btn-primary" type="submit" style="justify-content:center">ส่งข้อมูลขอราคา <svg class="ic" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="9 18 15 12 9 6"/></svg></button>
+</form>
+<div>
+<div class="info-card">
+<div class="info-row"><svg class="ic" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg><div><b>สำนักงานใหญ่</b>999 ซอยสุขุมวิท 101/1 แขวงบางจาก เขตพระโขนง กรุงเทพฯ 10260</div></div>
+<div class="info-row"><svg class="ic" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg><div><b>โทรศัพท์</b>02-314-9999 (จ.-ส. 8:30–18:00)<br>สายด่วนด่วน 24 ชม.: 089-777-9999</div></div>
+<div class="info-row"><svg class="ic" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg><div><b>LINE Official</b>@siamtransport (มี @ นำหน้า)</div></div>
+<div class="info-row"><svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg><div><b>เวลาทำการ</b>จันทร์–เสาร์ 8:30–18:00 น. (ขนส่งด่วน 24 ชม.)</div></div>
+<div class="map">พิกัด Google Maps — 13.6944° N, 100.6236° E</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<footer>
+<div class="wrap">
+<div class="cols">
+<div>
+<h4>สยามขนส่ง จำกัด</h4>
+<p>บริษัทขนส่งสินค้าครบวงจร จดทะเบียนนิติบุคคลเลขที่ 0105533001234 มีทุนจดทะเบียน 20 ล้านบาท ผู้ให้บริการขนส่งที่ได้รับการรับรองมาตรฐาน ISO 9001:2015</p>
+</div>
+<div>
+<h4>บริการ</h4>
+<a href="#services">ขนส่ง FTL / LTL</a><a href="#services">ขนส่งควบคุมอุณหภูมิ</a><a href="#services">คลังสินค้า Fulfillment</a><a href="#services">ขนส่งด่วน Express</a>
+</div>
+<div>
+<h4>ติดต่อ</h4>
+<a href="#contact">ขอใบเสนอราคา</a><a href="#contact">02-314-9999</a><a href="#contact">LINE @siamtransport</a>
+</div>
+</div>
+<div class="copyright"><span>© 2569 สยามขนส่ง จำกัด สงวนลิขสิทธิ์</span><span>นโยบายความเป็นส่วนตัว · เงื่อนไขการใช้บริการ</span></div>
+</div>
+</footer>
+<div class="toast" id="toast">ส่งข้อมูลเรียบร้อย — ทีมงานจะติดต่อกลับภายใน 1 ชั่วโมง (ตัวอย่าง)</div>
+<script>
+function toggleLang(){
+  const en = document.getElementById('brandEn').style.display === 'none';
+  const t = {
+    'navHome': ['หน้าแรก','Home'], 'navAbout': ['เกี่ยวกับเรา','About Us'],
+    'navSvc': ['บริการ','Services'], 'navWorks': ['ผลงาน','Our Works'], 'navContact': ['ติดต่อเรา','Contact'],
+    'heroEyebrow': ['ขนส่งสินค้าทั่วประเทศ · ตั้งแต่ พ.ศ. 2553','Nationwide Logistics · Since 2010'],
+    'heroTitle': ['ขนส่งสินค้าครบวงจร ตรงเวลา ปลอดภัย ทุกเส้นทางในประเทศ','Full-Service Logistics. On Time, Safe, Every Route Nationwide.'],
+    'heroSub': ['เราดูแลสินค้าของคุณตั้งแต่คลังจนถึงมือลูกค้า ด้วยรถบรรทุกกว่า 120 คัน ระบบติดตาม GPS แบบเรียลไทม์ และทีมงานมืออาชีพกว่า 350 คน','From warehouse to doorstep: 120+ trucks, real-time GPS tracking, and 350+ professional staff.'],
+    'st1': ['ปีประสบการณ์','Years of Experience'], 'st2': ['รถบรรทุกในฟลีท','Trucks in Fleet'],
+    'st3': ['จังหวัดที่ให้บริการ','Provinces Served'], 'st4': ['ส่งตรงเวลา','On-Time Delivery'],
+    'aboutTitle': ['มากกว่า 15 ปีที่เราเดินทางเคียงข้างธุรกิจไทย','15+ Years Moving Thai Business Forward'],
+    'aboutLead': ['จากรถบรรทุกคันเดียวในปี 2553 สู่เครือข่ายขนส่งครบวงจรที่ลูกค้ากว่า 800 องค์กรไว้วางใจ','From one truck in 2010 to a full logistics network trusted by 800+ organizations.']
+  };
+  for (const [id, pair] of Object.entries(t)) {
+    const el = document.getElementById(id);
+    if (el) el.textContent = pair[en ? 1 : 0];
+  }
+  document.getElementById('brandEn').style.display = en ? 'inline' : 'none';
+  document.querySelector('.lang').innerHTML = en ? 'TH | <b>EN</b>' : '<b>TH</b> | EN';
+}
+</script>
 </body>
 </html>
