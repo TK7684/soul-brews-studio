@@ -377,7 +377,7 @@ body {
   <div class="filterbar">
     <span class="f-label">ช่วงวันที่</span>
     <select class="select" aria-label="ช่วงวันที่">
-      <option>12 เดือนล่าสุด (ก.ย. 67 – ส.ค. 68)</option>
+      <option>12 เดือนล่าสุด (ก.ย. 68 – ส.ค. 69)</option>
       <option>3 เดือนล่าสุด</option>
       <option>เดือนนี้</option>
       <option>สัปดาห์นี้</option>
@@ -395,7 +395,7 @@ body {
     <div class="spacer"></div>
     <button class="btn-export">
       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-      Export CSV
+      ส่งออก CSV
     </button>
   </div>
 
@@ -457,7 +457,7 @@ body {
       <div class="card-head">
         <h2>แนวโน้มยอดขายรายเดือน</h2>
         <span class="hint">ล้านบาท · ทุกสาขา</span>
-        <span class="right">Sep 67 – Aug 68</span>
+        <span class="right">ก.ย. 68 – ส.ค. 69</span>
       </div>
       <div class="linechart-wrap">
         <svg class="linechart" viewBox="0 0 620 230" role="img" aria-label="กราฟเส้นยอดขายรายเดือน 12 เดือนล่าสุด">
@@ -475,8 +475,8 @@ body {
           <text class="lc-label" x="8" y="198">250K</text>
           <!-- year divider between Dec 67 / Jan 68 -->
           <line x1="195" y1="22" x2="195" y2="195" stroke="var(--border)" stroke-dasharray="2 4"/>
-          <text class="lc-yearmark" x="60" y="16">พ.ศ. 2567</text>
-          <text class="lc-yearmark" x="204" y="16">พ.ศ. 2568</text>
+          <text class="lc-yearmark" x="60" y="16">พ.ศ. 2568</text>
+          <text class="lc-yearmark" x="204" y="16">พ.ศ. 2569</text>
           <!-- area -->
           <path class="lc-area" d="M60 138 L107 129 L154 143 L201 122 L248 116 L295 124 L342 96 L389 82 L436 90 L483 66 L530 52 L577 38 L577 195 L60 195 Z"/>
           <!-- line -->
@@ -660,7 +660,7 @@ body {
       </div>
       <div>
         <h3>สาขาสยามโต 22% จากโปร Buy 1 Get 1</h3>
-        <p>การ์ดโปรโมชัน Buy 1 Get 1 เดือน มิ.ย.–ก.ค. 68 ดันยอดสาขาสยามขึ้น <b>+22% YoY</b> สูงสุดในทุกสาขา โดย 61% ของผู้ใช้โปรกลับมาซื้อซ้ำเต็มราคาภายใน 30 วัน — คุ้มต้นทุนโปรแน่นอน</p>
+        <p>การ์ดโปรโมชัน Buy 1 Get 1 เดือน มิ.ย.–ก.ค. 69 ดันยอดสาขาสยามขึ้น <b>+22% YoY</b> สูงสุดในทุกสาขา โดย 61% ของผู้ใช้โปรกลับมาซื้อซ้ำเต็มราคาภายใน 30 วัน — คุ้มต้นทุนโปรแน่นอน</p>
         <span class="i-tag">Promotion Impact · Confidence 92%</span>
       </div>
     </div>
@@ -690,5 +690,39 @@ body {
 
   <div class="footer-note">คอฟฟี่เชน กรุงเทพ · Sales Analytics v2.4 · Refreshed daily 06:00 · Bangkok ICT</div>
 </div>
+
+<script>
+// ---- filter interactivity (demo) ----
+document.querySelectorAll('.chip').forEach(c => {
+  c.style.cursor = 'pointer';
+  c.addEventListener('click', () => {
+    document.querySelectorAll('.chip').forEach(x => x.classList.remove('on'));
+    c.classList.add('on');
+    showToast(c.textContent.trim() === 'ทั้งหมด'
+      ? 'แสดงข้อมูลรวมทุกสาขา (5 สาขา)'
+      : 'กรองเฉพาะสาขา' + c.textContent.trim() + ' — ในระบบจริงตัวเลขทุกกล่องคำนวณใหม่ทันที');
+  });
+});
+const sel = document.querySelector('.select');
+if (sel) sel.addEventListener('change', () => {
+  showToast('เปลี่ยนช่วงเวลาเป็น: ' + sel.value + ' — กราฟและ KPI อัปเดตอัตโนมัติในระบบจริง');
+});
+document.querySelectorAll('.btn-export').forEach(b => {
+  b.style.cursor = 'pointer';
+  b.addEventListener('click', () => {
+    showToast('กำลังเตรียมไฟล์ CSV — ในระบบจริงจะได้ไฟล์ทันที พร้อมข้อมูลที่กรองแล้ว');
+  });
+});
+function showToast(msg) {
+  let t = document.getElementById('demoToast');
+  if (!t) {
+    t = document.createElement('div'); t.id = 'demoToast';
+    t.style.cssText = 'position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#1c1b18;color:#fff;padding:12px 20px;border-radius:10px;font-size:13.5px;z-index:99;box-shadow:0 8px 30px rgba(0,0,0,.25);max-width:90vw;text-align:center';
+    document.body.appendChild(t);
+  }
+  t.textContent = msg; t.style.opacity = '1'; t.style.transition = 'none';
+  clearTimeout(t._h); t._h = setTimeout(() => { t.style.transition = 'opacity .4s'; t.style.opacity = '0'; }, 2800);
+}
+</script>
 </body>
 </html>
