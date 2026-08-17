@@ -337,7 +337,7 @@ h1{font-size:clamp(24px,4.5vw,34px);font-weight:600;line-height:1.25;letter-spac
               <div class="bubble" style="padding:0;overflow:hidden;background:transparent;border:0">
                 <div class="flex-msg">
                   <div class="flex-hero">
-                    <span class="badge">PRO ประจำเดือน</span>
+                    <span class="badge">โปรประจำเดือน</span>
                     <div class="dish">
                       <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2c1.5 2.5 1.5 5-1 7s-3.5 4.5-1.5 7c-2.5-.5-4.5-2.8-4.5-5.5C5 7 8 3.5 12 2z"/><path d="M13.5 12.5c3 .5 5.5 2.8 5.5 5.5 0 2-1.5 4-4 4h-4c-1.5 0-2.5-.5-3-1.5"/></svg>
                     </div>
@@ -526,7 +526,7 @@ h1{font-size:clamp(24px,4.5vw,34px);font-weight:600;line-height:1.25;letter-spac
     </div>
     <div class="spec-foot">
       <div class="note">ราคาเริ่มต้น 2,500.– · ส่งมอบภายใน 5 วันทำการ · รองรับ LINE OA แบบยืนยันตัวตน</div>
-      <a class="cta" href="#">
+      <a class="cta" href="https://fastwork.co/user/bugtap" target="_blank" rel="noopener">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
         คุยเรื่องรายละเอียดเพิ่ม
       </a>
@@ -534,5 +534,25 @@ h1{font-size:clamp(24px,4.5vw,34px);font-weight:600;line-height:1.25;letter-spac
   </section>
 
 </div>
+
+<script>
+// quick replies + action buttons demo feedback
+document.querySelectorAll('.menu-list button, .flex-actions button').forEach(b => {
+  b.style.cursor = 'pointer';
+  b.addEventListener('click', () => {
+    showToast('ในระบบจริง ปุ่มนี้ส่งคำสั่งเข้าแชททันที — บอทตอบกลับภายใน 1 วินาที เหมือนข้อความที่เห็นด้านบน');
+  });
+});
+function showToast(msg) {
+  let t = document.getElementById('demoToast');
+  if (!t) {
+    t = document.createElement('div'); t.id = 'demoToast';
+    t.style.cssText = 'position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#1c1b18;color:#fff;padding:12px 20px;border-radius:10px;font-size:13.5px;z-index:99;box-shadow:0 8px 30px rgba(0,0,0,.25);max-width:90vw;text-align:center';
+    document.body.appendChild(t);
+  }
+  t.textContent = msg; t.style.opacity = '1'; t.style.transition = 'none';
+  clearTimeout(t._h); t._h = setTimeout(() => { t.style.transition = 'opacity .4s'; t.style.opacity = '0'; }, 2800);
+}
+</script>
 </body>
 </html>
