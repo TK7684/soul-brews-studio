@@ -177,7 +177,124 @@ a.order{color:var(--accent);font-weight:550;text-decoration:none}
 </main>
 </div>
 
-<div class="content" id="orders" style="display:none"></div>
+<div class="content" id="orders" style="display:none">
+<div class="panel">
+<h2>คำสั่งซื้อทั้งหมด</h2>
+<div class="sub">ตัวกรอง: ทุกสถานะ · แสดง 8 จาก 127 รายการวันนี้</div>
+<table>
+<tr><th>เลขที่</th><th>ลูกค้า</th><th>รายการ</th><th>ยอดรวม</th><th>ชำระโดย</th><th>สถานะ</th></tr>
+<tr><td>#FW-2026-1284</td><td>สมหญิง ก.</td><td>กาแฟดริป 1, เข็มขัด 1</td><td>฿1,150</td><td class="paym">PromptPay</td><td><span class="chip ok">ชำระแล้ว</span></td></tr>
+<tr><td>#FW-2026-1283</td><td>ธนากร ส.</td><td>ตะกร้าหวาย 2</td><td>฿890</td><td class="paym">COD</td><td><span class="chip ship">กำลังจัดส่ง</span></td></tr>
+<tr><td>#FW-2026-1282</td><td>Priya M.</td><td>เซ็ตชา 1</td><td>฿1,450</td><td class="paym">โอนเงิน</td><td><span class="chip wait">รอตรวจสอบ</span></td></tr>
+<tr><td>#FW-2026-1281</td><td>วรรณิดา ท.</td><td>ผ้ายกดอก 1, กระเป๋าผ้า 1</td><td>฿1,690</td><td class="paym">PromptPay</td><td><span class="chip ok">ชำระแล้ว</span></td></tr>
+<tr><td>#FW-2026-1280</td><td>อนุชา พ.</td><td>แก้วเซรามิก 4</td><td>฿920</td><td class="paym">COD</td><td><span class="chip ship">กำลังจัดส่ง</span></td></tr>
+<tr><td>#FW-2026-1279</td><td>Kanya W.</td><td>โคมไฟไม้ไผ่ 1</td><td>฿2,200</td><td class="paym">PromptPay</td><td><span class="chip ok">ส่งสำเร็จ</span></td></tr>
+<tr><td>#FW-2026-1278</td><td>ศิริพร ค.</td><td>เขียนช้าง 1</td><td>฿450</td><td class="paym">COD</td><td><span class="chip can">ยกเลิก</span></td></tr>
+<tr><td>#FW-2026-1277</td><td>ณัฐพล ว.</td><td>ชุดถ้วยชา 2</td><td>฿2,780</td><td class="paym">โอนเงิน</td><td><span class="chip ok">ส่งสำเร็จ</span></td></tr>
+</table>
+</div>
+<div class="note"><b>หมายเหตุ:</b> คลิกเลขที่คำสั่งซื้อเพื่อดูรายละเอียด พิมพ์ใบส่งขาย และอัปเดตสถานะได้ในหน้าเดียว — ในระบบจริงข้อมูลซิงก์กับช่องทางขายอัตโนมัติ</div>
+</div>
+
+<div class="content" id="products" style="display:none">
+<div class="panel">
+<h2>สินค้าทั้งหมด</h2>
+<div class="sub">142 รายการ · 5 รายการใกล้หมดสต็อก</div>
+<table>
+<tr><th>สินค้า</th><th>ราคา</th><th>คงเหลือ</th><th>ขายเดือนนี้</th><th>สถานะ</th></tr>
+<tr><td>กาแฟดริปบดละเอียด 250g</td><td>฿350</td><td>48</td><td>96</td><td><span class="chip ok">พร้อมขาย</span></td></tr>
+<tr><td>ตะกร้าหวายสานมือ</td><td>฿420</td><td>7</td><td>31</td><td><span class="chip wait">ใกล้หมด</span></td></tr>
+<tr><td>เซ็ตชาภาชนะดินเผา</td><td>฿1,450</td><td>12</td><td>18</td><td><span class="chip ok">พร้อมขาย</span></td></tr>
+<tr><td>ผ้ายกดอกลำพูน (2 สี)</td><td>฿890</td><td>23</td><td>27</td><td><span class="chip ok">พร้อมขาย</span></td></tr>
+<tr><td>แก้วเซรามิกเคลือบขาว</td><td>฿230</td><td>4</td><td>52</td><td><span class="chip wait">ใกล้หมด</span></td></tr>
+<tr><td>โคมไฟไม้ไผ่สาน</td><td>฿2,200</td><td>15</td><td>9</td><td><span class="chip ok">พร้อมขาย</span></td></tr>
+<tr><td>เขียนช้างไม้สักขนาดเล็ก</td><td>฿450</td><td>0</td><td>14</td><td><span class="chip can">หมดสต็อก</span></td></tr>
+<tr><td>ชุดถ้วยชา 2 ใบ + ถาด</td><td>฿1,390</td><td>19</td><td>11</td><td><span class="chip ok">พร้อมขาย</span></td></tr>
+</table>
+</div>
+<div class="note"><b>หมายเหตุ:</b> ระบบจริงเชื่อมสต็อกร่วมกับทุกช่องทาง (Shopee / Lazada / LINE) และแจ้งเตือนไลน์แม่ค้าเมื่อสินค้าใกล้หมดโดยอัตโนมัติ</div>
+</div>
+
+<div class="content" id="customers" style="display:none">
+<div class="two-col">
+<div class="panel">
+<h2>ลูกค้าใหม่ 30 วันล่าสุด</h2>
+<div class="sub">รวม 1,842 ลูกค้า · เพิ่มขึ้น 23% จากเดือนก่อน</div>
+<table>
+<tr><th>ชื่อ</th><th>ช่องทาง</th><th>คำสั่งซื้อ</th><th>ยอมซื้อรวม</th></tr>
+<tr><td>สมหญิง ก.</td><td>Shopee</td><td>4</td><td>฿3,120</td></tr>
+<tr><td>ธนากร ส.</td><td>LINE OA</td><td>2</td><td>฿1,680</td></tr>
+<tr><td>Priya M.</td><td>Lazada</td><td>1</td><td>฿1,450</td></tr>
+<tr><td>วรรณิดา ท.</td><td>Facebook</td><td>6</td><td>฿5,890</td></tr>
+<tr><td>อนุชา พ.</td><td>Shopee</td><td>3</td><td>฿2,090</td></tr>
+</table>
+</div>
+<div class="panel">
+<h2>กลุ่มลูกค้า (แบ่งอัตโนมัติ)</h2>
+<div class="sub">จากพฤติกรรมการซื้อจริง</div>
+<table>
+<tr><td>ลูกค้าประจำ (ซื้อ 5+ ครั้ง)</td><td style="text-align:right;font-weight:600">317 คน</td></tr>
+<tr><td>ลูกค้าที่เพิ่งกลับมาซื้อ</td><td style="text-align:right;font-weight:600">224 คน</td></tr>
+<tr><td>ยังไม่ได้ซื้อซ้ำ 60 วัน</td><td style="text-align:right;font-weight:600">860 คน</td></tr>
+<tr><td>ตะกร้าค้าง (ไม่ได้จ่าย)</td><td style="text-align:right;font-weight:600">441 คน</td></tr>
+</table>
+</div>
+</div>
+<div class="note"><b>หมายเหตุ:</b> ระบบจริงส่งข้อความ LINE หาลูกค้ากลุ่ม "ยังไม่ได้ซื้อซ้ำ" และ "ตะกร้าค้าง" อัตโนมัติ — ฟีเจอร์ดึงลูกค้ากลับที่ช่วยเพิ่มยอดขายได้จริง</div>
+</div>
+
+<div class="content" id="reports" style="display:none">
+<div class="panel">
+<h2>รายงานยอดขายรายเดือน</h2>
+<div class="sub">เปรียบเทียบปี 2568 / 2569 · หน่วย: ล้านบาท</div>
+<table>
+<tr><th>เดือน</th><th>ปี 2568</th><th>ปี 2569</th><th>เติบโต</th></tr>
+<tr><td>มกราคม</td><td>1.4</td><td>1.8</td><td>+29%</td></tr>
+<tr><td>กุมภาพันธ์</td><td>1.3</td><td>1.6</td><td>+23%</td></tr>
+<tr><td>มีนาคม</td><td>1.6</td><td>1.9</td><td>+19%</td></tr>
+<tr><td>เมษายน</td><td>1.5</td><td>1.7</td><td>+13%</td></tr>
+<tr><td>พฤษภาคม</td><td>1.7</td><td>2.0</td><td>+18%</td></tr>
+<tr><td>มิถุนายน</td><td>1.8</td><td>2.1</td><td>+17%</td></tr>
+<tr><td>กรกฎาคม</td><td>1.9</td><td>2.3</td><td>+21%</td></tr>
+</table>
+</div>
+<div class="panel">
+<h2>ส่งออกรายงาน</h2>
+<div class="sub">ไฟล์พร้อมใช้กับ accountant หรืออัปโหลดขึ้น Google Drive</div>
+<table>
+<tr><td>สรุปยอดขายรายวัน (.xlsx)</td><td style="text-align:right">อัปเดตล่าสุด 09:42 น.</td></tr>
+<tr><td>สรุปยอดขายรายเดือน (.xlsx)</td><td style="text-align:right">อัปเดตล่าสุด 1 ส.ค. 2569</td></tr>
+<tr><td>รายงานภาษีขาย (.pdf)</td><td style="text-align:right">อัปเดตล่าสุด 31 ก.ค. 2569</td></tr>
+<tr><td>รายชื่อลูกค้า (.csv)</td><td style="text-align:right">อัปเดตล่าสุด 09:42 น.</td></tr>
+</table>
+</div>
+<div class="note"><b>หมายเหตุ:</b> ทุกรายงานส่งออกได้ด้วยคลิกเดียว — ไม่ต้องนั่งรวมไฟล์เองทีละชีตเหมือนเดิม</div>
+</div>
+
+<div class="content" id="settings" style="display:none">
+<div class="two-col">
+<div class="panel">
+<h2>ข้อมูลร้าน</h2>
+<table>
+<tr><td>ชื่อร้าน</td><td style="font-weight:600">แม่ค้าออนไลน์ ป้าง</td></tr>
+<tr><td>ที่อยู่จัดส่งต้นทาง</td><td>88/4 ถ.รัชดาภิเษก แขวงดินแดง เขตดินแดง กรุงเทพฯ 10400</td></tr>
+<tr><td>เบอร์ติดต่อ</td><td>089-555-1234</td></tr>
+<tr><td>LINE OA ที่เชื่อมต่อ</td><td>@maekhaepang (ตรวจสอบแล้ว)</td></tr>
+<tr><td>บัญชีรับเงิน PromptPay</td><td>เชื่อมต่อแล้ว 089-555-1234</td></tr>
+</table>
+</div>
+<div class="panel">
+<h2>สิทธิ์ผู้ใช้</h2>
+<table>
+<tr><th>ผู้ใช้</th><th>บทบาท</th><th>สถานะ</th></tr>
+<tr><td>คุณแม่ ป้าง</td><td>ผู้ดูแลสูงสุด</td><td><span class="chip ok">ใช้งานอยู่</span></td></tr>
+<tr><td>ลูกสาวแป้ง</td><td>ดูได้อย่างเดียว</td><td><span class="chip ok">ใช้งานอยู่</span></td></tr>
+<tr><td>พี่นก (แพ็คของ)</td><td>จัดการคำสั่งซื้อ</td><td><span class="chip wait">รออนุมัติ</span></td></tr>
+</table>
+</div>
+</div>
+<div class="note"><b>หมายเหตุ:</b> แบ่งสิทธิ์คนในทีมได้ตามหน้าที่ — คนแพ็คของเห็นเฉพาะคำสั่งซื้อ ไม่เห็นยอดเงินรวม ปลอดภัยกว่าแชร์รหัสผ่านเดียวกัน</div>
+</div>
 <script>
 // section switching via sidebar (single-page demo)
 document.querySelectorAll('.menu a').forEach(a=>{
@@ -187,9 +304,22 @@ document.querySelectorAll('.menu a').forEach(x=>x.classList.remove('active'));
 a.classList.add('active');
 document.querySelector('.topbar h1').textContent = a.textContent.trim().replace(/\d+$/,'');
 document.querySelector('.crumb').textContent = 'หน้าหลัก / ' + a.textContent.trim().replace(/\d+$/,'');
-document.getElementById('dash').style.display = a.getAttribute('href')==='#dash' ? 'block':'none';
+['dash','orders','products','customers','reports','settings'].forEach(id=>{
+  document.getElementById(id).style.display = a.getAttribute('href')==='#'+id ? 'block':'none';
 });
 });
+});
+// demo toast for order links (real system opens detail page)
+document.querySelectorAll('.order').forEach(o=>o.addEventListener('click',e=>{
+e.preventDefault();
+showDemoToast('หน้ารายละเอียดคำสั่งซื้อเปิดในระบบจริง — นี่คือหน้าตัวอย่าง');
+}));
+function showDemoToast(msg){
+let t=document.getElementById('demoToast');
+if(!t){t=document.createElement('div');t.id='demoToast';t.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#1c1b18;color:#fff;padding:12px 20px;border-radius:10px;font-size:14px;z-index:99;box-shadow:0 8px 30px rgba(0,0,0,.25)';document.body.appendChild(t);}
+t.textContent=msg;t.style.opacity='1';
+clearTimeout(t._h);t._h=setTimeout(()=>{t.style.opacity='0';t.style.transition='opacity .4s'},2600);
+}
 </script>
 </body>
 </html>
