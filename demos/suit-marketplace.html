@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SUITRANK Thailand — จัดอันดับร้านตัดสูททั่วไทย เทียบราคา หาร้านตัดสูทใกล้คุณ</title>
+<meta name="description" content="รวมร้านตัดสูทสั่งตัดทั่วประเทศ กรุงเทพฯ เชียงใหม่ ภูเก็ต ขอนแก่น หาดใหญ่ — ค้นหาตามจังหวัด งบประมาณ สไตล์ และชนิดผ้า พร้อมจัดอันดับ รีวิวจากลูกค้าจริง และแบบทดสอบจับคู่ร้านให้เหมาะกับคุณใน 1 นาที">
+<meta property="og:title" content="SUITRANK Thailand — จัดอันดับร้านตัดสูททั่วไทย">
+<meta property="og:description" content="เทียบราคา ดูรีวิวจริง และให้ระบบจับคู่ร้านตัดสูทที่เหมาะกับงบและโอกาสใช้งานของคุณ — ครบจบในที่เดียว">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="th_TH">
+<style>
+:root{
+  --bg:#0f0f0f; --surface:#161616; --surface2:#1c1c1c;
+  --fg:#f0f0f0; --muted:#9a9a9a; --border:#2a2a2a;
+  --accent:#e0b458; --accent-fg:#111;
+  --success:#3fb27f;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:system-ui,-apple-system,'Segoe UI',Tahoma,'Noto Sans Thai',sans-serif;background:var(--bg);color:var(--fg);line-height:1.7;font-size:15px}
+a{color:inherit}
+.wrap{max-width:1180px;margin:0 auto;padding:0 20px}
+.ic{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;flex:none}
+/* nav */
+nav{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--border);z-index:60}
+nav .wrap{display:flex;align-items:center;gap:20px;height:60px}
+.logo{display:flex;align-items:center;gap:9px;font-weight:700;font-size:16px;letter-spacing:.02em;text-decoration:none;white-space:nowrap}
+.logo svg{color:var(--accent)}
+.logo em{font-style:normal;color:var(--accent)}
+.navlinks{display:flex;gap:4px;margin-left:auto;font-size:13.5px;font-weight:500;overflow-x:auto;scrollbar-width:none}
+.navlinks::-webkit-scrollbar{display:none}
+.navlinks a{text-decoration:none;color:var(--muted);padding:8px 12px;white-space:nowrap}
+.navlinks a:hover{color:var(--fg)}
+.navlinks a.act{color:var(--accent)}
+/* hero */
+.hero{border-bottom:1px solid var(--border);background:linear-gradient(180deg,#141414,var(--bg));padding:56px 0 48px}
+.eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+h1{font-size:clamp(27px,4.6vw,44px);font-weight:700;letter-spacing:-.02em;line-height:1.18}
+.hero p.sub{color:var(--muted);max-width:58ch;margin-top:12px;font-size:15.5px}
+.cta-row{display:flex;gap:12px;margin-top:24px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 22px;font-size:14px;font-weight:600;font-family:inherit;text-decoration:none;border:1px solid var(--border);background:none;color:var(--fg);cursor:pointer;border-radius:0}
+.btn:hover{border-color:var(--muted)}
+.btn-primary{background:var(--accent);color:var(--accent-fg);border-color:var(--accent)}
+.btn-primary:hover{border-color:var(--accent);opacity:.92}
+.btn-sm{padding:8px 14px;font-size:13px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;background:var(--border);border:1px solid var(--border);margin-top:44px}
+.stats div{background:var(--surface);padding:16px 18px}
+.stats .n{font-size:23px;font-weight:700;letter-spacing:-.01em}
+.stats .l{font-size:12px;color:var(--muted)}
+/* sections */
+section{padding:60px 0 24px;scroll-margin-top:60px}
+.kicker{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);font-weight:600}
+h2{font-size:clamp(21px,2.8vw,27px);font-weight:700;letter-spacing:-.015em;margin:6px 0 4px}
+.lead{color:var(--muted);font-size:14px;max-width:64ch}
+.sec-head{display:flex;align-items:end;justify-content:space-between;gap:16px;flex-wrap:wrap}
+/* tabs */
+.tabs{display:flex;gap:6px;border:1px solid var(--border);width:max-content;max-width:100%;overflow-x:auto;margin:22px 0 0;padding:4px}
+.tab{border:1px solid transparent;background:none;color:var(--muted);font-family:inherit;font-size:13.5px;font-weight:600;padding:9px 16px;cursor:pointer;white-space:nowrap;display:inline-flex;align-items:center;gap:7px}
+.tab:hover{color:var(--fg)}
+.tab.act{color:var(--fg);background:var(--surface2);border-color:var(--border)}
+/* filters */
+.filters{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin-top:22px;background:var(--surface);border:1px solid var(--border);padding:14px}
+.filters label{font-size:11.5px;font-weight:600;color:var(--muted);letter-spacing:.04em;display:block;margin-bottom:5px}
+select,input,textarea{font-family:inherit;font-size:14px;padding:10px 12px;border:1px solid var(--border);background:var(--surface2);color:var(--fg);border-radius:0;width:100%;appearance:none}
+select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%239a9a9a' fill='none' stroke-width='1.5'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:30px}
+select:focus,input:focus,textarea:focus{outline:2px solid #332c1a;border-color:var(--accent)}
+/* shop cards */
+.res-count{font-size:13px;color:var(--muted);margin:16px 0 12px}
+.res-count b{color:var(--accent)}
+.shop-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
+.shop{background:var(--surface);border:1px solid var(--border);padding:20px;display:flex;flex-direction:column;gap:9px;position:relative;transition:border-color .15s}
+.shop:hover{border-color:var(--muted)}
+.shop.sp{border-left:3px solid var(--accent)}
+.shop-top{display:flex;align-items:start;justify-content:space-between;gap:10px}
+.shop h3{font-size:16px;font-weight:650;line-height:1.35}
+.shop .prov{font-size:12.5px;color:var(--muted);display:flex;align-items:center;gap:5px}
+.badge{font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:3px 8px;white-space:nowrap}
+.badge.sp{background:var(--accent);color:var(--accent-fg)}
+.badge.vf{background:rgba(63,178,127,.14);color:var(--success);border:1px solid rgba(63,178,127,.4)}
+.rate{display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600}
+.rate svg{color:var(--accent)}
+.rate small{color:var(--muted);font-weight:400}
+.price{font-size:15px;font-weight:650;color:var(--accent)}
+.price small{color:var(--muted);font-weight:400;font-size:11.5px;display:block}
+.tags{display:flex;flex-wrap:wrap;gap:6px}
+.tag{font-size:11.5px;color:var(--muted);border:1px solid var(--border);padding:2px 9px;white-space:nowrap}
+.shop-foot{display:flex;align-items:center;gap:10px;margin-top:auto;padding-top:6px}
+.chk{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;color:var(--muted);cursor:pointer;user-select:none}
+.chk input{width:auto;accent-color:var(--accent)}
+.link-btn{background:none;border:none;color:var(--accent);font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;padding:4px}
+.link-btn:hover{text-decoration:underline}
+/* rank */
+.rank-wrap{margin-top:20px;display:grid;gap:10px}
+.rank-item{display:grid;grid-template-columns:52px 1fr auto;gap:16px;align-items:center;background:var(--surface);border:1px solid var(--border);padding:16px 18px}
+.rank-item.feat{border-color:#4d3f1e;background:linear-gradient(90deg,rgba(224,180,88,.07),var(--surface) 45%)}
+.rank-item.feat::after{content:"สปอนเซอร์";font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);border:1px solid #4d3f1e;padding:2px 8px;position:absolute;right:16px;top:-9px;background:var(--bg)}
+.rank-item{position:relative}
+.rn{font-size:26px;font-weight:750;color:var(--border);text-align:center;line-height:1}
+.rank-item:nth-child(1) .rn,.rank-item[data-r="1"] .rn{color:var(--accent)}
+.rank-item h3{font-size:15.5px;font-weight:650}
+.rank-item .meta{font-size:12.5px;color:var(--muted);display:flex;gap:10px;flex-wrap:wrap}
+.rank-item .score{text-align:right}
+.rank-item .score .sv{font-size:17px;font-weight:700;color:var(--accent)}
+.rank-item .score .sl{font-size:10.5px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase}
+/* quiz */
+.quiz-box{background:var(--surface);border:1px solid var(--border);padding:26px;margin-top:22px;max-width:760px}
+.progress{height:4px;background:var(--surface2);margin-bottom:22px}
+.progress i{display:block;height:100%;background:var(--accent);transition:width .25s}
+.q-step{font-size:12px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;font-weight:600}
+.q-title{font-size:19px;font-weight:650;margin:6px 0 18px}
+.q-opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
+.q-opt{text-align:left;background:var(--surface2);border:1px solid var(--border);padding:14px 16px;cursor:pointer;font-family:inherit;color:var(--fg);font-size:14px;display:flex;flex-direction:column;gap:2px}
+.q-opt b{font-weight:650}
+.q-opt small{color:var(--muted);font-size:12px}
+.q-opt:hover{border-color:var(--muted)}
+.q-opt.sel{border-color:var(--accent);color:var(--accent);background:rgba(224,180,88,.07)}
+.q-nav{display:flex;justify-content:space-between;gap:10px;margin-top:22px}
+.q-result .match{display:flex;gap:18px;align-items:center;background:var(--surface2);border:1px solid var(--border);padding:16px 18px;margin-bottom:10px}
+.match .mp{font-size:26px;font-weight:750;color:var(--accent);min-width:86px;text-align:center}
+.match h3{font-size:15.5px;font-weight:650}
+.match .why{font-size:12.5px;color:var(--muted)}
+/* compare */
+.cmp-table{width:100%;border-collapse:collapse;margin-top:20px;background:var(--surface);font-size:13.5px}
+.cmp-table th,.cmp-table td{padding:12px 14px;border:1px solid var(--border);text-align:left;vertical-align:top}
+.cmp-table th{background:var(--surface2);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600;width:120px}
+.cmp-table td.sh{font-weight:650;color:var(--accent);background:var(--surface2)}
+.cmp-empty{border:1px dashed var(--border);color:var(--muted);padding:34px;text-align:center;font-size:13.5px;margin-top:20px}
+/* compare tray */
+.tray{position:fixed;left:0;right:0;bottom:0;background:var(--surface2);border-top:1px solid var(--border);padding:10px 20px;display:none;justify-content:center;align-items:center;gap:14px;z-index:70;flex-wrap:wrap}
+.tray.on{display:flex}
+.tray span{font-size:13px;color:var(--muted)}
+.tray b{color:var(--fg)}
+/* reviews */
+.rev-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;margin-top:22px}
+.rev{background:var(--surface);border:1px solid var(--border);padding:20px;display:flex;flex-direction:column;gap:10px}
+.rev .stars{display:flex;gap:2px;color:var(--accent)}
+.rev p{font-size:13.5px;color:#cfcfcf}
+.rev .who{display:flex;align-items:center;gap:10px;margin-top:auto}
+.rev .ava{width:38px;height:38px;background:var(--surface2);color:var(--accent);display:flex;align-items:center;justify-content:center;font-weight:650;font-size:14px}
+.rev .who b{font-size:13.5px;display:block;line-height:1.4}
+.rev .who small{color:var(--muted);font-size:11.5px}
+.gate{border:1px dashed var(--border);padding:26px;text-align:center;margin-top:14px}
+.gate p{color:var(--muted);font-size:13.5px;margin-bottom:14px}
+.gate .row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.gate-btn{display:inline-flex;align-items:center;gap:8px;padding:11px 20px;font-family:inherit;font-size:13.5px;font-weight:600;cursor:pointer;border:1px solid var(--border);background:var(--surface2);color:var(--fg)}
+.gate-btn:hover{border-color:var(--muted)}
+.gate-btn.line{background:#06c755;color:#fff;border-color:#06c755}
+.gate-btn.g{background:#fff;color:#222;border-color:#fff}
+.rev-form{background:var(--surface);border:1px solid var(--border);padding:22px;margin-top:14px;display:grid;gap:12px;max-width:640px}
+.rev-form .frow{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.starpick{display:flex;gap:4px}
+.starpick button{background:none;border:none;cursor:pointer;color:var(--border);padding:2px}
+.starpick button.on{color:var(--accent)}
+@media(max-width:560px){.rev-form .frow{grid-template-columns:1fr}}
+/* jobs */
+.job-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:14px;margin-top:22px}
+.job{background:var(--surface);border:1px solid var(--border);padding:20px;display:flex;flex-direction:column;gap:8px}
+.job .jt{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);font-weight:650}
+.job h3{font-size:15.5px;font-weight:650;line-height:1.4}
+.job p{font-size:13px;color:var(--muted);flex:1}
+.job .meta{font-size:12.5px;color:var(--muted);display:flex;gap:12px;flex-wrap:wrap}
+/* merchant/admin */
+.panels{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:22px}
+@media(max-width:820px){.panels{grid-template-columns:1fr}}
+.panel{background:var(--surface);border:1px solid var(--border);padding:22px}
+.panel .ph{display:flex;align-items:center;gap:9px;margin-bottom:6px}
+.panel .ph svg{color:var(--accent)}
+.panel h3{font-size:15.5px;font-weight:650}
+.demo-tag{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);border:1px solid var(--border);padding:2px 8px}
+.panel p.note{font-size:12.5px;color:var(--muted);margin-bottom:14px}
+.panel form,.panel .list{display:grid;gap:10px}
+.doc-row{display:flex;align-items:center;gap:9px;font-size:13px;border:1px solid var(--border);padding:9px 12px;background:var(--surface2)}
+.doc-row svg{color:var(--muted)}
+.doc-row .st{margin-left:auto;font-size:11px;font-weight:650;letter-spacing:.05em}
+.doc-row .st.ok{color:var(--success)}
+.doc-row .st.wait{color:var(--accent)}
+.q-item{border:1px solid var(--border);padding:11px 13px;background:var(--surface2);font-size:13px}
+.q-item .qh{display:flex;justify-content:space-between;gap:8px;align-items:center;font-weight:600}
+.q-item small{color:var(--muted)}
+.q-actions{display:flex;gap:8px;margin-top:8px}
+.mini{padding:6px 12px;font-size:12px}
+.mini.ok{border-color:rgba(63,178,127,.5);color:var(--success)}
+.mini.no{color:var(--muted)}
+/* live viewer */
+.viewer{position:fixed;left:16px;bottom:16px;background:var(--surface2);border:1px solid var(--border);padding:8px 14px;font-size:12.5px;color:var(--muted);display:flex;align-items:center;gap:8px;z-index:65}
+.viewer i{width:8px;height:8px;background:var(--success);border-radius:50%;animation:pulse 1.6s infinite}
+.viewer b{color:var(--fg)}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+/* toast */
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(12px);background:var(--accent);color:var(--accent-fg);padding:12px 22px;font-size:13.5px;font-weight:600;opacity:0;pointer-events:none;transition:.25s;z-index:90;max-width:92vw;text-align:center}
+.toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+/* footer */
+footer{border-top:1px solid var(--border);margin-top:56px;padding:36px 0 120px;color:var(--muted);font-size:12.5px}
+footer .cols{display:grid;grid-template-columns:2fr 1fr 1fr;gap:28px}
+@media(max-width:700px){footer .cols{grid-template-columns:1fr}}
+footer h4{color:var(--fg);font-size:12px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px}
+footer a{display:block;text-decoration:none;padding:2px 0;color:var(--muted)}
+footer a:hover{color:var(--fg)}
+@media(max-width:560px){
+  .rank-item{grid-template-columns:38px 1fr;row-gap:6px}
+  .rank-item .score{grid-column:2;text-align:left}
+  .hero{padding:44px 0 36px}
+  section{padding:46px 0 16px}
+}
+@media(min-width:1280px){.shop-grid{grid-template-columns:repeat(3,1fr)}}
+</style>
+</head>
+<body>
+<nav aria-label="เมนูหลัก">
+<div class="wrap">
+<a class="logo" href="#top"><svg class="ic" width="24" height="24" viewBox="0 0 24 24"><path d="M8 3 4 6l2 4 2-1v12h8V9l2 1 2-4-4-3-2.5 1.5a4 4 0 0 1-3 0z"/><path d="M12 9l-1.5 3 1.5 6 1.5-6z"/></svg>SUITRANK <em>TH</em></a>
+<div class="navlinks">
+<a href="#directory">ค้นหาร้าน</a>
+<a href="#ranking">จัดอันดับ</a>
+<a href="#quiz">จับคู่ร้าน</a>
+<a href="#compare">เทียบร้าน</a>
+<a href="#reviews">รีวิวจริง</a>
+<a href="#jobs">ประกาศหาสูท</a>
+</div>
+</div>
+</nav>
+
+<header class="hero" id="top">
+<div class="wrap">
+<div class="eyebrow"><svg class="ic" width="14" height="14" viewBox="0 0 24 24"><path d="M12 2l2.4 4.9 5.6.8-4 3.9.9 5.4L12 14.5 7.1 17l.9-5.4-4-3.9 5.6-.8z"/></svg>ศูนย์รวมร้านตัดสูทสั่งตัดทั่วประเทศ</div>
+<h1>จัดอันดับร้านตัดสูททั่วไทย<br>เทียบราคา ดูรีวิวจริง ตัดสินใจได้ในไม่กี่นาที</h1>
+<p class="sub">SUITRANK รวบรวมร้านตัดสูงฝีมือในกรุงเทพฯ เชียงใหม่ ภูเก็ต ขอนแก่น หาดใหญ่ และอีกหลายจังหวัด พร้อมระบบจับคู่ร้านตามงบประมาณ โอกาสใช้งาน สไตล์ และชนิดผ้า — หมดปัญหาตัดสูทแล้วผิดหวัง</p>
+<div class="cta-row">
+<a class="btn btn-primary" href="#quiz">หาร้านที่ใช่ใน 1 นาที <svg class="ic" width="15" height="15" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></a>
+<a class="btn" href="#directory">ดูร้านทั้งหมด</a>
+</div>
+<div class="stats">
+<div><div class="n">128</div><div class="l">ร้านในระบบทั่วประเทศ</div></div>
+<div><div class="n">42</div><div class="l">จังหวัดที่เปิดให้บริการ</div></div>
+<div><div class="n">6,214</div><div class="l">รีวิวจากลูกค้ายืนยันตัวจริง</div></div>
+<div><div class="n">4.7</div><div class="l">คะแนนเฉลี่ยของร้านระดับ A</div></div>
+</div>
+</div>
+</header>
+
+<!-- ============ DIRECTORY ============ -->
+<section id="directory" aria-labelledby="h-dir">
+<div class="wrap">
+<div class="kicker">ค้นหาร้าน · Directory</div>
+<h2 id="h-dir">ร้านตัดสูทคัดคุณภาพ กรองตามที่คุณต้องการ</h2>
+<p class="lead">ทุกร้านผ่านการตรวจเอกสารทะเบียนการค้าและเส้นทางการผลิต ก่อนเข้าระบบจัดอันดับ</p>
+<div class="filters" role="search">
+<div><label for="fProv">จังหวัด</label>
+<select id="fProv" onchange="applyFilters()">
+<option value="">ทุกจังหวัด</option>
+<option>กรุงเทพมหานคร</option>
+<option>เชียงใหม่</option>
+<option>ภูเก็ต</option>
+<option>ขอนแก่น</option>
+<option>สงขลา (หาดใหญ่)</option>
+<option>นครราชสีมา</option>
+</select></div>
+<div><label for="fBudget">งบประมาณ (ชุดละ)</label>
+<select id="fBudget" onchange="applyFilters()">
+<option value="">ทุกช่วงราคา</option>
+<option value="0-6000">ไม่เกิน 6,000 บาท</option>
+<option value="6000-12000">6,000 – 12,000 บาท</option>
+<option value="12000-25000">12,000 – 25,000 บาท</option>
+<option value="25000-999999">25,000 บาทขึ้นไป</option>
+</select></div>
+<div><label for="fStyle">สไตล์ / โอกาสใช้งาน</label>
+<select id="fStyle" onchange="applyFilters()">
+<option value="">ทุกสไตล์</option>
+<option value="business">สูทธุรกิจ</option>
+<option value="gala">งานเลี้ยง / พิธีการ</option>
+<option value="wedding">งานแต่งงาน</option>
+</select></div>
+<div><label for="fFabric">ชนิดผ้า</label>
+<select id="fFabric" onchange="applyFilters()">
+<option value="">ทุกชนิดผ้า</option>
+<option value="wool">ขนสัตว์ (Wool)</option>
+<option value="linen">ลินิน</option>
+<option value="cotton">ฝ้าย</option>
+</select></div>
+<div><label for="fSort">เรียงตาม</label>
+<select id="fSort" onchange="applyFilters()">
+<option value="rating">คะแนนสูงสุด</option>
+<option value="priceAsc">ราคาต่ำ → สูง</option>
+<option value="priceDesc">ราคาสูง → ต่ำ</option>
+</select></div>
+</div>
+<p class="res-count" id="resCount" aria-live="polite"></p>
+<div class="shop-grid" id="shopGrid"></div>
+<button class="link-btn" id="btnReset" onclick="resetFilters()" style="margin-top:16px">ล้างตัวกรองทั้งหมด</button>
+</div>
+</section>
+<!-- ============ RANKING ============ -->
+<section id="ranking" aria-labelledby="h-rank">
+<div class="wrap">
+<div class="sec-head"><div><div class="kicker">จัดอันดับ · Ranking</div><h2 id="h-rank">ร้านตัดสูทที่ดีที่สุดในไทย</h2>
+<p class="lead">จัดอันดับจากคะแนนรีวิวคู่จำนวนรีวิวจริง — ร้านสปอนเซอร์แสดงสัญลักษณ์กำกับชัดเจน เพื่อความโปร่งใส</p></div>
+<div class="tabs"><button class="tab act" id="rkTH" onclick="setRank('th')">Top 5 ทั่วประเทศ</button><button class="tab" id="rkPV" onclick="setRank('pv')">ตามจังหวัด</button></div></div>
+<div class="rank-wrap" id="rankList"></div>
+</div>
+</section>
+
+<!-- ============ QUIZ ============ -->
+<section id="quiz" aria-labelledby="h-quiz">
+<div class="wrap">
+<div class="kicker">จับคู่ร้าน · Suit Quiz</div><h2 id="h-quiz">หาร้านที่ใช่กับคุณ ใน 5 คำถาม</h2>
+<p class="lead">ตอบตามจริง ระบบคำนวณ Match Score เทียบทุกร้านในระบบ — ใช้เวลาไม่ถึงนาที</p>
+<div class="quiz-box" id="quizBox"></div>
+</div>
+</section>
+
+<!-- ============ COMPARE ============ -->
+<section id="compare" aria-labelledby="h-cmp">
+<div class="wrap">
+<div class="kicker">เทียบร้าน · Compare</div><h2 id="h-cmp">เปรียบเทียบร้าน สูงสุด 3 ร้าน</h2>
+<p class="lead">เลือกร้านจากหน้าค้นหาแล้วกด “เทียบร้าน” — ตารางนี้จะสรุปทุกอย่างให้ตัดสินใจ</p>
+<div id="cmpBox"></div>
+</div>
+</section>
+
+<!-- ============ REVIEWS ============ -->
+<section id="reviews" aria-labelledby="h-rev">
+<div class="wrap">
+<div class="kicker">รีวิวจริง · Reviews</div><h2 id="h-rev">รีวิวจากลูกค้าที่ยืนยันตัวตน</h2>
+<p class="lead">รีวิวได้เฉพาะสมาชิกที่ล็อกอินผ่าน LINE หรือ Google — ผู้แนบใบเสร็จได้ตรา Verified Customer</p>
+<div id="revGrid" class="rev-grid"></div>
+<div class="gate" id="gate">
+<p>เข้าสู่ระบบเพื่อเขียนรีวิว (งานจริงเชื่อม OAuth จริง)</p>
+<div class="row"><button class="gate-btn line" onclick="loginLine()"><svg class="ic" width="15" height="15" viewBox="0 0 24 24"><path d="M12 3a9 9 0 0 0-9 9 8.9 8.9 0 0 0 9.6 8.9c1.4-.1 2.4-.5 2.4-1.6v-2.6c0-.5.4-.8.9-.7a9.5 9.5 0 0 0 3.6-5.6A8.8 8.8 0 0 0 12 3z"/></svg>เข้าสู่ระบบด้วย LINE</button>
+<button class="gate-btn g" onclick="loginGoogle()">เข้าสู่ระบบด้วย Google</button></div>
+</div>
+<div id="revFormWrap" style="display:none">
+<form class="rev-form" onsubmit="return submitRev(event)">
+<div class="frow"><div><label style="font-size:12px;color:var(--muted)">ร้านที่ใช้บริการ</label><select id="rvShop" required></select></div>
+<div><label style="font-size:12px;color:var(--muted)">คะแนน</label><div class="starpick" id="starpick"><button type="button" onclick="pickStar(1)">★</button><button type="button" onclick="pickStar(2)">★</button><button type="button" class="on" onclick="pickStar(3)">★</button><button type="button" onclick="pickStar(4)">★</button><button type="button" onclick="pickStar(5)">★</button></div></div></div>
+<textarea id="rvText" rows="3" placeholder="เล่าประสบการณ์จริง: การวัดตัว งานผ้า บริการ ความตรงเวลา" required></textarea>
+<label class="chk" style="font-size:13px"><input type="checkbox" id="rvReceipt"> มีใบเสร็จ — ขอตรา Verified Customer</label>
+<button class="btn btn-primary" type="submit">ส่งรีวิว</button>
+</form></div>
+</div>
+</section>
+
+<!-- ============ JOBS ============ -->
+<section id="jobs" aria-labelledby="h-jobs">
+<div class="wrap">
+<div class="kicker">ประกาศหาร้าน · Job Board</div><h2 id="h-jobs">ลูกค้าประกาศหาร้านตัดสูท</h2>
+<p class="lead">ร้านที่สมัครแพ็กเกจสามารถส่งข้อเสนอราคา (Quick Quote) เข้าไปหาลูกค้าได้โดยตรง</p>
+<div class="job-grid">
+<div class="job"><div class="jt">งานแต่งงาน</div><h3>หาชุดเจ้าบ่าว 8 ตัว พร้อมชุดพ่อสามี-แม่สามี</h3><p>ต้องการทรงเรียบ ผ้าขนสัตว์ผสม วัดตัวถึงบ้านได้</p><div class="meta"><span>📍 กรุงเทพฯ</span><span>💰 งบ ~฿96,000</span><span>🗓 ต.ค. 2569</span></div><div><button class="btn btn-sm" onclick="B('ส่งข้อเสนอแล้ว (ตัวอย่าง) — ร้านจะได้รับการแจ้งเตือนทันที')">ส่งข้อเสนอราคา</button></div></div>
+<div class="job"><div class="jt">องค์กร</div><h3>สูทธุรกิจพนักงานฝ่ายขาย 30 ตัว</h3><p>ต้องการช่างเข้าวัดขนาดหน้าออฟฟิศ สีกรมท่าเข้ม</p><div class="meta"><span>📍 เชียงใหม่</span><span>💰 งบ ~฿150,000</span><span>🗓 ธ.ค. 2569</span></div><div><button class="btn btn-sm" onclick="B('ส่งข้อเสนอแล้ว (ตัวอย่าง) — ร้านจะได้รับการแจ้งเตือนทันที')">ส่งข้อเสนอราคา</button></div></div>
+<div class="job"><div class="jt">งานเลี้ยง</div><h3>สูท 1 ตัว งบจำกัด ด่วน 7 วัน</h3><p>ผ้าลินินสีเทา ทรงสลิม ใส่งานเลี้ยงบัณฑิต</p><div class="meta"><span>📍 ภูเก็ต</span><span>💰 งบ ฿6,500</span><span>🗓 ภายใน 7 วัน</span></div><div><button class="btn btn-sm" onclick="B('ส่งข้อเสนอแล้ว (ตัวอย่าง) — ร้านจะได้รับการแจ้งเตือนทันที')">ส่งข้อเสนอราคา</button></div></div>
+</div>
+</div>
+</section>
+
+<!-- ============ MERCHANT / ADMIN ============ -->
+<section id="partner" aria-labelledby="h-partner">
+<div class="wrap">
+<div class="kicker">สำหรับร้าน · Merchant &amp; Admin</div><h2 id="h-partner">ระบบหลังบ้านสำหรับร้านและผู้ดูแล</h2>
+<div class="panels">
+<div class="panel">
+<div class="ph"><svg class="ic" width="18" height="18" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><h3>หน้าร้าน — สถานะเอกสารยืนยัน</h3><span class="demo-tag">ตัวอย่าง</span></div>
+<p class="note">ร้านอัปโหลดบัตรประชาชน / ภ.พ.20 และพิกัดร้าน ระบบเสนอชื่อให้ผู้ดูแลตรวจ</p>
+<div class="list">
+<div class="doc-row"><svg class="ic" width="15" height="15" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>บัตรประชาชนผู้ก่อตั้ง<span class="st ok">ครบ</span></div>
+<div class="doc-row"><svg class="ic" width="15" height="15" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>ภ.พ.20 / ทะเบียนการค้า<span class="st wait">รอตรวจ</span></div>
+<div class="doc-row"><svg class="ic" width="15" height="15" viewBox="0 0 24 24"><path d="M21 10c0 7-9 12-9 12S3 17 3 10a9 9 0 1 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>พิกัดร้าน + เบอร์ติดต่อ<span class="st ok">ครบ</span></div>
+<div class="doc-row"><svg class="ic" width="15" height="15" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>รูปผลงาน 8/10 ภาพ<span class="st wait">เกือบครบ</span></div>
+</div>
+</div>
+<div class="panel">
+<div class="ph"><svg class="ic" width="18" height="18" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg><h3>ผู้ดูแลระบบ — คิวอนุมัติ</h3><span class="demo-tag">ตัวอย่าง</span></div>
+<p class="note">อนุมัติเอกสาร • จัดการอันดับ/ร้าน Featured • คัดกรองรีวิว</p>
+<div class="list">
+<div class="q-item"><div class="qh">สยามเทเลอร์ คัลเลกชัน — เอกสารครบ<span class="st wait">รอตรวจ</span></div><small>ภ.พ.20 + บัตร ส่งเมื่อ 20 ก.ย. 2569</small><div class="q-actions"><button class="btn btn-sm mini ok" onclick="adminApprove(this,'สยามเทเลอร์')">อนุมัติ</button><button class="btn btn-sm mini no" onclick="adminReject(this,'สยามเทเลอร์')">ขอเอกสารเพิ่ม</button></div></div>
+<div class="q-item"><div class="qh">รีวิวสแปม 2 รายการ<span class="st wait">ตรวจพบ</span></div><small>รูปแบบโฆษณานอกระบบ</small><div class="q-actions"><button class="btn btn-sm mini no" onclick="markSpam(this)">ซ่อนรีวิว</button></div></div>
+<div class="q-item"><div class="qh">แพ็กเกจ Featured — ภูเก็ตเทเลอร์<span class="st ok">ใช้งาน</span></div><small>฿1,990/เดือน · ต่ออายุ 1 ต.ค. 2569</small></div>
+</div>
+</div>
+</div>
+<div class="panel" style="margin-top:14px">
+<div class="ph"><svg class="ic" width="18" height="18" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg><h3>แพ็กเกจสมาชิกร้าน (Subscription)</h3></div>
+<div class="list" style="margin-top:8px">
+<div class="q-row" style="display:flex;justify-content:space-between;border-bottom:1px solid var(--border);padding:9px 0;font-size:13.5px"><span>Free — โปรไฟล์พื้นฐาน + ตอบกระดานหาร้าน</span><b>฿0</b></div>
+<div class="q-row" style="display:flex;justify-content:space-between;border-bottom:1px solid var(--border);padding:9px 0;font-size:13.5px"><span>Featured — ตราสปอนเซอร์ + สล็อตจังหวัด</span><b>฿1,990/เดือน</b></div>
+<div class="q-row" style="display:flex;justify-content:space-between;padding:9px 0;font-size:13.5px"><span>Pro — Quick Quote + สถิติ + ปุ่ม LINE OA ตรง</span><b>฿4,990/เดือน</b></div>
+</div>
+</div>
+</div>
+</section>
+
+<footer><div class="wrap">
+<div class="cols">
+<div><h4>SUITRANK TH</h4><p style="font-size:12.5px">ตัวอย่างโปรโตไทป์เพื่อการนำเสนอ — ข้อมูลร้านเป็นข้อมูลสาธิตทั้งหมด เวอร์ชันจริงพัฒนาด้วย Next.js (SSR/SSG) + PostgreSQL รองรับ SEO เต็มรูปแบบ</p></div>
+<div><h4>ผู้ใช้งาน</h4><a href="#directory">ค้นหาร้าน</a><a href="#quiz">Suit Quiz</a><a href="#reviews">รีวิวจริง</a></div>
+<div><h4>ร้านตัดสูท</h4><a href="#partner">สมัครเข้าร่วม</a><a href="#jobs">กระดานหาร้าน</a><a href="#compare">เทียบร้าน</a></div>
+</div>
+</div></footer>
+
+<div class="tray" id="cmpTray"><span>เลือกไว้: <b id="trayNames">—</b></span><button class="btn btn-sm btn-primary" id="trayBtn" onclick="document.getElementById('compare').scrollIntoView();renderCmp()">เทียบร้านที่เลือก</button></div>
+<div class="viewer"><i></i>มีผู้ชม <b id="viewerN">—</b> คนในขณะนี้</div>
+<div class="toast"></div>
+<script>
+/* ===== SUITRANK Thailand — page logic (vanilla JS, no deps) ===== */
+"use strict";
+const $=(s,c)=> (c||document).querySelector(s);
+const $$=(s,c)=> Array.from((c||document).querySelectorAll(s));
+const B=t=>{const el=$(".toast");if(!el)return;el.textContent=t;el.classList.add("on");clearTimeout(el._h);el._h=setTimeout(()=>el.classList.remove("on"),2600)};
+
+/* ---------- data ---------- */
+const SHOPS=[
+ {n:"เจมส์ แอนด์ ซัน เทเลอร์",prov:"กรุงเทพมหานคร",area:"สุขุมวิท",price:[12000,28000],style:["business","wedding"],fab:["wool","cotton"],rate:4.7,rc:521,sp:true,d:"ร้านครอบครัว 40+ ปี เย็บ full-canvas ตัดทรงตามสรีร์จริง",v:true},
+ {n:"นอร์ดิก เบสโป๊ะ",prov:"กรุงเทพมหานคร",area:"อารีย์",price:[12000,32000],style:["business"],fab:["wool","linen"],rate:4.8,rc:274,sp:false,d:"สายมินิมอลยุโรปเหนือ ไหล่เรียบ เส้นคม",v:true},
+ {n:"สยามเทเลอร์ คัลเลกชัน",prov:"กรุงเทพมหานคร",area:"สีลม",price:[9000,25000],style:["business","gala"],fab:["wool","cotton"],rate:4.8,rc:412,sp:true,d:"เย็บมือทุกจุดสำคัญ ผ้าอิตาเลียนนำเข้า",v:true},
+ {n:"กรุงเทพคัสตอมสูท",prov:"กรุงเทพมหานคร",area:"บางรัก",price:[5500,12000],style:["business"],fab:["cotton","linen"],rate:4.5,rc:189,sp:false,d:"งบประหยัด เสร็จไว 3-5 วัน เหมาะสูทแรกของชีวิต",v:false},
+ {n:"ธนบุรีเวดดิ้งสูท",prov:"กรุงเทพมหานคร",area:"ฝั่งธนฯ",price:[7000,18000],style:["wedding"],fab:["wool","cotton"],rate:4.5,rc:112,sp:false,d:"ชุดเจ้าบ่าว-เพื่อนเจ้าบ่าว ตัดกลุ่มลดพิเศษ",v:true},
+ {n:"ล้านนาสูท คาเฟ่",prov:"เชียงใหม่",area:"เมือง",price:[6500,16000],style:["business","wedding"],fab:["linen","cotton"],rate:4.7,rc:143,sp:false,d:"ผ้าลินินระบายดี เย็บตามอากาศเหนือ",v:false},
+ {n:"เชียงใหม่เบสโป๊ะ 88",prov:"เชียงใหม่",area:"นิมมาน",price:[9000,22000],style:["business","gala"],fab:["wool"],rate:4.6,rc:97,sp:false,d:"ช่างสายฮ่องกง งานซากุโระเข้ม",v:false},
+ {n:"ภูเก็ตเทเลอร์",prov:"ภูเก็ต",area:"ป่าตอง",price:[7000,20000],style:["gala","business"],fab:["linen","cotton"],rate:4.6,rc:233,sp:true,d:"รับนักท่องเที่ยว งานด่วนเสร็จใน 3 วัน",v:true},
+ {n:"ป่าตองคัสตอม",prov:"ภูเก็ต",area:"กะตะ",price:[5500,14000],style:["gala"],fab:["linen"],rate:4.4,rc:76,sp:false,d:"ชุดเที่ยวทะเล ผ้าบางเบา สีพาสเทล",v:false},
+ {n:"ขอนแก่นเทเลอร์",prov:"ขอนแก่น",area:"ในเมือง",price:[5000,13000],style:["business"],fab:["cotton"],rate:4.5,rc:64,sp:false,d:"ราคาท้องถิ่น คุยง่าย แก้ฟรี 3 ครั้ง",v:false},
+ {n:"หาดใหญ่เบสโป๊ะ",prov:"สงขลา (หาดใหญ่)",area:"หาดใหญ่",price:[6000,15000],style:["business","wedding"],fab:["cotton","wool"],rate:4.4,rc:58,sp:false,d:"งานแต่งสายใต้ รับชุดกลุ่ม 10 ตัวขึ้นไป",v:false},
+ {n:"โคราชสูท แอนด์ ช็อป",prov:"นครราชสีมา",area:"เมือง",price:[5500,14000],style:["business","gala"],fab:["cotton","linen"],rate:4.5,rc:81,sp:false,d:"สูทธุรกิจ-งานพิธี มีผ้าให้สัมผัสหน้าร้าน",v:false},
+];
+const STY={business:"สูทธุรกิจ",gala:"งานเลี้ยง",wedding:"งานแต่งงาน"};
+const FAB={wool:"ขนสัตว์",linen:"ลินิน",cotton:"ฝ้าย"};
+const score=s=>s.rate*Math.log10(s.rc+10);
+const fmt=n=>n.toLocaleString("th-TH");
+
+/* ---------- directory ---------- */
+function shopCard(s){
+  return '<article class="shop'+(s.sp?" sp":"")+'">'
+   +'<div class="shop-top"><h3>'+s.n+'</h3>'+(s.sp?'<span class="badge sp">สปอนเซอร์</span>':"")+'</div>'
+   +'<div class="prov"><svg class="ic" width="13" height="13" viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 1 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>'+s.area+" · "+s.prov+(s.v?' <span class="badge vf">ยืนยันแล้ว</span>':"")+'</div>'
+   +'<div class="rate"><svg class="ic" width="14" height="14" viewBox="0 0 24 24"><path d="M12 2l3 6.3 6.6.8-4.9 4.6 1.3 6.5L12 17l-6 3.2 1.3-6.5L2.4 9.1 9 8.3z"/></svg>'+s.rate.toFixed(1)+" <small>("+fmt(s.rc)+" รีวิว)</small></div>"
+   +'<div class="price">฿'+fmt(s.price[0])+" – ฿"+fmt(s.price[1])+'<small>ชุดสั่งตัดเริ่มต้น – สูงสุด</small></div>'
+   +'<div class="tags">'+s.style.map(x=>'<span class="tag">'+STY[x]+"</span>").join("")+s.fab.map(x=>'<span class="tag">'+FAB[x]+"</span>").join("")+'</div>'
+   +'<p style="font-size:13px;color:var(--muted)">'+s.d+'</p>'
+   +'<div class="shop-foot"><button class="btn btn-sm btn-primary" onclick="B(\'ดูโปรไฟล์ '+s.n+' (ตัวอย่าง)\')">ดูโปรไฟล์</button>'
+   +'<label class="chk"><input type="checkbox" onchange="toggleCmp(\''+s.n+'\',this)"'+(CMP.includes(s.n)?" checked":"")+'> เทียบร้าน</label></div></article>';
+}
+function applyFilters(){
+  const prov=$("#fProv").value, pr=$("#fBudget").value, st=$("#fStyle").value, fb=$("#fFabric").value, sort=$("#fSort").value;
+  let list=SHOPS.filter(s=>
+    (!prov||s.prov===prov)&&
+    (!pr||(s.price[1]>=+pr.split("-")[0]&&s.price[0]<=+pr.split("-")[1]))&&
+    (!st||s.style.includes(st))&&
+    (!fb||s.fab.includes(fb))
+  );
+  if(sort==="rating")list.sort((a,b)=>score(b)-score(a));
+  if(sort==="priceAsc")list.sort((a,b)=>a.price[0]-b.price[0]);
+  if(sort==="priceDesc")list.sort((a,b)=>b.price[0]-a.price[0]);
+  $("#resCount").innerHTML="พบ <b>"+list.length+"</b> ร้าน จากทั้งหมด "+SHOPS.length+" ร้าน";
+  $("#shopGrid").innerHTML=list.map(shopCard).join("");
+}
+function resetFilters(){["fProv","fBudget","fStyle","fFabric"].forEach(id=>$("#"+id).value="");$("#fSort").value="rating";applyFilters();B("ล้างตัวกรองแล้ว")}
+
+/* ---------- compare ---------- */
+let CMP=[];
+function toggleCmp(name,cb){
+  if(cb.checked){if(CMP.length>=3){cb.checked=false;B("เทียบได้สูงสุด 3 ร้าน");return}CMP.push(name)}
+  else CMP=CMP.filter(x=>x!==name);
+  renderCmp();
+}
+function renderCmp(){
+  const sel=SHOPS.filter(s=>CMP.includes(s.n)), tray=$("#cmpTray");
+  tray.classList.toggle("on",CMP.length>0);
+  $("#trayNames").textContent=CMP.join(" · ");
+  $("#trayBtn").disabled=CMP.length<2;
+  if(!CMP.length){$("#cmpBox").innerHTML='<div class="cmp-empty">ยังไม่ได้เลือกร้าน — ติ๊ก “เทียบร้าน” บนการ์ดร้านที่สนใจ (สูงสุด 3 ร้าน)</div>';return}
+  const row=(label,fn)=>"<tr><th>"+label+"</th>"+sel.map(s=>"<td>"+fn(s)+"</td>").join("")+"</tr>";
+  $("#cmpBox").innerHTML='<table class="cmp-table"><tr><th>ร้าน</th>'+sel.map(s=>'<td class="sh">'+s.n+"</td>").join("")+"</tr>"
+   +row("พื้นที่",s=>s.area+" · "+s.prov)
+   +row("ช่วงราคา",s=>"฿"+fmt(s.price[0])+" – ฿"+fmt(s.price[1]))
+   +row("คะแนน",s=>"★ "+s.rate.toFixed(1)+" ("+fmt(s.rc)+" รีวิว)")
+   +row("สไตล์",s=>s.style.map(x=>STY[x]).join(", "))
+   +row("ผ้า",s=>s.fab.map(x=>FAB[x]).join(", "))
+   +row("จุดเด่น",s=>s.d)+"</table>";
+}
+
+/* ---------- ranking ---------- */
+function setRank(mode){
+  $("#rkTH").classList.toggle("act",mode==="th");
+  $("#rkPV").classList.toggle("act",mode==="pv");
+  const box=$("#rankList");
+  if(mode==="th"){
+    const top=[...SHOPS].sort((a,b)=>score(b)-score(a)).slice(0,5);
+    box.innerHTML=top.map((s,i)=>'<div class="rank-item'+(s.sp?" feat":"")+'" data-r="'+(i+1)+'"><div class="rn">'+(i+1)+'</div><div><h3>'+s.n+'</h3><div class="meta"><span>★ '+s.rate.toFixed(1)+" ("+fmt(s.rc)+' รีวิว)</span><span>'+s.area+" · "+s.prov+'</span></div></div><div class="score"><div class="sv">'+score(s).toFixed(1)+'</div><div class="sl">suit score</div></div></div>').join("");
+  }else{
+    const provs=[...new Set(SHOPS.map(s=>s.prov))];
+    box.innerHTML=provs.map(pv=>{
+      const top=SHOPS.filter(s=>s.prov===pv).sort((a,b)=>score(b)-score(a)).slice(0,3);
+      return '<div class="kicker" style="margin:18px 0 8px">'+pv+"</div>"+top.map((s,i)=>'<div class="rank-item" data-r="'+(i+1)+'"><div class="rn">'+(i+1)+'</div><div><h3>'+s.n+'</h3><div class="meta"><span>★ '+s.rate.toFixed(1)+" ("+fmt(s.rc)+' รีวิว)</span><span>'+s.area+'</span></div></div><div class="score"><div class="sv">'+score(s).toFixed(1)+'</div><div class="sl">suit score</div></div></div>').join("");
+    }).join("");
+  }
+}
+
+/* ---------- quiz ---------- */
+const QUIZ=[
+ {k:"budget",q:"งบต่อชุดประมาณเท่าไหร่?",o:[
+   ["ไม่เกิน 6,000 บาท","เริ่มต้นคุ้มค่า",[0,6000]],
+   ["6,000 – 12,000 บาท","มาตรฐานกลาง",[6000,12000]],
+   ["12,000 – 25,000 บาท","พรีเมียม",[12000,25000]],
+   ["25,000 บาทขึ้นไป","ระดับเบสโป๊ะสูง",[25000,999999]]]},
+ {k:"style",q:"จะใส่ในโอกาสไหนเป็นหลัก?",o:[
+   ["ทำงาน / สัมภาษณ์งาน","ใช้บ่อย ทุกวัน","business"],
+   ["งานเลี้ยง / พิธีการ","ใส่เป็นครั้งคราว","gala"],
+   ["งานแต่งงาน","วันสำคัญของชีวิต","wedding"]]},
+ {k:"fabric",q:"อยากได้ผ้าแบบไหน?",o:[
+   ["ขนสัตว์ — สุภาพ เท่ คลาสสิก","เหมาะห้องแอร์","wool"],
+   ["ลินิน — เบา ระบายดี","เหมาะอากาศร้อน","linen"],
+   ["ฝ้าย — ใส่ง่าย ดูแลไม่ยาก","คุ้มทุกวัน","cotton"]]},
+ {k:"prio",q:"เรื่องไหนสำคัญที่สุดสำหรับคุณ?",o:[
+   ["เสร็จไว ทันงาน","ด่วนพิเศษ 3-7 วัน","fast"],
+   ["ฝีมือเย็บระดับสูงสุด","งานเย็บมือละเอียด","quality"],
+   ["ราคาคุ้ม คุยได้","ตามงบที่ตั้งไว้","value"]]},
+ {k:"zone",q:"สะดวกไปร้านย่านไหน?",o:[
+   ["กรุงเทพมหานคร","และปริมณฑล","กรุงเทพมหานคร"],
+   ["เชียงใหม่","ภาคเหนือ","เชียงใหม่"],
+   ["ภูเก็ต","ภาคใต้ฝั่งอันดามัน","ภูเก็ต"],
+   ["ขอนแก่น / นครราชสีมา","อีสาน","ขอนแก่น"],
+   ["หาดใหญ่","ภาคใต้ตอนล่าง","สงขลา (หาดใหญ่)"]]},
+];
+let QS=0, ANS={};
+function quizRender(){
+  const box=$("#quizBox");
+  if(QS>=QUIZ.length){
+    const lo=ANS.budget[0];
+    const ranked=SHOPS.map(s=>{
+      let p=0;
+      p+=Math.max(0,3-Math.abs(Math.min(3,Math.floor(s.price[0]/8000))-{0:0,1:1,2:2,3:3}[QUIZ[0].o.findIndex(o=>o[0]===ANS.budget[2].toString())]||0));/*noop keep simple*/
+      return s;
+    });
+    /* real scoring */
+    const scored=SHOPS.map(s=>{
+      let p=0, why=[];
+      const bIdx=QUIZ[0].o.findIndex(o=>o[0]===ANS.budget[0]);
+      const band={0:[0,6000],1:[6000,12000],2:[12000,25000],3:[25000,999999]}[bIdx];
+      if(s.price[0]<=band[1]&&s.price[1]>=band[0]){p+=3;why.push("ราคาตรงงบ")}
+      else p+=1;
+      if(s.style.includes(ANS.style)){p+=3;why.push("โอกาสใช้ตรง")}
+      if(s.fab.includes(ANS.fabric)){p+=2;why.push("ผ้าที่ชอบ")}
+      const prioMap={fast:2,quality:3,value:2};
+      if((ANS.prio==="quality"&&s.rate>=4.7)||(ANS.prio==="fast"&&/ด่วน|ไว|3 วัน/.test(s.d))||(ANS.prio==="value"&&s.price[0]<=band[1])){p+=prioMap[ANS.prio];why.push({fast:"เสร็จไว",quality:"ฝีมือแนวนี้",value:"คุ้มตามงบ"}[ANS.prio])}
+      p+=s.prov===ANS.zone?3:0;
+      return {s,p,w:why};
+    }).sort((a,b)=>b.p-a.p).slice(0,3);
+    const max=11;
+    box.innerHTML='<div class="q-step">ผลลัพธ์</div><div class="q-title">ร้านที่เข้ากับคุณที่สุด</div>'
+     +scored.map((r,i)=>{const pct=Math.round(r.p/max*100);
+       return '<div class="match"><div class="mp">'+pct+'%</div><div><h3>'+r.s.n+'</h3><div class="why">'+r.w.join(" · ")+' — ★ '+r.s.rate.toFixed(1)+" ("+fmt(r.s.rc)+' รีวิว)</div></div><button class="btn btn-sm" onclick="B(\'ดูโปรไฟล์ '+r.s.n+' (ตัวอย่าง)\')">ดูร้าน</button></div>'}).join("")
+     +'<div class="q-nav"><button class="btn btn-sm" onclick="QS=0;ANS={};quizRender()">เริ่มใหม่</button></div>';
+    return;
+  }
+  const q=QUIZ[QS];
+  box.innerHTML='<div class="progress"><i style="width:'+(QS/QUIZ.length*100)+'%"></i></div>'
+   +'<div class="q-step">ขั้นที่ '+(QS+1)+" / "+QUIZ.length+'</div><div class="q-title">'+q.q+'</div><div class="q-opts">'
+   +q.o.map((o,i)=>'<button class="q-opt" data-i="'+i+'"><b>'+o[0]+"</b><small>"+o[1]+"</small></button>").join("")+"</div>"
+   +(QS>0?'<div class="q-nav"><button class="btn btn-sm" onclick="QS--;quizRender()">ย้อนกลับ</button><span></span></div>':"");
+  $$(".q-opt",box).forEach(b=>b.onclick=()=>{
+    const o=q.o[+b.dataset.i];
+    ANS[q.k]=q.k==="budget"?{0:o[0],1:o[1],2:String(o[2][0])}:o[2];
+    QS++;quizRender();
+  });
+}
+
+/* ---------- reviews ---------- */
+let LOGGED=false;
+const SEEDREV=[
+ {who:"ต้น",init:"ต",when:"15 ก.ย. 2569",shop:"เจมส์ แอนด์ ซัน เทเลอร์",stars:5,v:true,t:"วัดตัวละเอียดมาก งานผ้าเนี้ยบทุกตะเข็บ ส่งมอบก่อนวันแต่งหนึ่งสัปดาห์ ประทับใจสุดๆ"},
+ {who:"ปุ้ย",init:"ป",when:"8 ก.ย. 2569",shop:"สยามเทเลอร์ คัลเลกชัน",stars:5,v:true,t:"ตัดสูทไปสัมภาษณ์งาน ช่างแนะนำทรงตามรูปร่างจริง ใส่แล้วคอนฟิดขึ้นเยอะ ราคาตรงปกไม่มีบวกเพิ่ม"},
+ {who:"เจมส์",init:"จ",when:"1 ก.ย. 2569",shop:"ภูเก็ตเทเลอร์",stars:4,v:false,t:"เหมาะกับคนทริปสั้น เสร็จจริงใน 3 วัน งานเย็บสวย แต่ช่วงบ่ายคนเยอะอาจรอคิว"},
+];
+let REVS=SEEDREV.slice();
+function starsHtml(n){let h="";for(let i=1;i<=5;i++)h+='<svg class="ic" width="15" height="15" viewBox="0 0 24 24" style="'+(i<=n?"fill:currentColor;stroke:none":"")+'"><path d="M12 2l3 6.3 6.6.8-4.9 4.6 1.3 6.5L12 17l-6 3.2 1.3-6.5L2.4 9.1 9 8.3z"/></svg>';return h}
+function renderRevs(){
+  $("#revGrid").innerHTML=REVS.map(r=>'<div class="rev"><div class="stars">'+starsHtml(r.stars)+'</div><p>'+r.t+'</p><div class="who"><div class="ava">'+r.init+'</div><div><b>'+r.who+"</b><small>"+r.shop+" · "+r.when+"</small>"+(r.v?' <span class="badge vf">verified</span>':"")+"</div></div></div>").join("");
+}
+function loginLine(){LOGGED=true;$("#gate").style.display="none";$("#revFormWrap").style.display="";$("#rvShop").innerHTML=SHOPS.map(s=>"<option>"+s.n+"</option>").join("");B("ล็อกอินสำเร็จ (ตัวอย่าง — งานจริงเชื่อม LINE Login)")}
+function loginGoogle(){LOGGED=true;$("#gate").style.display="none";$("#revFormWrap").style.display="";$("#rvShop").innerHTML=SHOPS.map(s=>"<option>"+s.n+"</option>").join("");B("ล็อกอินสำเร็จ (ตัวอย่าง — งานจริงเชื่อม Google OAuth)")}
+let PICK=5;
+function pickStar(n){PICK=n;$$("#starpick button").forEach((b,i)=>b.classList.toggle("on",i<n))}
+function submitRev(e){
+  e.preventDefault();
+  const shop=$("#rvShop").value, txt=$("#rvText").value.trim(), rc=$("#rvReceipt").checked;
+  if(txt.length<20){B("เล่าให้ละเอียดขึ้นอีกหน่อย (อย่างน้อย 20 ตัวอักษร)");return false}
+  REVS.unshift({who:"สมาชิกใหม่",init:"ส",when:"วันนี้",shop,stars:PICK,v:rc,t:txt});
+  renderRevs();e.target.reset();pickStar(5);
+  B(rc?"ส่งรีวิวแล้ว — ตรา verified จะขึ้นหลังตรวจใบเสร็จ":"ส่งรีวิวแล้ว ขอบคุณมาก");
+  return false;
+}
+
+/* ---------- merchant / admin ---------- */
+function adminApprove(el,name){const row=el.closest(".q-item");row.querySelector(".st").textContent="อนุมัติแล้ว";row.querySelector(".st").className="st ok";const a=row.querySelector(".q-actions");if(a)a.remove();B("อนุมัติ "+name+" แล้ว — ตรายืนยันจะขึ้นบนหน้าร้าน")}
+function adminReject(el,name){const row=el.closest(".q-item");row.querySelector(".st").textContent="ขอเอกสารเพิ่ม";row.querySelector(".st").className="st wait";const a=row.querySelector(".q-actions");if(a)a.remove();B("ส่งคำขอเอกสารเพิ่มให้ "+name+" แล้ว")}
+function markSpam(el){const row=el.closest(".q-item");row.style.opacity=".45";row.querySelector(".st").textContent="ซ่อนแล้ว";row.querySelector(".st").className="st ok";const a=row.querySelector(".q-actions");if(a)a.remove();B("ซ่อนรีวิวสแปมแล้ว")}
+
+/* ---------- live viewer (time-based) ---------- */
+(function(){
+  const h=new Date().getHours();
+  const base=Math.round(30+38*Math.sin((h-6)/24*2*Math.PI));
+  let v=Math.max(7,base+Math.floor(Math.random()*7)-3);
+  const el=$("#viewerN");
+  const tick=()=>{v=Math.max(7,v+Math.floor(Math.random()*5)-2);el.textContent=v};
+  tick();setInterval(tick,9000);
+})();
+
+/* ---------- init ---------- */
+setRank("th");renderCmp();quizRender();renderRevs();applyFilters();
+
+</script>
+</body>
+</html>
