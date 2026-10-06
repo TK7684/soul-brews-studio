@@ -1,0 +1,326 @@
+{
+ "day": "2026-10-06",
+ "branch": "ตัวอย่างร้านกาแฟ — สาขาเดโม่",
+ "shift": {
+  "opened_at": "2026-10-06T01:00:00",
+  "closed_at": "2026-10-06T08:20:00",
+  "float_satang": 100000,
+  "counted_satang": 203500,
+  "expected_satang": 203500,
+  "diff_satang": 0,
+  "cash_in_satang": 50000,
+  "cash_out_satang": 30000
+ },
+ "summary_python": {
+  "bills_paid": 12,
+  "bills_cancelled": 1,
+  "revenue_satang": 133500
+ },
+ "orders": [
+  {
+   "seq": 1,
+   "created_at": "2026-10-06T01:05:00",
+   "status": "paid",
+   "total_satang": 11000,
+   "items": [
+    {
+     "name": "อเมริกาโน่",
+     "unit_satang": 4500,
+     "qty": 1
+    },
+    {
+     "name": "ลาเต้",
+     "unit_satang": 6500,
+     "qty": 1
+    }
+   ],
+   "payment": {
+    "method": "cash",
+    "amount_satang": 15000,
+    "change_satang": 4000,
+    "ref": null
+   },
+   "cancel_reason": null
+  },
+  {
+   "seq": 2,
+   "created_at": "2026-10-06T01:40:00",
+   "status": "paid",
+   "total_satang": 10000,
+   "items": [
+    {
+     "name": "ชาไทย",
+     "unit_satang": 5000,
+     "qty": 2
+    }
+   ],
+   "payment": {
+    "method": "promptpay",
+    "amount_satang": 10000,
+    "change_satang": 0,
+    "ref": null
+   },
+   "cancel_reason": null
+  },
+  {
+   "seq": 3,
+   "created_at": "2026-10-06T02:15:00",
+   "status": "paid",
+   "total_satang": 13500,
+   "items": [
+    {
+     "name": "ลาเต้",
+     "unit_satang": 7500,
+     "qty": 1
+    },
+    {
+     "name": "โกโก้",
+     "unit_satang": 6000,
+     "qty": 1
+    }
+   ],
+   "payment": {
+    "method": "cash",
+    "amount_satang": 13500,
+    "change_satang": 0,
+    "ref": null
+   },
+   "cancel_reason": null
+  },
+  {
+   "seq": 4,
+   "created_at": "2026-10-06T03:05:00",
+   "status": "paid",
+   "total_satang": 13500,
+   "items": [
+    {
+     "name": "อเมริกาโน่",
+     "unit_satang": 4500,
+     "qty": 3
+    }
+   ],
+   "payment": {
+    "method": "promptpay",
+    "amount_satang": 13500,
+    "change_satang": 0,
+    "ref": null
+   },
+   "cancel_reason": null
+  },
+  {
+   "seq": 5,
+   "created_at": "2026-10-06T04:30:00",
+   "status": "paid",
+   "total_satang": 6000,
+   "items": [
+    {
+     "name": "ชาไทย",
+     "unit_satang": 6000,
+     "qty": 1
+    }
+   ],
+   "payment": {
+    "method": "transfer",
+    "amount_satang": 6000,
+    "change_satang": 0,
+    "ref": "SCB-8817"
+   },
+   "cancel_reason": null
+  },
+  {
+   "seq": 6,
+   "created_at": "2026-10-06T05:20:00",
+   "status": "paid",
+   "total_satang": 15500,
+   "items": [
+    {
+     "name": "ลาเต้",
+     "unit_satang": 5500,
+     "qty": 2
+    },
+    {
+     "name": "อเมริกาโน่",
+     "unit_satang": 4500,
+     "qty": 1
+    }
+   ],
+   "payment": {
+    "method": "cash",
+    "amount_satang": 20000,
+    "change_satang": 4500,
+    "ref": null
+   },
+   "cancel_reason": null
+  },
+  {
+   "seq": 7,
+   "created_at": "2026-10-06T06:10:00",
+   "status": "paid",
+   "total_satang": 7000,
+   "items": [
+    {
+     "name": "โกโก้",
+     "unit_satang": 7000,
+     "qty": 1
+    }
+   ],
+   "payment": {
+    "method": "promptpay",
+    "amount_satang": 7000,
+    "change_satang": 0,
+    "ref": null
+   },
+   "cancel_reason": null
+  },
+  {
+   "seq": 8,
+   "created_at": "2026-10-06T07:45:00",
+   "status": "paid",
+   "total_satang": 15000,
+   "items": [
+    {
+     "name": "อเมริกาโน่",
+     "unit_satang": 4500,
+     "qty": 1
+    },
+    {
+     "name": "ชาไทย",
+     "unit_satang": 5000,
+     "qty": 1
+    },
+    {
+     "name": "ลาเต้",
+     "unit_satang": 5500,
+     "qty": 1
+    }
+   ],
+   "payment": {
+    "method": "cash",
+    "amount_satang": 15000,
+    "change_satang": 0,
+    "ref": null
+   },
+   "cancel_reason": null
+  },
+  {
+   "seq": 9,
+   "created_at": "2026-10-06T09:05:00",
+   "status": "paid",
+   "total_satang": 6500,
+   "items": [
+    {
+     "name": "ลาเต้",
+     "unit_satang": 6500,
+     "qty": 1
+    }
+   ],
+   "payment": {
+    "method": "delivery_note",
+    "amount_satang": 6500,
+    "change_satang": 0,
+    "ref": "GRAB-1042"
+   },
+   "cancel_reason": null
+  },
+  {
+   "seq": 10,
+   "created_at": "2026-10-06T10:25:00",
+   "status": "paid",
+   "total_satang": 13000,
+   "items": [
+    {
+     "name": "อเมริกาโน่",
+     "unit_satang": 6500,
+     "qty": 2
+    }
+   ],
+   "payment": {
+    "method": "promptpay",
+    "amount_satang": 13000,
+    "change_satang": 0,
+    "ref": null
+   },
+   "cancel_reason": null
+  },
+  {
+   "seq": 11,
+   "created_at": "2026-10-06T11:40:00",
+   "status": "paid",
+   "total_satang": 17000,
+   "items": [
+    {
+     "name": "ชาไทย",
+     "unit_satang": 5000,
+     "qty": 1
+    },
+    {
+     "name": "โกโก้",
+     "unit_satang": 6000,
+     "qty": 2
+    }
+   ],
+   "payment": {
+    "method": "cash",
+    "amount_satang": 20000,
+    "change_satang": 3000,
+    "ref": null
+   },
+   "cancel_reason": null
+  },
+  {
+   "seq": 12,
+   "created_at": "2026-10-06T12:55:00",
+   "status": "paid",
+   "total_satang": 5500,
+   "items": [
+    {
+     "name": "ลาเต้",
+     "unit_satang": 5500,
+     "qty": 1
+    }
+   ],
+   "payment": {
+    "method": "promptpay",
+    "amount_satang": 5500,
+    "change_satang": 0,
+    "ref": null
+   },
+   "cancel_reason": null
+  },
+  {
+   "seq": 13,
+   "created_at": "2026-10-06T08:20:00",
+   "status": "cancelled",
+   "total_satang": 5500,
+   "items": [
+    {
+     "name": "ลาเต้",
+     "unit_satang": 5500,
+     "qty": 1
+    }
+   ],
+   "payment": null,
+   "cancel_reason": "ลูกค้าสั่งผิดเมนู"
+  }
+ ],
+ "risk_events": [
+  {
+   "kind": "shift_opened",
+   "severity": "info",
+   "payload_json": "{\"shift_id\": 1, \"float\": 100000}",
+   "created_at": "2026-10-06T01:00:00"
+  },
+  {
+   "kind": "order_cancelled",
+   "severity": "info",
+   "payload_json": "{\"order\": \"88a8f009\", \"reason\": \"ลูกค้าสั่งผิดเมนู\", \"refund\": \"promptpay\"}",
+   "created_at": "2026-10-06T08:20:00"
+  },
+  {
+   "kind": "shift_closed_diff",
+   "severity": "info",
+   "payload_json": "{\"shift_id\": 1, \"diff\": 0}",
+   "created_at": "2026-10-06T08:20:00"
+  }
+ ]
+}
