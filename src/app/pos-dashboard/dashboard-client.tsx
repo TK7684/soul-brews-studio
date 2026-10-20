@@ -1,21 +1,53 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   BUCKET_TH,
   METHOD_TH,
   RISK_TH,
   bkkTime,
   drawerTextOf,
+  pickSnapshot,
   sumByBucket,
   sumByItems,
   sumByMethod,
   thb,
   type PayFilter,
   type PosSnapshot,
+  type SnapshotSource,
 } from "@/lib/pos-metrics";
 
-export default function DashboardClient({ snapshot }: { snapshot: PosSnapshot }) {
+export default function DashboardClient({ snapshot: bundled }: { snapshot: PosSnapshot }) {
+  // Live-API lane (Day 28): the page ships with the bundled snapshot so it always
+  // renders (static export + SSR safe), then upgrades itself from /api/pos-day.
+  const [snapshot, setSnapshot] = useState<PosSnapshot>(bundled);
+  const [source, setSource] = useState<SnapshotSource | "pending">("pending");
+
+  useEffect(() => {
+    let alive = true;
+    // Manual AbortController+timer (not AbortSignal.timeout) — older Safari/Chromium
+    // throw on AbortSignal.timeout before the .catch lane exists (gate finding #3).
+    const ctrl = new AbortController();
+    const timer = setTimeout(() => ctrl.abort(), 4000);
+    fetch("/api/pos-day", { cache: "no-store", signal: ctrl.signal })
+      .then((r) => (r.ok ? r.json() : Promise.reject(new Error(String(r.status)))))
+      .then((j: unknown) => {
+        if (!alive) return;
+        const picked = pickSnapshot(bundled, j);
+        setSnapshot(picked.snapshot);
+        setSource(picked.source);
+      })
+      .catch(() => {
+        if (alive) setSource("bundled");
+      })
+      .finally(() => clearTimeout(timer));
+    return () => {
+      alive = false;
+      clearTimeout(timer);
+      ctrl.abort();
+    };
+  }, [bundled]);
+
   const [payFilter, setPayFilter] = useState<PayFilter>("all");
   const [showCancelled, setShowCancelled] = useState(true);
 
@@ -40,6 +72,22 @@ export default function DashboardClient({ snapshot }: { snapshot: PosSnapshot })
 
   return (
     <div className="space-y-6">
+      {/* ---- live-API source badge (Day 28) */}
+      <p
+        data-testid="data-source"
+        className={
+          source === "api"
+            ? "text-xs font-medium text-emerald-400"
+            : "text-xs text-gray-400"
+        }
+      >
+        {source === "api"
+          ? `ข้อมูลสดจาก /api/pos-day (วันที่ ${snapshot.day})`
+          : source === "pending"
+            ? "กำลังดึงข้อมูลจาก /api/pos-day"
+            : "ดึงข้อมูลจาก API ไม่สำเร็จ แสดงข้อมูลแนบหน้าชั่วคราว"}
+      </p>
+
       {/* ---- KPI row */}
       <section className="grid grid-cols-2 gap-3 sm:grid-cols-4">
         {[

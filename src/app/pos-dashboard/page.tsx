@@ -46,8 +46,8 @@ export default function PosDashboardPage() {
           โดยไม่ต้องขุดฐานข้อมูลเอง เหมาะกับร้านกาแฟ ร้านชงดื่ม ร้านอาหารเล็ก ที่อยากรู้ยอดวันนี้และเงินสดในลิ้นชักตอนปิดกะ
         </p>
         <p className="mt-2 text-sm text-gray-400">
-          เดโม่นี้ทำด้วย Next.js 16 อ่านข้อมูลจากไฟล์ส่งออกของเอนจิน POS จริง
-          ลองกดสลับช่วงเวลาและกรองวิธีชำระเงินดูได้เลย
+          เดโม่นี้ทำด้วย Next.js 16 ดึงข้อมูลจาก /api/pos-day ตอนเปิดหน้า
+          ถ้าดึงไม่ได้จะสลับไปใช้ข้อมูลแนบหน้าเอง ลองกดสลับช่วงเวลาและกรองวิธีชำระเงินดูได้เลย
         </p>
         <p className="mt-4 text-sm">
           <a href="/" className="text-amber-500 underline hover:text-amber-400">
@@ -59,8 +59,9 @@ export default function PosDashboardPage() {
       <section className="mt-10 text-sm text-gray-400">
         <h2 className="text-base font-bold text-gray-200">ข้อมูลในเดโม่นี้</h2>
         <p className="mt-2 max-w-2xl">
-          สแนปช็อตวันขาย {snapshot.day} จาก {snapshot.branch} — ระบบจริงดึงตรงจากตาราง POS
-          ผ่าน API ของเครื่องร้าน ตัวอย่างนี้ใช้ไฟล์ส่งออกแทนเพื่อให้ลองกดเล่นได้ทุกที่
+          สแนปช็อตวันขาย {snapshot.day} จาก {snapshot.branch} — ข้อมูลถูกเสิร์ฟผ่าน
+          API endpoint /api/pos-day หน้าเว็บดึงเข้ามาตอนเปิด ถ้า API ไม่ตอบ
+          ระบบจะใช้ข้อมูลแนบหน้าแทนโดยอัตโนมัติ ไม่มีหน้าว่างให้เห็น
         </p>
       </section>
     </main>

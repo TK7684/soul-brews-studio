@@ -124,6 +124,93 @@ export function sumByItems(paid: PosOrder[]): Array<[string, { cups: number; sat
   return [...acc.entries()].sort((a, b) => b[1].satang - a[1].satang);
 }
 
+export type SnapshotSource = "api" | "bundled";
+
+// Runtime merge policy for the live-API lane (Day 28): accept the /api/pos-day
+// payload ONLY if every field the dashboard dereferences is present with the
+// right type — otherwise fall back to the bundled snapshot. A 404 body, an HTML
+// error page, or a partial/foreign JSON must never blank the page.
+const isNum = (v: unknown): v is number => typeof v === "number" && Number.isFinite(v);
+
+function orderIsSafe(o: unknown): boolean {
+  if (typeof o !== "object" || o === null) return false;
+  const j = o as {
+    status?: unknown;
+    total_satang?: unknown;
+    items?: unknown;
+    payment?: unknown;
+  };
+  return (
+    typeof j.status === "string" &&
+    isNum(j.total_satang) &&
+    // bkkTime(o.created_at) slices the ISO string on every order row and in
+    // sumByBucket -> bucketOf — a missing/non-string created_at crashes render.
+    typeof (j as { created_at?: unknown }).created_at === "string" &&
+    Array.isArray(j.items) &&
+    // sumByItems dereferences item.name/qty/unit_satang during render — an
+    // entry like `null` or `{}` passing the guard would crash there.
+    j.items.every(
+      (it) =>
+        typeof it === "object" &&
+        it !== null &&
+        typeof (it as { name?: unknown }).name === "string" &&
+        isNum((it as { qty?: unknown }).qty) &&
+        isNum((it as { unit_satang?: unknown }).unit_satang),
+    ) &&
+    (j.payment === null || typeof j.payment === "object")
+  ) &&
+  // Render reads are null-safe (`o.payment ? ... : "—"`, `!o.payment && continue`),
+  // but a PAID order without a method-bearing payment is semantically wrong —
+  // require it so the method table can't silently lose a bill.
+  (j.status !== "paid" ||
+    (typeof j.payment === "object" &&
+      j.payment !== null &&
+      typeof (j.payment as { method?: unknown }).method === "string"));
+}
+
+function riskEventIsSafe(r: unknown): boolean {
+  // Watchlist renders r.kind (RISK_TH lookup w/ ?? fallback) and bkkTime(r.created_at)
+  return (
+    typeof r === "object" &&
+    r !== null &&
+    typeof (r as { kind?: unknown }).kind === "string" &&
+    typeof (r as { created_at?: unknown }).created_at === "string"
+  );
+}
+
+export function pickSnapshot(
+  bundled: PosSnapshot,
+  api: unknown,
+): { snapshot: PosSnapshot; source: SnapshotSource } {
+  const j = api as Partial<PosSnapshot> | null;
+  const sum = j?.summary_python as Partial<PosSnapshot["summary_python"]> | undefined;
+  const shift = j?.shift as Partial<PosSnapshot["shift"]> | undefined;
+  if (
+    typeof j?.day === "string" &&
+    j.day.length > 0 &&
+    typeof j?.branch === "string" &&
+    j.branch.length > 0 &&
+    isNum(sum?.revenue_satang) &&
+    isNum(sum?.bills_paid) &&
+    isNum(sum?.bills_cancelled) &&
+    typeof shift === "object" &&
+    shift !== null &&
+    isNum(shift.float_satang) &&
+    isNum(shift.counted_satang) &&
+    isNum(shift.expected_satang) &&
+    isNum(shift.diff_satang) &&
+    isNum(shift.cash_in_satang) &&
+    isNum(shift.cash_out_satang) &&
+    Array.isArray(j?.risk_events) &&
+    j.risk_events.every(riskEventIsSafe) &&
+    Array.isArray(j?.orders) &&
+    j.orders.every(orderIsSafe)
+  ) {
+    return { snapshot: j as PosSnapshot, source: "api" };
+  }
+  return { snapshot: bundled, source: "bundled" };
+}
+
 export function drawerTextOf(diffSatang: number): string {
   if (diffSatang === 0) return "ตรงกับระบบ ไม่มีส่วนต่าง";
   return diffSatang > 0
